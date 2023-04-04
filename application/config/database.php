@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
@@ -79,7 +79,7 @@ $db['default'] = array(
 	'port'     => '5432',
 	'username' => 'postgres',
 	'password' => 'Qwerty123ui',
-	'database' => 'ptm2023',
+	'database' => 'backup_ptm',
 	'dbdriver' => 'postgre',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
