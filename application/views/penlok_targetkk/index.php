@@ -33,16 +33,11 @@
 		              <th>No</th>
 		              <th>NIP</th>
 		              <th>Nama Pejabat</th>
+		              <th>Provinsi</th>
 		              <th>Kab Kota</th>
 		              <th>Tahun</th>
-		              <th>Tanggal SK 1</th>
-		              <th>File Upload SK 1</th>
-		              <th>Tanggal SK 2</th>
-		              <th>File Upload SK2</th>
-		              <th>Target</th>
-		              <th>Realisasi Target</th>
-		              <th>Tanggal Upload</th>
-		              <th>Aksi</th>
+		              <th>Target KK</th>
+		              <th style="width: 100px !important">Aksi</th>
 	            </tr>
 	          </thead>
 	        </table>
@@ -69,7 +64,7 @@
 		})
     }
 
-    function del(id) {
+    function dels(id) {
     	$.get( "<?=base_url('penlok_targetkk/delete/')?>"+id, function( response ) {
 		  	response = JSON.parse(response)
         	if (response.sts == 'success') {

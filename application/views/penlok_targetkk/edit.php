@@ -17,21 +17,7 @@
                 		<input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" style="display: none">
                 		<input type="hidden" name="id" value="<?=$id?>">
 						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for='tahun'>Tahun</label>
-									<select name='tahun' id='tahun' class="form-control custom-select">
-										<?php 
-											$start = date('Y')-2;
-											$stop = date('Y');
-
-										 for($i=$start;$i >= $now;$i++){ ?>
-												<option value='<?=$start?>'><?=$start?></option>
-										<?php }?>
-									</select>
-									
-								</div>
-							</div>
+							
 							<div class="col-md-6">
 
 								<div class="form-group">
@@ -52,185 +38,75 @@
 
 								<div class="form-group">
 									<label for='fc_o'>Kab Kota</label>
-									<select name='kode_kab_kota' id='kabkota' class="form-control select2 custom-select w-100">
+									<select name='kode_kab_kota' id='kabkota' onchange="kabChange()" class="form-control select2 custom-select w-100">
 									</select>
+
+									<input type="hidden" name="kode_kab_kota_old" value="<?=@$data['kode_kab_kota']?>">
 									
 								</div>
 
 							</div>
+				
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for='tahun'>Tahun Anggaran</label>
+									<input type="text" name="tahun_anggaran" readonly="" class="form-control" id="tahun_anggaran">
+									<input type="hidden" name="tahun_anggaran_old" readonly="" value="<?=@$data['tahun_anggaran']?>" class="form-control" id="tahun_anggaran_old">
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for='target_kk'>Target KK</label>
+									<input name='target_kk' id='target_kk' readonly="" type='text' value='<?=@$data['target_kk']?>' class="numbers form-control">
+									
+								</div>
+							</div>
+
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for='nip'>NIP</label>
 									<input name='nip' id='nip' type='text' value='<?=@$data['nip']?>' maxlength="18" class="numbers form-control">
-									
 								</div>
 							</div>
-						</div>
-
-
-						<div class="row">
-
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for='nama_pejabat'>Nama Pejabat</label>
 									<input name='nama_pejabat' id='nama_pejabat' type='text' value='<?=@$data['nama_pejabat']?>' class="form-control">
 									
 								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for='target_kk'>Target KK</label>
-									<input name='target_kk' id='target_kk' type='text' value='<?=@$data['target_kk']?>' class="numbers form-control">
-									
-								</div>
+							
 							</div>
 
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for='tahun'>Tahun Responden </label>
+									<select name='tahun' id='tahun' class="form-control custom-select">
+										<!-- 		<option <?php if ($data['tahun'] == date('Y')-2) {echo 'selected';}?> value='<?=date('Y')-2?>'><?=date('Y')-2?></option>
+												<option <?php if ($data['tahun'] == date('Y')-1) {echo 'selected';}?> value='<?=date('Y')-1?>'><?=date('Y')-1?></option>
+												<option <?php if ($data['tahun'] == date('Y')) {echo 'selected';}?> value='<?=date('Y')?>'><?=date('Y')?></option>
+
+ -->
+												<?php
+													$from = 2021;
+													$now = date('Y');
+													for ($i=$from; $i <= $now ; $i++) { 
+														$sel = $data['tahun'] == $i ? 'selected':'';
+														echo "<option ".$sel." value='".$i."'>".$i."</option>";
+													}
+												?>
+									</select>
+								</div>
+							</div>
+						
 						</div>
+
 					</div>
 				</div>
 
 				<div class="card ">
 
-					<div class="card-header">
-						<h3 class="card-title">SK 1</h3>
-
-						<div class="card-tools">
-							<button type="button" class="btn btn-tool" data-card-widget="collapse">
-								<i class="fas fa-minus"></i>
-							</button>
-						</div>
-						<!-- /.card-tools -->
-					</div>
-
-					<div class="card-body">
-						<div class="row">
-							<div class="col-md-12">
-
-								<div class="row">
-									<div class="col-6">
-										<div class="form-group">
-											<label for='no_sk1'>No SK</label>
-											<input name='no_sk1' id='no_sk1' type='text' value='<?=@$data['no_sk1']?>' class="form-control">
-											
-										</div>
-									</div>
-									<div class="col-6">
-
-										<div class="form-group">
-											<label for='tanggal_sk1'>Tanggal</label>
-											<div class="input-group date" id="tanggal_sk1" data-target-input="nearest">
-												<!-- <input name='f' id='fc_f' type='text' value='<?=@$data['']?>' class="form-control datetimepicker-input" data-target="#tanggal_sk1" />
-												<div class="input-group-append" data-target="#tanggal_sk1" data-toggle="datetimepicker">
-													<div class="input-group-text"><i class="fa fa-calendar"></i></div>
-												</div> -->
-												<input type="date" class="form-control" name="tanggal_sk1">
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for='tentang_sk1'>Tentang</label>
-									<input name='tentang_sk1' id='tentang_sk1' type='text' value='<?=@$data['tentang_sk1']?>' class="form-control">
-									
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for='file_foto_sk1'>Foto SK</label>
-											<div class="custom-file">
-												<input name='file_foto_sk1' id='file_foto_sk1' type='file' class="custom-file-input" accept="image/png, image/jpeg, application/pdf">
-												<label class="custom-file-label" for='file_foto_sk1'>Pilih file</label>
-											</div>
-											
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label class="col-form-label" for="inputSuccess">
-											</label>
-											<button type="button" class="form-control btn btn-default" data-toggle="modal" data-target="#modal-1">
-												Lihat File
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="card ">
-
-							<div class="card-header">
-								<h3 class="card-title">SK 2</h3>
-
-								<div class="card-tools">
-									<button type="button" class="btn btn-tool" data-card-widget="collapse">
-										<i class="fas fa-minus"></i>
-									</button>
-								</div>
-								<!-- /.card-tools -->
-							</div>
-
-
-							<div class="card-body">
-
-								<div class="row">
-									<div class="col-md-12">
-
-										<div class="row">
-											<div class="col-6">
-												<div class="form-group">
-													<label for='no_sk2'>No SK</label>
-													<input name='no_sk2' id='no_sk2' type='text' value='<?=@$data['no_sk2']?>' class="form-control">
-													
-												</div>
-											</div>
-											<div class="col-6">
-												<div class="form-group">
-													<label for='tanggal_sk2'>Tanggal</label>
-													<div class="input-group date" id="tanggal_sk2" data-target-input="nearest">
-														<!-- <input name='f' id='fc_f' type='text' value='<?=@$data['']?>' class="form-control datetimepicker-input" data-target="#tanggal_sk2" />
-														<div class="input-group-append" data-target="#tanggal_sk2" data-toggle="datetimepicker">
-															<div class="input-group-text"><i class="fa fa-calendar"></i></div>
-														</div> -->
-														<input type="date" class="form-control" name="tanggal_sk2">
-													</div>
-													
-												</div>
-											</div>
-										</div>
-										<div class="form-group">
-											<label for='tentang_sk2'>Tentang</label>
-											<input name='tentang_sk2' id='tentang_sk2' type='text' value='<?=@$data['tentang_sk2']?>' class="form-control">
-											
-										</div>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for='file_foto_sk2'>Foto SK</label>
-													<div class="custom-file">
-														<input name='file_foto_sk2' id='file_foto_sk2' type='file' class="custom-file-input" >
-														<label class="custom-file-label" for='file_foto_sk2'>Pilih file</label>
-													</div>
-													
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label class="col-form-label" for="inputSuccess">
-													</label>
-													<button type="button" class="form-control btn btn-default" data-toggle="modal" data-target="#modal-2">
-														Lihat File
-													</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						
+					
 
 						<div class="row">
 							<div class="col-md-6">
@@ -266,7 +142,8 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<iframe id="sk1_prewview" src="" class="w-100" style="height:500px" frameborder="0"></iframe>
+
+				<iframe id="sk1_prewview" src="<?=base_url('uploads/penlok_targetkk/').$data['file_foto_sk1']?>" class="w-100" style="height:500px" frameborder="0"></iframe>
 			</div>
 			<div class="modal-footer justify-content-between">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -288,7 +165,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<iframe id="sk2_prewview" src="" class="w-100" style="height:500px;width: 100%" frameborder="0"></iframe>
+				<iframe id="sk2_prewview" src="<?=base_url('uploads/penlok_targetkk/').$data['file_foto_sk2']?>" class="w-100" style="height:500px;width: 100%" frameborder="0"></iframe>
 
 			</div>
 			<div class="modal-footer justify-content-between">
@@ -321,7 +198,8 @@
     	});
     	 $('#file_foto_sk2').on('change', function(){
     	// var fuUpload = document.getElementById("lampiran1");
-    		if(this.files[0].type != 'image/jpeg' && this.files[0].type != 'image/jpg' && this.files[0].type != 'image/png' && this.files[0].type != 'image/gif'){
+    	console.log(this.files[0].type)
+    		if(this.files[0].type != 'image/jpeg' && this.files[0].type != 'image/jpg' && this.files[0].type != 'image/png' && this.files[0].type != 'image/gif' && this.files[0].type != 'application/pdf'){
     			toastr.error('Tipe File Salah atau File Rusak!')
     			$(this).val('')
 	    		$('#sk2_prewview').attr('src','');
@@ -333,8 +211,9 @@
     		}
     	});
 
-    	
+    	console.log(<?=$data["tahun"]?>)
 
+    	 // $('#tahun').val(<?=$data["tahun"]?>).trigger('change');
     	
 
     	$('.select2').select2()
@@ -352,7 +231,7 @@
 
 		$("#postForm").submit(function(event){
 	        event.preventDefault(); //prevent default action 
-	        var post_url = '<?php echo base_url("penlok_targetkk/create") ?>'; //get form action url
+	        var post_url = '<?php echo base_url("penlok_targetkk/update") ?>'; //get form action url
 	        var request_method = $(this).attr("method"); //get form GET/POST method
 	        var form_data = new FormData(this); //Encode form elements for submission
 	        
@@ -391,6 +270,13 @@
 			data = JSON.parse(data)
 			$('#kabkota').html(data)
 			$("#kabkota").val(<?=$data['kode_kab_kota']?>).trigger('change');
+			var element = $('#kabkota').find('option:selected'); 
+	        var target = element.attr("data-target"); 
+	        var tahun = element.attr("data-tahun"); 
+	        $('#tahun_anggaran').val(tahun); 
+	        $('#target_kk').val(target);
+
+
 		});
 		console.log('ok')
     }
@@ -401,6 +287,15 @@
 			data = JSON.parse(data)
 			$('#kabkota').html(data)
 		});
+    }
+
+      function kabChange(argument) {
+    	var element = $('#kabkota').find('option:selected'); 
+	        var target = element.attr("data-target"); 
+	        var tahun = element.attr("data-tahun"); 
+	        $('#tahun_anggaran').val(tahun); 
+	        $('#target_kk').val(target);
+
     }
 	
 </script>
