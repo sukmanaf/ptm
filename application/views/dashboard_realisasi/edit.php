@@ -18,13 +18,31 @@
 					<input type="hidden" name="id" value="<?= $data['id'] ?>">
 
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-8">
 							<div class="form-group">
-								<label for="kode_sektor_usaha">Kode Sektor Usaha</label>
-								<input name="kode_sektor_usaha" maxlength="3" id="kode_sektor_usaha" type="text" value="<?= $data['kode_sektor_usaha'] ?>" class="form-control clear">
+								<label for="">Sektor Usaha</label>
+								<select id="kode_sektor_usaha" name="kode_sektor_usaha" required class="form-control select2" style="width: 100%;">
+									<option value="">-- Semua --</option>
+									<?php foreach ($key as $key => $value) : ?>
+										<?php if ($value->kode_sektor_usaha == $data['kode_sektor_usaha']) {
+											$sel = 'selected';
+										} else {
+											$sel = '';
+										} ?>
+
+										<option <?= @$sel ?> value="<?= $value->kode_sektor_usaha ?>"><?= $value->deskripsi ?></option>
+									<?php endforeach ?>
+								</select>
 							</div>
 						</div>
-
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="kode_sub_dashboard_realisasi">Kode Sub Sektor Usaha</label>
+								<input name="kode_dashboard_realisasi" maxlength="4" id="kode_dashboard_realisasi" type="text" value="<?= $data['kode_subsektor_usaha'] ?>" class="form-control clear">
+							</div>
+						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-6">
@@ -33,7 +51,6 @@
 								<input name="deskripsi" id="deskripsi" type="text" value="<?= $data['deskripsi'] ?>" class="form-control clear">
 							</div>
 						</div>
-
 					</div>
 
 
@@ -43,7 +60,7 @@
 							<div class="row">
 								<div class="col">
 									<div class="form-group">
-										<a href="<?= base_url('sektor_usaha') ?>" class="form-control btn btn-secondary"><label>Tutup</label></a>
+										<a href="<?= base_url('dashboard_realisasi') ?>" class="form-control btn btn-secondary"><label>Tutup</label></a>
 									</div>
 								</div>
 								<div class="col">
@@ -85,42 +102,39 @@
 		})
 
 		$("#postForm").submit(function(event) {
-			var kode = $("#kode_sektor_usaha").val()
-			var dt = tampil_data('ms_kuesioner_re10a', 'kode_sektor_usaha', kode);
-			if (dt.length > 0 && dt[0].kode_sektor_usaha != kode) {
-				toastr.error('Kode Sektor Usaha Tersebut Sudah Ada !!')
+			var kode = $("#kode_dashboard_realisasi").val()
+			var dt = tampil_data('ms_kuesioner_re10b', 'kode_subsektor_usaha', kode);
+			if (dt.length > 0 && dt[0].kode_subsektor_usaha != kode) {
+				toastr.error('Kode Sub Sektor Usaha Tersebut Sudah Ada !!')
 				return
-			} else if (kode.length < 3) {
-				toastr.error('Kode Sektor Usaha Harus Tiga Digit !!')
-				return
-			} else {
-				event.preventDefault(); //prevent default action 
-				var post_url = '<?php echo base_url("sektor_usaha/update") ?>'; //get form action url
-				var request_method = $(this).attr("method"); //get form GET/POST method
-				var form_data = new FormData(this); //Encode form elements for submission
-
-
-				$.ajax({
-					url: post_url,
-					type: 'POST',
-					data: form_data,
-					processData: false,
-					contentType: false,
-					cache: false,
-					async: false,
-				}).done(function(response) {
-					response = JSON.parse(response)
-					if (response.sts == 'success') {
-						toastr.success(response.message);
-						$('.clear').val("")
-						window.location.replace('<?= base_url("sektor_usaha") ?>');
-						// $('#table-front').DataTable().ajax.reload();
-					} else {
-						toastr.error(response.message);
-					}
-				});
-
 			}
+			event.preventDefault(); //prevent default action 
+			var post_url = '<?php echo base_url("dashboard_realisasi/update") ?>'; //get form action url
+			var request_method = $(this).attr("method"); //get form GET/POST method
+			var form_data = new FormData(this); //Encode form elements for submission
+
+
+			$.ajax({
+				url: post_url,
+				type: 'POST',
+				data: form_data,
+				processData: false,
+				contentType: false,
+				cache: false,
+				async: false,
+			}).done(function(response) {
+				response = JSON.parse(response)
+				if (response.sts == 'success') {
+					toastr.success(response.message);
+					$('.clear').val("")
+					window.location.replace('<?= base_url("dashboard_realisasi") ?>');
+					// $('#table-front').DataTable().ajax.reload();
+				} else {
+					toastr.error(response.message);
+				}
+			});
+
+
 		});
 
 
@@ -129,7 +143,7 @@
 	function tampil_data(table, colum, id) {
 		var url = ''
 		var tadata = ''
-		urls = "<?php echo base_url(); ?>sektor_usaha/tampildata/" + table + "/" + colum + "/" + id;
+		urls = "<?php echo base_url(); ?>dashboard_realisasi/tampildata/" + table + "/" + colum + "/" + id;
 		$.ajax({
 			url: urls,
 			contentType: "application/json; charset=utf-8",
@@ -145,13 +159,15 @@
 		return tadata;
 	}
 
+
+
 	function nikChange(nik) {
 		event.preventDefault(); //prevent default action 
-		$.get("<?php echo base_url("sektor_usaha/detailNik/") ?>" + nik, function(data) {
+		$.get("<?php echo base_url("dashboard_realisasi/detailNik/") ?>" + nik, function(data) {
 			data = JSON.parse(data)
 			console.log(data.luas)
 			$('#keanggotaan').val(data.keanggotaan)
-			$('#sektor_usaha').val(data.sektor_usaha)
+			$('#dashboard_realisasi').val(data.dashboard_realisasi)
 			$('#nama_kelompok').val(data.kelompok)
 			$('#luas_tanah').val(data.luas)
 		});

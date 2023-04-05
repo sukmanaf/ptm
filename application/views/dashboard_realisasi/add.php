@@ -15,12 +15,24 @@
 			<div class="card-body">
 				<form action="#" id="postForm" class="form-horizontal" enctype="multipart/form-data" method="post">
 					<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
-
+					<div class="row">
+						<div class="col-md-8">
+							<div class="form-group">
+								<label for="">Sektor Usaha</label>
+								<select id="kode_sektor_usaha" name="kode_sektor_usaha" required class="form-control select2" style="width: 100%;">
+									<option value="">-- Semua --</option>
+									<?php foreach ($key as $key => $value) : ?>
+										<option value="<?= $value->kode_sektor_usaha ?>"><?= $value->deskripsi ?></option>
+									<?php endforeach ?>
+								</select>
+							</div>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label for="kode_sektor_usaha">Kode Sektor Usaha</label>
-								<input name="kode_sektor_usaha" id="kode_sektor_usaha" type="text" maxlength="3" value="" class="form-control clear">
+								<label for="kode_dashboard_realisasi">Kode Sub Sektor Usaha</label>
+								<input name="kode_dashboard_realisasi" maxlength="4" id="kode_dashboard_realisasi" type="text" value="" class="form-control clear">
 							</div>
 						</div>
 					</div>
@@ -41,7 +53,7 @@
 							<div class="row">
 								<div class="col">
 									<div class="form-group">
-										<a href="<?= base_url('sektor_usaha') ?>" class="form-control btn btn-secondary"><label>Tutup</label></a>
+										<a href="<?= base_url('dashboard_realisasi') ?>" class="form-control btn btn-secondary"><label>Tutup</label></a>
 									</div>
 								</div>
 								<div class="col">
@@ -72,52 +84,38 @@
 		$('.select2').select2()
 		$('#titleId').html('<?= $title ?>')
 
-		$("#nama_kelompok").keyup(function(event) {
-			var namaKel = $("#nama_kelompok").val();
-			if (namaKel == '') {
-				$("#keanggotaan").val('');
-				$("#keanggotaan").prop('readonly', true)
-			} else {
-				$("#keanggotaan").prop('readonly', false)
-			}
-		})
-
 		$("#postForm").submit(function(event) {
-			var kode = $("#kode_sektor_usaha").val()
-			var dt = tampil_data('ms_kuesioner_re10a', 'kode_sektor_usaha', kode);
-			if (kode.length < 3) {
-				toastr.error('Kode Sektor Usaha Harus Tiga Digit !!')
+			var kode = $("#kode_dashboard_realisasi").val()
+			var dt = tampil_data('ms_kuesioner_re10b', 'kode_subsektor_usaha', kode);
+			if (dt.length > 0) {
+				toastr.error('Kode Sub Sektor Usaha Tersebut Sudah Ada !!')
 				return
-			} else if (dt.length > 0) {
-				toastr.error('Kode Sektor Usaha Tersebut Sudah Ada !!')
-				return
-			} else {
-				event.preventDefault(); //prevent default action 
-				var post_url = '<?php echo base_url("sektor_usaha/create") ?>'; //get form action url
-				var request_method = $(this).attr("method"); //get form GET/POST method
-				var form_data = new FormData(this); //Encode form elements for submission
-
-
-				$.ajax({
-					url: post_url,
-					type: 'POST',
-					data: form_data,
-					processData: false,
-					contentType: false,
-					cache: false,
-					async: false,
-				}).done(function(response) {
-					response = JSON.parse(response)
-					if (response.sts == 'success') {
-						toastr.success(response.message);
-						$('.clear').val("")
-						// $('#table-front').DataTable().ajax.reload();
-					} else {
-						toastr.error(response.message);
-					}
-				});
-
 			}
+			event.preventDefault(); //prevent default action 
+			var post_url = '<?php echo base_url("dashboard_realisasi/create") ?>'; //get form action url
+			var request_method = $(this).attr("method"); //get form GET/POST method
+			var form_data = new FormData(this); //Encode form elements for submission
+
+
+			$.ajax({
+				url: post_url,
+				type: 'POST',
+				data: form_data,
+				processData: false,
+				contentType: false,
+				cache: false,
+				async: false,
+			}).done(function(response) {
+				response = JSON.parse(response)
+				if (response.sts == 'success') {
+					toastr.success(response.message);
+					$('.clear').val("")
+					// $('#table-front').DataTable().ajax.reload();
+				} else {
+					toastr.error(response.message);
+				}
+			});
+
 
 		});
 
@@ -127,7 +125,7 @@
 	function tampil_data(table, colum, id) {
 		var url = ''
 		var tadata = ''
-		urls = "<?php echo base_url(); ?>sektor_usaha/tampildata/" + table + "/" + colum + "/" + id;
+		urls = "<?php echo base_url(); ?>dashboard_realisasi/tampildata/" + table + "/" + colum + "/" + id;
 		$.ajax({
 			url: urls,
 			contentType: "application/json; charset=utf-8",
@@ -143,16 +141,10 @@
 		return tadata;
 	}
 
-
-	function nikChange(nik) {
+	function nikChange(key) {
 		event.preventDefault(); //prevent default action 
-		$.get("<?php echo base_url("sektor_usaha/detailNik/") ?>" + nik, function(data) {
+		$.get("<?php echo base_url("dashboard_realisasi/detailNik/") ?>" + key, function(data) {
 			data = JSON.parse(data)
-			console.log(data.luas)
-			$('#keanggotaan').val(data.keanggotaan)
-			$('#sektor_usaha').val(data.sektor_usaha)
-			$('#nama_kelompok').val(data.kelompok)
-			$('#luas_tanah').val(data.luas)
 		});
 	}
 </script>
