@@ -17,15 +17,7 @@
                 		<input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" style="display: none">
 
 						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for='tahun'>Tahun</label>
-									<select name='tahun' id='tahun' class="form-control custom-select">
-												<option value='<?=date('Y')?>'><?=date('Y')?></option>
-									</select>
-									
-								</div>
-							</div>
+							
 							<div class="col-md-6">
 
 								<div class="form-group">
@@ -45,7 +37,7 @@
 
 								<div class="form-group">
 									<label for='fc_o'>Kab Kota</label>
-									<select name='kode_kab_kota' id='kabkota' class="form-control select2 custom-select w-100">
+									<select name='kode_kab_kota' onchange="kabChange()" id='kabkota' class="form-control select2 custom-select w-100">
 									</select>
 									
 								</div>
@@ -53,16 +45,34 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for='nip'>NIP</label>
-									<input name='nip' id='nip' type='text' value='' maxlength="18" class="numbers form-control">
+									<label for='tahun'>Tahun Anggaran</label>
+									<!-- <select name='tahun' id='tahun' class="form-control custom-select">
+												<option value='<?=date('Y')?>'><?=date('Y')?></option>
+									</select> -->
+									<input type="text" name="tahun_anggaran" readonly="" class="form-control" id="tahun_anggaran">
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for='target_kk'>Target KK</label>
+									<input name='target_kk' id='target_kk' readonly="" type='text' value='' class="numbers form-control">
 									
 								</div>
 							</div>
+
 						</div>
 
 
 						<div class="row">
 
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for='nip'>NIP</label>
+									<input name='nip' id='nip' type='text' value='' maxlength="18" class="numbers form-control">
+									
+								</div>
+							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for='nama_pejabat'>Nama Pejabat</label>
@@ -72,158 +82,36 @@
 							</div>
 						</div>
 						<div class="row">
+
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for='target_kk'>Target KK</label>
-									<input name='target_kk' id='target_kk' type='text' value='' class="numbers form-control">
-									
+									<label for='tahun'>Tahun Responden</label>
+									<select name='tahun' id='tahun' class="form-control custom-select">
+											<!-- 	<option value='<?=date('Y')-2?>'><?=date('Y')-2?></option>
+												<option value='<?=date('Y')-1?>'><?=date('Y')-1?></option>
+												<option value='<?=date('Y')?>'><?=date('Y')?></option> -->
+
+
+												<?php
+													$from = 2021;
+													$now = date('Y');
+													for ($i=$from; $i <= $now ; $i++) { 
+														echo "<option value='".$i."'>".$i."</option>";
+													}
+												?>
+									</select>
 								</div>
 							</div>
-
+						
+						</div>
+						<div class="row">
 						</div>
 					</div>
 				</div>
 
 				<div class="card ">
 
-					<div class="card-header">
-						<h3 class="card-title">SK 1</h3>
-
-						<div class="card-tools">
-							<button type="button" class="btn btn-tool" data-card-widget="collapse">
-								<i class="fas fa-minus"></i>
-							</button>
-						</div>
-						<!-- /.card-tools -->
-					</div>
-
-					<div class="card-body">
-						<div class="row">
-							<div class="col-md-12">
-
-								<div class="row">
-									<div class="col-6">
-										<div class="form-group">
-											<label for='no_sk1'>No SK</label>
-											<input name='no_sk1' id='no_sk1' type='text' value='' class="form-control">
-											
-										</div>
-									</div>
-									<div class="col-6">
-
-										<div class="form-group">
-											<label for='tanggal_sk1'>Tanggal</label>
-											<div class="input-group date" id="tanggal_sk1" data-target-input="nearest">
-												<!-- <input name='f' id='fc_f' type='text' value='' class="form-control datetimepicker-input" data-target="#tanggal_sk1" />
-												<div class="input-group-append" data-target="#tanggal_sk1" data-toggle="datetimepicker">
-													<div class="input-group-text"><i class="fa fa-calendar"></i></div>
-												</div> -->
-												<input type="date" class="form-control" name="tanggal_sk1">
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for='tentang_sk1'>Tentang</label>
-									<input name='tentang_sk1' id='tentang_sk1' type='text' value='' class="form-control">
-									
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for='file_foto_sk1'>Foto SK</label>
-											<div class="custom-file">
-												<input name='file_foto_sk1' id='file_foto_sk1' type='file' class="custom-file-input" accept="image/png, image/jpeg, application/pdf">
-												<label class="custom-file-label" for='file_foto_sk1'>Pilih file</label>
-											</div>
-											
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label class="col-form-label" for="inputSuccess">
-											</label>
-											<button type="button" class="form-control btn btn-default" data-toggle="modal" data-target="#modal-1">
-												Lihat File
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="card ">
-
-							<div class="card-header">
-								<h3 class="card-title">SK 2</h3>
-
-								<div class="card-tools">
-									<button type="button" class="btn btn-tool" data-card-widget="collapse">
-										<i class="fas fa-minus"></i>
-									</button>
-								</div>
-								<!-- /.card-tools -->
-							</div>
-
-
-							<div class="card-body">
-
-								<div class="row">
-									<div class="col-md-12">
-
-										<div class="row">
-											<div class="col-6">
-												<div class="form-group">
-													<label for='no_sk2'>No SK</label>
-													<input name='no_sk2' id='no_sk2' type='text' value='' class="form-control">
-													
-												</div>
-											</div>
-											<div class="col-6">
-												<div class="form-group">
-													<label for='tanggal_sk2'>Tanggal</label>
-													<div class="input-group date" id="tanggal_sk2" data-target-input="nearest">
-														<!-- <input name='f' id='fc_f' type='text' value='' class="form-control datetimepicker-input" data-target="#tanggal_sk2" />
-														<div class="input-group-append" data-target="#tanggal_sk2" data-toggle="datetimepicker">
-															<div class="input-group-text"><i class="fa fa-calendar"></i></div>
-														</div> -->
-														<input type="date" class="form-control" name="tanggal_sk2">
-													</div>
-													
-												</div>
-											</div>
-										</div>
-										<div class="form-group">
-											<label for='tentang_sk2'>Tentang</label>
-											<input name='tentang_sk2' id='tentang_sk2' type='text' value='' class="form-control">
-											
-										</div>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group">
-													<label for='file_foto_sk2'>Foto SK</label>
-													<div class="custom-file">
-														<input name='file_foto_sk2' id='file_foto_sk2' type='file' class="custom-file-input" >
-														<label class="custom-file-label" for='file_foto_sk2'>Pilih file</label>
-													</div>
-													
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label class="col-form-label" for="inputSuccess">
-													</label>
-													<button type="button" class="form-control btn btn-default" data-toggle="modal" data-target="#modal-2">
-														Lihat File
-													</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						
+					
 
 						<div class="row">
 							<div class="col-md-6">
@@ -298,32 +186,7 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-    	 $('#file_foto_sk1').on('change', function(){
-    	// var fuUpload = document.getElementById("lampiran1");
-    		if(this.files[0].type != 'image/jpeg' && this.files[0].type != 'image/jpg' && this.files[0].type != 'image/png' && this.files[0].type != 'image/gif' && this.files[0].type != 'application/pdf'){
-    			toastr.error('Tipe File Salah atau File Rusak!')
-    			$(this).val('')
-	    		$('#sk1_prewview').attr('src','');
-    		}else{
-	    		console.log(URL.createObjectURL(this.files[0]))
-	    		var url = URL.createObjectURL(this.files[0]);
-	    		$('#sk1_prewview').attr('src',url);
-
-    		}
-    	});
-    	 $('#file_foto_sk2').on('change', function(){
-    	// var fuUpload = document.getElementById("lampiran1");
-    		if(this.files[0].type != 'image/jpeg' && this.files[0].type != 'image/jpg' && this.files[0].type != 'image/png' && this.files[0].type != 'image/gif'){
-    			toastr.error('Tipe File Salah atau File Rusak!')
-    			$(this).val('')
-	    		$('#sk2_prewview').attr('src','');
-    		}else{
-	    		console.log(URL.createObjectURL(this.files[0]))
-	    		var url = URL.createObjectURL(this.files[0]);
-	    		$('#sk2_prewview').attr('src',url);
-
-    		}
-    	});
+    	
 
     	
 
@@ -384,5 +247,17 @@
 			$('#kabkota').html(data)
 		});
     }
+
+    function kabChange(argument) {
+    	var element = $('#kabkota').find('option:selected'); 
+	        var target = element.attr("data-target"); 
+	        var tahun = element.attr("data-tahun"); 
+	        console.log(tahun)
+	        console.log(target)
+	        $('#tahun_anggaran').val(tahun); 
+	        $('#target_kk').val(target); 
+    }
+
+
 	
 </script>

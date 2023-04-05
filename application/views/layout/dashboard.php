@@ -379,35 +379,35 @@
 									</ul>
 								</li>
 
-							</ul>
-						</li>
-						<li class="nav-item">
-							<a href="http://194.233.71.171/ptm-web/subject_object" class='nav-link '>
-								<i class="nav-icon fas fa-book"></i>
-								<p>Entry Subject Object</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="http://194.233.71.171/ptm-web/mou_pks" class='nav-link '>
-								<i class="nav-icon fas fa-book"></i>
-								<p>MoU dan PKS</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="http://194.233.71.171/ptm-web/kegiatan_kanwil" class='nav-link '>
-								<i class="nav-icon fas fa-book"></i>
-								<p>Kegiatan Kanwil</p>
-							</a>
-						</li>
-						<li class='nav-item '>
-							<a href="#" class='nav-link '>
-								<i class="nav-icon fas fa-book"></i>
-								<p>
-									CPCL
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a href="<?=base_url()?>subjectobject" class='nav-link '>
+							<i class="nav-icon fas fa-book"></i>
+							<p>Entry Subject Object</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://194.233.71.171/ptm-web/mou_pks" class='nav-link '>
+							<i class="nav-icon fas fa-book"></i>
+							<p>MoU dan PKS</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://194.233.71.171/ptm-web/kegiatan_kanwil" class='nav-link '>
+							<i class="nav-icon fas fa-book"></i>
+							<p>Kegiatan Kanwil</p>
+						</a>
+					</li>
+					<li class='nav-item '>
+						<a href="#" class='nav-link '>
+							<i class="nav-icon fas fa-book"></i>
+							<p>
+								CPCL
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
 								<li class="nav-item">
 									<a href='http://194.233.71.171/ptm-web/cpcl/entri' class="nav-link">
 										<i class='nav-icon fa-circle far'></i>
@@ -588,6 +588,7 @@
 						</li>
 
 
+  
 					</ul>
 				</nav>
 				<!-- /.sidebar-menu -->
@@ -598,18 +599,19 @@
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-			<!-- Content Header (Page header) -->
-
-			<?= $body ?>
-			<!-- /.content -->
-		</div>
-		<!-- /.content-wrapper -->
-		<footer class="main-footer">
-			<div class="float-right d-none d-sm-block">
-				<b>Version</b> 3.2.0
-			</div>
-			<strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-		</footer>
+    <!-- Content Header (Page header) -->
+    
+        <?=$body?>
+    <!-- /.content -->
+		  </div>
+		  <!-- /.content-wrapper -->
+		  <!-- Content Wrapper. Contains page content -->
+		  <footer class="main-footer">
+		    <div class="float-right d-none d-sm-block">
+		      <!-- <b>Version</b> 3.2.0 -->
+		    </div>
+		    <strong>Copyright © Kementerian Agraria dan Tata Ruang/ Badan Pertanahan Nasional All rights reserved
+		  </footer>
 
 		<!-- Control Sidebar -->
 		<aside class="control-sidebar control-sidebar-dark">
