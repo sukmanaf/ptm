@@ -26,7 +26,7 @@ class Penlok_targetkk extends CI_Controller {
 		// echo "</pre>";exit();
 		foreach ($get as $key => $value) {
 			$a = [
-				$key+1,@$value->nip,@$value->nama_pejabat,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,
+				$key+1,@$value->nip,@$value->nama_pejabat,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun_anggaran,@$value->target_kk,
 					'<a type="button"  style="display:inline" href="'.base_url('detail_penlok/data/').$value->id.'" class="btn btn-primary"><i class="fas fa-search" ></i></a>'.
 					// '<a type="button" style="display:inline" href="'.base_url('penlok_targetkk/upload/').$value->id.'" class="btn btn-warning"><i class="fas fa-upload"></i></a>'.
 				'<a type="button" href="'.base_url('penlok_targetkk/edit/').$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
@@ -352,7 +352,7 @@ class Penlok_targetkk extends CI_Controller {
     public function upload($id='')
 	{
 		$data['id']=$id;
-		$data['title']= 'Home - Master Data - Admin Pusat - Sektor Usaha - Upload';
+		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Penetapan Lokasi dan Target KK - Upload';
 		$data['data'] = $this->global->get_by_one('dt_pengembangan_rencana_usaha',$id,'id');
 		$this->skin->view('penlok_targetkk/upload',$data);
 

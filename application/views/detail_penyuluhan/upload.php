@@ -35,7 +35,7 @@
  						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="keanggotaan">Pilih File</label>
+									<!-- <label for="keanggotaan">Pilih File</label> -->
 									<input name="files" id="keanggotaan" required="" type="file" class="form-control-file clear">
 								</div>
 							</div>

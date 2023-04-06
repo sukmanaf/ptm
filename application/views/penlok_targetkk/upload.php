@@ -63,15 +63,15 @@
 								<div class="form-group">
 									<label for='file_foto_sk2'>Foto SK</label>
 									<div class="custom-file">
-										<input name='files' id='files' type='file' class="clear custom-file-input" >
-										<label class="custom-file-label" for='files'>Pilih file</label>
+										<input name='files' id='files' type='file' class="clear" >
+										<!-- <label class="custom-file-label" for='files'>Pilih file</label> -->
 									</div>
 									
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-form-label" for="inputSuccess"> .
+									<label class="col-form-label" for="inputSuccess"> 
 									</label>
 									<button type="button" class="form-control btn btn-default" data-toggle="modal" data-target="#modal-2">
 										Lihat File
@@ -155,7 +155,7 @@
 
     	$('#files').on('change', function(){
     	// var fuUpload = document.getElementById("lampiran1");
-    		if(this.files[0].type != 'image/jpeg' && this.files[0].type != 'image/jpg' && this.files[0].type != 'image/png' && this.files[0].type != 'image/gif'){
+    		if(this.files[0].type != 'image/jpeg' && this.files[0].type != 'image/jpg' && this.files[0].type != 'image/png' && this.files[0].type != 'image/gif' && this.files[0].type != 'application/pdf'){
     			toastr.error('Tipe File Salah atau File Rusak!')
     			$(this).val('')
 	    		$('#sk2_prewview').attr('src','');

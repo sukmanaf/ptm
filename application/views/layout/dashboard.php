@@ -27,6 +27,13 @@
 
 	<!-- jQuery -->
 	<script src="<?= base_url() ?>assets/plugins/jquery/jquery.min.js"></script>
+
+    <!-- Include  DateTimePicker CDN -->
+    <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    	<!-- leafletjs -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -141,14 +148,14 @@
 
 
 
-						<!-- <li class="nav-item">
+						<li class="nav-item">
 						<a href="http://194.233.71.171/ptm-web/dashboard" class='nav-link '>
 							<i class="nav-icon fas fa-tachometer-alt"></i>
 							<p>
 								Dashboard
 							</p>
 						</a>
-					</li> -->
+					</li>
 						<li class='nav-item '>
 							<a href="#" class='nav-link '>
 								<i class="nav-icon fas fa-copy"></i>
@@ -520,6 +527,15 @@
 	<script src="<?= base_url() ?>assets/dist/js/adminlte.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<!-- <script src="<?= base_url() ?>assets/dist/js/demo.js"></script> -->
+
+
+     <!-- Make sure you put this AFTER Leaflet's CSS -->
+ 	<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
+    <!-- Include daettime picker.js CDN -->
+    
+	    <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
 	<!-- Page specific script -->
 	<script>
 		$(function() {

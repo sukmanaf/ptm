@@ -14,9 +14,9 @@
 	  <div class="card card-outline card-primary">
 	    <div class="card-header">
 	      <div class="card-tools">
-	      	      <!-- <a  style="float: right" href="<?=base_url('pemetaan_sosial/add')?>" class="btn btn-warning pull-right">
-	        <i class="fas fa-plus mr-2 text-white"></i>Baru </a> -->
-	        <div class="input-group input-group-sm">
+<!-- 	      	      <a  style="float: right" href="<?=base_url('pemetaan_sosial/add')?>" class="btn btn-warning pull-right">
+	        <i class="fas fa-plus mr-2 text-white"></i>Baru </a>
+ -->	        <div class="input-group input-group-sm">
 	          <div class="input-group-append"></div>
 	        </div>
 	      </div>

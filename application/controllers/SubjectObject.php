@@ -15,6 +15,20 @@ class SubjectObject extends CI_Controller {
 	}
 
 
+	public function tahun_kedua($value='')
+	{
+		$this->skin->view('subject_object/tahun_kedua',null);
+		
+	}
+
+
+	public function tahun_ketiga($value='')
+	{
+		$this->skin->view('subject_object/tahun_ketiga',null);
+		
+	}
+
+
 
 
 }

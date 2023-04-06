@@ -13,6 +13,7 @@
     <div class="container-fluid">
 	  <div class="card card-outline card-primary">
 	    <div class="card-header">
+
 	      <div class="card-tools">
 	      	      <a  style="float: right" href="<?=base_url('detail_pemsos_responden/add/').$id?>" class="btn btn-warning pull-right">
 	        <i class="fas fa-plus mr-2 text-white"></i>Baru </a>
@@ -31,11 +32,9 @@
 	            <tr>
 		              
 		              <th>No</th>
-		              <th>Kabupaten.Kota</th>
-		              <th>Kecamatan</th>
-		              <th>Desa/Kelurahan</th>
-		              <th>Target KK</th>
-		              <th>Target Waktu</th>
+		              <th>NIK</th>
+		              <th>Nama</th>
+		              <th>Jenis Kelamin</th>
 		              <th style="width: 100px !important">Aksi</th>
 	            </tr>
 	          </thead>

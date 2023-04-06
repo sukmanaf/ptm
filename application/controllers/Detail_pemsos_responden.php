@@ -26,17 +26,17 @@ class Detail_pemsos_responden extends CI_Controller {
 
 	public function get_all($id)
 	{
-		$get=$this->pemsos->getData($id);
+		$get=$this->pemsos->getDataDetail($id);
 		$data = [];
 		// echo "<pre>";
 		// print_r ($get);
 		// echo "</pre>";exit();
 		foreach ($get as $key => $value) {
-			
+			$jk = $value->jenis_kelamin == "L" ? 'Laki-laki' : 'Perempuan';
 			$a = [
-				$key+1,@$value->nama_kab_kota,@$value->nama_kecamatan,@$value->nama_desa_kelurahan,@$value->jumlah,@$value->target_batas_waktu_penyelesaian,
+				$key+1,@$value->nik,@$value->nama_responden_utama,$jk,
 				// '<a type="button" href="'.base_url('detail_pemsos_responden/edit/').$id.'/'.$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
-				'<a type="button"  style="display:inline" href="'.base_url('detail_pemsos_responden/add/').$value->id.'" class="btn btn-success"><i class="fas fa-edit" ></i></a>'
+				'<a type="button"  style="display:inline" href="'.base_url('detail_pemsos_responden/detail/').$value->id_targetkk_desa.'" class="btn btn-success"><i class="fas fa-edit" ></i></a>'
 				// '<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
 			];
 			array_push($data,$a);
@@ -45,44 +45,148 @@ class Detail_pemsos_responden extends CI_Controller {
 		echo json_encode($data);
 	}
 
+	public function get_lk($id)
+	{
+		$this->db->where('id_targetkk_desa', $id);
+		$get=$this->db->get('v_dt_pemsos_lk')->result();
+		$data = [];
+		foreach ($get as $key => $value) {
+			$a = [
+				$key+1,@$value->nik,@$value->nama_kab_kota,@$value->nama_kecamatan,@$value->nama_desa_kelurahan,@$value->alamat,
+				// '<a type="button" href="'.base_url('detail_pemsos_responden/edit/').$id.'/'.$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
+				'<a type="button" disabled  style="display:inline" href="'.base_url('detail_pemsos_responden/add/').$value->id.'" class="btn btn-success"><i class="fas fa-edit" ></i></a>'
+				// '<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
+			];
+			array_push($data,$a);
+		}
 
+		echo json_encode($data);
+	}
+
+		public function get_ar($id)
+	{
+		$this->db->where('id_targetkk_desa', $id);
+		$get=$this->db->get('v_dt_pemsos_ar')->result();
+		$data = [];
+		foreach ($get as $key => $value) {
+			$a = [
+				$key+1,@$value->nik,@$value->nama,@$value->nama_jenis_kelamin,@$value->nama_hubungan,
+				// '<a type="button" href="'.base_url('detail_pemsos_responden/edit/').$id.'/'.$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
+				'<a type="button" disabled  style="display:inline" href="'.base_url('detail_pemsos_responden/add/').$value->id.'" class="btn btn-success"><i class="fas fa-edit" ></i></a>'
+				// '<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
+			];
+			array_push($data,$a);
+		}
+
+		echo json_encode($data);
+	}
+
+		public function detail($id)
+	{
+		$data['id']=$id;
+		$data['sektor']=$this->global->get_all('ms_kuesioner_re10a');
+		$data['terdaftar']=$this->pemsos->terdaftar();
+		$data['tidakTerdaftar']=$this->pemsos->tidakTerdaftar();
+		$data['fieldstaff']=$this->pemsos->fieldstaff();
+		// ==== ar =====
+		$data['hub_kk']=$this->pemsos->hub_kk();
+		$data['pekerjaan']=$this->pemsos->pekerjaan();
+		
+		$data['data'] = $this->global->get_by_one('v_kuesioner_re',$id,'id_targetkk_desa');
+		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Pemetaan Sosial - Desa - Baru';
+		$data['lk']=$this->load->view('detail_pemsos_responden/lk',$data,true);
+		$data['ar']=$this->load->view('detail_pemsos_responden/ar',$data,true);
+		$this->skin->view('detail_pemsos_responden/detail',$data);
+	}
 	public function add($id)
 	{
 		$data['id']=$id;
 		$data['sektor']=$this->global->get_all('ms_kuesioner_re10a');
-
+		$data['terdaftar']=$this->pemsos->terdaftar();
+		$data['tidakTerdaftar']=$this->pemsos->tidakTerdaftar();
+		$data['fieldstaff']=$this->pemsos->fieldstaff();
+		
+		$data['data'] = $this->global->get_by_one('wa_targetkk_desa',$id,'id');
 		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Pemetaan Sosial - Desa - Baru';
+		$data['lk']=$this->load->view('detail_pemsos_responden/lk',$data['data'],true);
 		$this->skin->view('detail_pemsos_responden/add',$data);
 	}
 
 	public function create()
 	{
-		
-		$kd_desa = $this->input->post('kode_desa_kelurahan',true);
-		$jml = $this->input->post('jumlah',true);
-		$sisa = $this->input->post('sisa',true);
-		
-		$check = $this->pemsos->cekDesaKel($kd_desa);
 
-		if ($check > 0) {
-			echo json_encode(['sts' => 'fail','message' => 'Desa Kelurahan Sudah ada!']);
+		$nokk = $this->input->post('no_kk',true);
+
+		if (strlen($nokk) != 16) {
+			echo json_encode(['sts' => 'fail','message' => 'Jumlah No KK Harus 16!']);
 			exit();
 		}
-		if ($jml > $sisa) {
-			echo json_encode(['sts' => 'fail','message' => 'Jumlah Target KK tidak Bisa Melebihi Sisa Kuota!']);
-			exit();
-		}
+		$istelf = $this->input->post('memiliki_no_telepon',true);
+		$no_telepon = $this->input->post('no_telepon',true);
+		$sts_tanah = $this->input->post('sumber_status_tanah',true);
+		$tanah_terdaftar = $this->input->post('tanah_terdaftar_atau_tidak',true);
+		$nik = $this->input->post('nik',true);
+		$sektor_usaha = $this->input->post('sektor_usaha',true);
+		$sub_sektor_usaha = $this->input->post('sub_sektor_usaha',true);
+		$jenis_sub_sektor_usaha = $this->input->post('jenis_sub_sektor_usaha',true);
+		$tahun_status_tanah = $this->input->post('tahun_status_tanah',true);
+		$arr =[];
+		foreach ($sektor_usaha as $key => $value) {
+			if($sektor_usaha[$key] && $sub_sektor_usaha[$key] && $jenis_sub_sektor_usaha[$key]){
+				$a=[
+						'nik' => $nik,
+						'kode_sektor_usaha' => $sektor_usaha[$key],
+						'kode_subsektor_usaha' => $sub_sektor_usaha[$key],
+						'kode_jenis_subsektor_usaha' => $jenis_sub_sektor_usaha[$key],
 
+				];
+				array_push($arr,$a);
+			}
+		}
 		$data = [
 
-					'targetkk_id'	=> $this->input->post('targetkk_id',true),
-					'kode_desa_kelurahan'	=> $this->input->post('kode_desa_kelurahan',true),
-					'jumlah' => $this->input->post('jumlah',true),
-					'target_batas_waktu_penyelesaian' => $this->input->post('target_batas_waktu_penyelesaian',true) == '' ? null : $this->input->post('target_batas_waktu_penyelesaian',true),
+					'tanggal_lahir'	=> $this->input->post('tanggal_lahir',true),
+					'id_targetkk_desa'	=> $this->input->post('targetkk_id',true),
+					'nama_responden_utama'	=> $this->input->post('nama_responden_utama',true),
+					'no_urut_rt'	=> $this->input->post('no_rt',true),
+					'nik' => $this->input->post('nik',true),
+					'jenis_kelamin' => $this->input->post('jenis_kelamin',true),
+					'nama_kepala_keluarga' => $this->input->post('nama_kk',true),
+					'jumlah_tanggungan' => $this->input->post('jml_tanggungan',true),
+					'memiliki_telepon' => $this->input->post('memiliki_no_telepon',true),
+					'sumber_status_tanah' => $this->input->post('sumber_status_tanah',true),
+					'kode_field_staff' => $this->input->post('kode_field_staff',true),
+					'kode_peninjau' => $this->input->post('kode_peninjau',true),
+					'jam_mulai' => $this->input->post('jam_mulai',true),
+					'jam_selesai' => $this->input->post('jam_selesai',true),
+					'hasil_kunjungan_pertama' => $this->input->post('hasil_kunjungan',true),
+					'tgl_kunjungan_pertama' => $this->input->post('tgl_kunjungan',true),
+					'no_kk' => $this->input->post('no_kk',true),
+
 				];
 
-		$ins =  $this->db->insert('wa_targetkk_desa', $data);
+		$ins =  $this->db->insert('wa_kuesioner_re', $data);
 		if ($ins) {
+			
+			if($istelf == 1){
+				$a=['nik' => $nik,'nomor_telepon'=>$no_telepon];
+				$this->db->insert('wa_kuesioner_re08', $a);
+			}
+			if($sts_tanah == 1){
+				$a=['nik' => $nik,'kode_status_tanah_terdaftar'=>$tanah_terdaftar,'tahun' => $tahun_status_tanah];
+				$this->db->insert('wa_kuesioner_re09a', $a);
+			}
+			if($sts_tanah == 2){
+				$a=['nik' => $nik,'kode_status_tanah_belum_terdaftar'=>$tanah_terdaftar];
+				$this->db->insert('wa_kuesioner_re09b', $a);
+			}
+		// echo "<pre>";
+		// print_r ($_POST);
+		// echo "</pre>";exit();
+
+			$this->db->insert_batch('wa_kuesioner_re10', $arr);
+
+
 			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
 		}else{
 			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
@@ -167,11 +271,81 @@ class Detail_pemsos_responden extends CI_Controller {
 	{
 		$data['id']=$id;
 		$data['sektor']=$this->global->get_all('ms_kuesioner_re10a');
-		$data['html'] =$this->load->view('detail_pemsos/append', $data, true);
+		$data['html'] =$this->load->view('detail_pemsos_responden/append', $data, true);
 		echo json_encode($data);
 	}
 
-	
+	public function cekNik($nik='')
+	{
+		$data = $this->global->get_by_one('wa_kuesioner_re',$nik,'nik');
+		if(empty($data)){
+			echo 1;		
+		}else{
+			echo 0;
+		}
+	}
+
+
+
+	public function create_lk()
+	{
+		// echo "<pre>";
+		// print_r ($_POST);
+		// echo "</pre>";exit();
+		
+
+		$data = [
+					'nik' => $this->input->post('nik',true),
+					'id_targetkk_desa' => $this->input->post('id_targetkk_desa',true),
+				    'kode_provinsi' => $this->input->post('kode_provinsi',true),
+				    'kode_kab_kota' => $this->input->post('kode_kab_kota',true),
+				    'kode_kecamatan' => $this->input->post('kode_kecamatan',true),
+				    'kode_desa_kelurahan' => $this->input->post('kode_desa_kelurahan',true),
+				    'alamat' => $this->input->post('alamat',true),
+				];
+
+
+		$ins =  $this->db->insert('wa_kuesioner_lk', $data);
+		$id = $this->db->insert_id();
+		if ($ins) {
+		
+			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
+		}else{
+			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
+		}
+
+	}
+
+	public function create_ar()
+	{
+
+
+		$data = [
+					'nik' => $this->input->post('nik',true),
+					'id_targetkk_desa' => $this->input->post('id_targetkk_desa',true),
+					'nama' =>  $this->input->post('nama_anggota_keluarga',true),
+				    'jenis_kelamin' =>  $this->input->post('jenis_kelamin',true),
+				    'tanggal_lahir' =>  $this->input->post('tanggal_lahir',true),
+				    'status_perkawinan' =>  $this->input->post('status_perkawinan',true),
+				    'kode_hubungan_dgn_kk' =>  $this->input->post('hubungan_dengan_kk',true),
+				    'kode_pekerjaan' =>  $this->input->post('pekerjaan',true),
+				    'pendidikan' =>  $this->input->post('pendidikan',true),
+				    'apakah_anggota_keluarga_bekerja' =>  $this->input->post('is_anggota_keluarga_bekerja',true),
+				    'penghasilan_anggota_keluarga_yang_bekerja' =>  $this->input->post('penghasilan',true),
+				];
+
+
+		$ins =  $this->db->insert('wa_kuesioner_ar', $data);
+		$id = $this->db->insert_id();
+		if ($ins) {
+		
+			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
+		}else{
+			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
+		}
+
+	}
+
 }
 
 /* End of file Detail_penyuluhan.php */
