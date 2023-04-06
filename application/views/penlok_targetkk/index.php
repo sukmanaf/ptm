@@ -13,6 +13,9 @@
     <div class="container-fluid">
 	  <div class="card card-outline card-primary">
 	    <div class="card-header">
+
+	      	<a  style="" href="<?=base_url('subjectobject/tahun_pertama')?>" class="btn btn-default">
+	        <i class="fas fa-arrow-left mr-2 text-white"></i>Kembali </a>
 	      <div class="card-tools">
 	      	      <a  style="float: right" href="<?=base_url('penlok_targetkk/add')?>" class="btn btn-warning pull-right">
 	        <i class="fas fa-plus mr-2 text-white"></i>Baru </a>
@@ -35,7 +38,7 @@
 		              <th>Nama Pejabat</th>
 		              <th>Provinsi</th>
 		              <th>Kab Kota</th>
-		              <th>Tahun</th>
+		              <th>Tahun Anggaran</th>
 		              <th>Target KK</th>
 		              <th style="width: 100px !important">Aksi</th>
 	            </tr>

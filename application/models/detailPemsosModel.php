@@ -9,6 +9,13 @@ class DetailPemsosModel extends CI_Model {
 		return $this->db->get('v_dt_targetkk_perkota')->result();
 	}
 
+	public function getDataDetail($id='')
+	{
+		$this->db->where('id_targetkk_desa', $id);
+		$this->db->order_by('id', 'desc');
+		return $this->db->get('wa_kuesioner_re')->result();
+	}
+
 	public function getDataKab($id)
 	{
 		$this->db->select('wa_targetkk.*,ms_kab_kota.nama_kab_kota');
@@ -60,6 +67,52 @@ class DetailPemsosModel extends CI_Model {
 	{
 		$this->db->where("kode_subsektor_usaha = '".$kode."'");
 		return $this->db->get('ms_kuesioner_re10c')->result();
+	}
+
+	public function terdaftar()
+	{
+		$data = $this->db->get('ms_kuesioner_re01')->result();
+		$str='<option value="">-- Pilih --</option>';
+		foreach ($data as $key => $value) {
+			$str .= '<option value="'.$value->kode_status_tanah_terdaftar.'">'.$value->deskripsi.'</option>';
+		}
+		return $str;
+	}
+	public function tidakTerdaftar()
+	{
+		$data = $this->db->get('ms_kuesioner_re02')->result();
+		$str='<option value="">-- Pilih --</option>';
+		foreach ($data as $key => $value) {
+			$str .= '<option value="'.$value->kode_status_tanah_belum_terdaftar.'">'.$value->deskripsi.'</option>';
+		}
+		return $str;
+	}
+	public function fieldstaff()
+	{
+		$data = $this->db->get('wa_surveyor')->result();
+		$str='<option value="">-- Pilih Fieldstaff --</option>';
+		foreach ($data as $key => $value) {
+			$str .= '<option value="'.$value->npk.'">'.$value->npk.' - '.$value->fullname.'</option>';
+		}
+		return $str;
+	}
+	public function hub_kk()
+	{
+		$data = $this->db->get('ms_kuesioner_ar02')->result();
+		$str='<option value="">-- Pilih Hubungan --</option>';
+		foreach ($data as $key => $value) {
+			$str .= '<option value="'.$value->kode_hubungan_dgn_kk.'">'.$value->kode_hubungan_dgn_kk.' - '.$value->deskripsi.'</option>';
+		}
+		return $str;
+	}
+	public function pekerjaan()
+	{
+		$data = $this->db->get('ms_kuesioner_ar06')->result();
+		$str='<option value="">-- Pilih Pekerjaan --</option>';
+		foreach ($data as $key => $value) {
+			$str .= '<option value="'.$value->kode_pekerjaan.'">'.$value->kode_pekerjaan.' - '.$value->deskripsi.'</option>';
+		}
+		return $str;
 	}
 
 }

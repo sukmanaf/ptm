@@ -383,6 +383,9 @@ class Penyuluhan extends CI_Controller {
             }
 
             if ($_FILES['files']['name']) {
+            	// echo "<pre>";
+            	// print_r ($_FILES);
+            	// echo "</pre>";exit();
         		// check type fle upload
         		$allowed_type = array('image/jpeg'=>1,'image/jpg'=>1,'image/png'=>1,'image/gif'=>1,'application/pdf'=>1);
 				$filetype = mime_content_type($_FILES['files']['tmp_name']);
@@ -503,7 +506,7 @@ class Penyuluhan extends CI_Controller {
 	{
 		
 		$this->db->where('id', $id);
-		$del = $this->db->delete('wa_targetkk_file');
+		$del = $this->db->delete('fl_penyuluhan');
 		if($del)
 		{
 			echo json_encode(['sts' => 'success']);

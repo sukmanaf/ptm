@@ -53,15 +53,15 @@
 								<div class="form-group">
 									<label for='file_foto_sk2'>Upload File</label>
 									<div class="custom-file">
-										<input name='files' id='files' type='file' class="clear custom-file-input" >
-										<label class="custom-file-label" for='files'>Pilih file</label>
+										<input name='files' id='files' type='file' class="clear " >
+										<!-- <label class="custom-file-label" for='files'>Pilih file</label> -->
 									</div>
 									
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label class="col-form-label" for="inputSuccess"> .
+									<label class="col-form-label" for="inputSuccess"> 
 									</label>
 									<button type="button" class="form-control btn btn-default" data-toggle="modal" data-target="#modal-2">
 										Lihat File

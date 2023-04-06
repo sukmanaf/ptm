@@ -7,7 +7,7 @@
     </div>
   </div><!-- /.container-fluid -->
 </section>
-
+	
     <!-- Main content -->
     <section class="content">
       	<div class="container-fluid">
@@ -35,8 +35,26 @@
 				                </div>
 				                <div class="col-sm-6 col-md-6 col-xs-12">
 				                    <div class="form-group">
-				                        <label for='fc_nik'>No. Induk Kependukdukan</label>
-				                        <input name='nik' id='fc_nik' placeholder='No. Induk Kependudukan' type='text' value='' minlength='1' maxlength='100' class="form-control" aria-describedby="inputGroupPrepend" required />
+				                        <label for='nik'>No. Induk Kependukdukan</label></br>
+				                        <input name='nik' id='nik' style="display: inline;width: 75%" placeholder='No. Induk Kependudukan' type='text' value='' minlength='1' maxlength='100' class="form-control" aria-describedby="inputGroupPrepend" required />
+				                        <button class="btn btn-primary" style="display: inline" onclick="generateNik($(this).val())">Generate NIK</button>
+				                    </div>
+				                </div>
+				            </div>
+				            <div class="row">
+				                <div class="col-sm-6 col-md-6 col-xs-12">
+				                    <div class="form-group">
+				                        <label for='no_kk'>No KK</label>
+				                        <input name='no_kk' id='no_kk' placeholder='No KK' type='text' value='' minlength='1' maxlength='100' class="form-control" aria-describedby="inputGroupPrepend" required />
+				                        <div class="invalid-feedback">
+				                            
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class="col-sm-6 col-md-6 col-xs-12">
+				                    <div class="form-group">
+				                        <label for='fc_nik'>Tanggal Lahir</label>
+				                        <input name='tanggal_lahir' id='fc_tanggal_lahir' placeholder='No. Induk Kependudukan' type='date'class="form-control" aria-describedby="inputGroupPrepend" required value="<?=date('Y-m-d')?>" />
 				                        <div class="invalid-feedback">
 				                            
 				                        </div>
@@ -66,7 +84,7 @@
 		                        <div class="col-md-6">
 		                            <div class="form-group">
 		                                <label for='fc_memiliki_no_telepon'>Memiliki No.Telepon / HP</label>
-		                                <select name='memiliki_no_telepon' id='fc_memiliki_no_telepon' class="form-control select2 custom-select w-100">
+		                                <select name='memiliki_no_telepon' onchange="telpChange($(this).val())" id='fc_memiliki_no_telepon' class="form-control select2 custom-select w-100">
 		                                                <option value='1'>Ya</option>
 		                                                <option value='2'>Tidak</option>
 		                                </select>
@@ -75,8 +93,8 @@
 		                        </div>
 		                        <div class="col-md-6">
 		                            <div class="form-group">
-		                                <label for='fc_no_telepon'>Nomor Telepon</label>
-		                                <input name='no_telepon' id='fc_no_telepon' placeholder='Nomor Telepon' type='text' value='' minlength='1' maxlength='20' class="form-control" aria-describedby="inputGroupPrepend" required />
+		                                <label for='no_telepon'>Nomor Telepon</label>
+		                                <input name='no_telepon' id='no_telepon' placeholder='Nomor Telepon' type='text' value='' minlength='1' maxlength='20' class="form-control" aria-describedby="inputGroupPrepend" required />
 		                                <div class="invalid-feedback">
 		                                    
 		                                </div>
@@ -105,28 +123,49 @@
 				            </div>
 
 				            <div class="row">
-		                        <div class="col-md-6">
+		                        <div class="col-md-4">
 		                            <div class="form-group">
 		                                <label for='fc_sumber_status_tanah'>Sumber Status Tanah</label>
-		                                <select id="sumber_status_tanah" name='sumber_status_tanah' id='fc_sumber_status_tanah' class="form-control select2 custom-select w-100">
+		                                <select id="sumber_status_tanah"  required  onchange="statusTanahChange($(this).val())" name='sumber_status_tanah' class="form-control select2 custom-select w-100">
+		                                                <option value=''>-- Pilih Status tanah -- </option>
 		                                                <option value='1'>Terdaftar</option>
 		                                                <option value='2'>Belum Terdaftar</option>
 		                                </select>
 		                                
 		                            </div>
 		                        </div>
-		                        <div class="col-md-6">
+		                        <div class="col-md-4">
 		                            <label>Keterangan Status Tanah</label>
-		                            <select id='tanah_terdaftar_atau_tidak' name='tanah_terdaftar_atau_tidak' class="form-control select2 custom-select w-100" data-semua='0'>
-		                                    <option value='' selected='selected'>Semua</option>
+		                            <select id='tanah_terdaftar_atau_tidak'  required  name='tanah_terdaftar_atau_tidak' class="form-control select2 custom-select w-100" data-semua='0'>
+		                                    <option value='' >-- Pilih Status Tanah --</option>
 		                            </select>
 		                    	</div>
+
+		                        <div class="col-md-4">
+		                            <div class="form-group">
+		                                <label for='tahun_status_tanah'>Tahun</label>
+		                                <select name='tahun_status_tanah'  required  id='tahun_status_tanah' class="form-control select2 custom-select w-100">
+		                                                <option value=''>-- Pilih Tahun --</option>
+		                                                <?php
+		                                                	$now = date('Y');
+		                                                	$stop = 1979;
+		                                                	for ($i=$now; $i > $stop; $i--) { 
+		                                                		# code...
+		                                                		echo 	'<option value="'.$i.'">'.$i.'</option>';
+		                                                	}
+
+
+		                                                ?>
+		                                </select>
+		                                
+		                            </div>
+		                        </div>
 		                    </div>
 			                <div class="row">
 			                        <div class="col-md-3">
 			                            <div class="form-group">
 			                                <label>Sektor Usaha Yang Dikelola</label>
-			                                <select  id='sektor_usaha' onchange="sektorChange($(this).val())" name='sektor_usaha[]' class="select2 custom-select w-100" data-semua='0'>
+			                                <select  id='sektor_usaha'  required  onchange="sektorChange($(this).val())" name='sektor_usaha[]' class="select2 custom-select w-100" data-semua='0'>
 			                                	<option value="">-- Pilih Sektor --</option>
 			                                	<?php
 			                                		foreach ($sektor as $key => $value) { ?>
@@ -142,7 +181,7 @@
 			                        <div class="col-md-4">
 			                            <div class="form-group">
 			                                <label>Sub Sektor Usaha</label>
-			                                <select id='sub_sektor_usaha' onchange="subSektorChange($(this).val())" name='sub_sektor_usaha' class="form-control select2 custom-select w-100" data-semua='0'>
+			                                <select id='sub_sektor_usaha'  required  onchange="subSektorChange($(this).val())" name='sub_sektor_usaha[]' class="form-control select2 custom-select w-100" data-semua='0'>
 			                                </select>
 			                                <div class="invalid-feedback">
 			                                    
@@ -152,7 +191,7 @@
 			                        <div class="col-md-4">
 			                            <div class="form-group">
 			                                <label>Jenis Sub Sektor Usaha</label>
-			                                <select id='jenis_sub_sektor_usaha' name='jenis_sub_sektor_usaha' class="form-control select2 custom-select w-100" data-semua='0'>
+			                                <select id='jenis_sub_sektor_usaha'  required  name='jenis_sub_sektor_usaha[]' class="form-control select2 custom-select w-100" data-semua='0'>
 			                                </select>
 			                                <div class="invalid-feedback">
 			                                    
@@ -168,9 +207,61 @@
 			                <div class="append">
 			                	
 			                </div>
-			                </div>
+
 			                
 				        </div>
+						<div class="card-header">
+				            <h3>
+				                Fieldstaff
+				            </h3>
+				        </div>
+				        <div class="card-body">
+				            <div class="row">
+				                <div class="col-sm-6 col-md-6 col-xs-12">
+				                    <div class="form-group">
+				                        <label for='kode_fieldstaff'>Nama Fieldstaff</label>
+				                        <select id="kode_field_staff" name='kode_field_staff'  required  class="form-control select2 custom-select w-100">
+		                                               <?=$fieldstaff?>
+		                                </select>
+				                    </div>
+				                </div>
+				                <div class="col-sm-6 col-md-6 col-xs-12">
+				                    <div class="form-group">
+				                        <label for='kode_peninjau'>Nama Peninjau</label></br>
+				                        <input name='kode_peninjau' id='kode_peninjau'  placeholder='Nama Peninjau' type='text' value='' minlength='1' maxlength='100' class="form-control" aria-describedby="inputGroupPrepend" required />
+				                    </div>
+				                </div>
+				            </div>
+				            <div class="row">
+				                <div class="col-sm-6 col-md-6 col-xs-12">
+				                    <div class="form-group">
+				                        <label for='tgl_kunjungan'>Tanggal Kunjungan</label>
+				                        <input type="date" name="tgl_kunjungan"  required class="form-control" value="<?=date('Y-m-d')?>">
+				                    </div>
+				                </div>
+				                <div class="col-sm-6 col-md-6 col-xs-12">
+				                    <div class="form-group">
+				                        <label for='hasil_kunjungan'>Hasil Kunjungan</label></br>
+				                        <input name='hasil_kunjungan' id='hasil_kunjungan'  placeholder='hasil Kunjungan' type='text' value='' class="form-control" aria-describedby="inputGroupPrepend" required />
+				                    </div>
+				                </div>
+				            </div>
+				            <div class="row">
+				                <div class="col-sm-6 col-md-6 col-xs-12">
+				                    <div class="form-group">
+				                        <label for='jam_mulai'>Jam Mulai</label>
+				                        <input name="jam_mulai" type="text" name="jam_mulai"  required class="timepicker form-control" value="12:00">
+				                    </div>
+				                </div>
+				                <div class="col-sm-6 col-md-6 col-xs-12">
+				                    <div class="form-group">
+				                        <label for='jam_selesai'>Jam Selesai</label></br>
+				                        <input name='jam_selesai' id='jam_selesai'  placeholder='' type='text' value="13:00" class="timepicker form-control " required />
+				                    </div>
+				                </div>
+				            </div>
+				        </div>
+				        
 
 
 						<div class="row">
@@ -246,6 +337,7 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+    	  $('.timepicker').timepicker();
     	$('.select2').select2()
     	
     	$('#titleId').html('<?=$title?>')
@@ -292,6 +384,19 @@
 
 
     })
+
+
+    function statusTanahChange(sts) {
+	    event.preventDefault(); //prevent default action 
+	    if (sts == 1) {
+	    	$('#tanah_terdaftar_atau_tidak').html('<?=$terdaftar?>')
+    		$('#tahun_status_tanah').attr('disabled',false)
+	    }else{
+	    	$('#tanah_terdaftar_atau_tidak').html('<?=$tidakTerdaftar?>')
+    		$('#tahun_status_tanah').attr('disabled',true)
+    		$('#tahun_status_tanah').val('').trigger('change')
+	    }
+    }
 
 
 
@@ -343,7 +448,35 @@
 		});
     }
 
-   
+   function del(v) {
+	    event.preventDefault(); //prevent default action
+		$('#row'+v).remove()
+	    
+   }
 
+    function generateNik() {
+	    event.preventDefault(); //prevent default action
+    	var kode = '<?=$data['kode_desa_kelurahan'].rand(00000000,99999999	)?>';
+    	$.get( "<?php echo base_url("detail_pemsos_responden/cekNik/") ?>"+kode, function( data ) {
+			if(data == 1){
+    			$('#nik').val(kode)
+			}else{
+				generateNik()
+
+
+			}
+		});
+    }
+
+    function telpChange(v) {
+    	if (v==1) {
+    		$('#no_telepon').attr('disabled',false)
+    	}else{
+    		$('#no_telepon').val('')
+    		$('#no_telepon').attr('disabled',true)
+    	}
+    }
+
+ 
 	
 </script>

@@ -14,8 +14,8 @@
 	  <div class="card card-outline card-primary">
 	    <div class="card-header">
 	      <div class="card-tools">
-	      	      <a  style="float: right" href="<?=base_url('detail_pemsos/add/').$id?>" class="btn btn-warning pull-right">
-	        <i class="fas fa-plus mr-2 text-white"></i>Baru </a>
+	      	      <!-- <a  style="float: right" href="<?=base_url('detail_pemsos/add/').$id?>" class="btn btn-warning pull-right">
+	        <i class="fas fa-plus mr-2 text-white"></i>Baru </a> -->
 	        <div class="input-group input-group-sm">
 	          <div class="input-group-append"></div>
 	        </div>

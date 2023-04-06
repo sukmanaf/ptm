@@ -82,6 +82,7 @@ class Detail_penlok extends CI_Controller {
 					'kode_desa_kelurahan'	=> $this->input->post('kode_desa_kelurahan',true),
 					'jumlah' => $this->input->post('jumlah',true),
 					'target_batas_waktu_penyelesaian' => $this->input->post('target_batas_waktu_penyelesaian',true) == '' ? null : $this->input->post('target_batas_waktu_penyelesaian',true),
+					'created_on' => date('Y-m-d')
 				];
 
 		$ins =  $this->db->insert('wa_targetkk_desa', $data);
@@ -101,6 +102,9 @@ class Detail_penlok extends CI_Controller {
 		$data['datakab']['kuota_terpakai'] = $this->penlok->getKuota($id_target);
 
 		$data['data'] = $this->global->get_by_one('wa_targetkk_desa',$id,'id');
+		// echo "<pre>";
+		// print_r ($data['data']);
+		// echo "</pre>";exit();
 		$data['kec'] = $this->penlok->getKec($data['datakab']['kode_kab_kota']);
 		$data['data']['nama_kecamatan'] = $this->penlok->getNamaKec($data['data']['kode_desa_kelurahan'])['nama_kecamatan'];
 		$data['data']['kode_kecamatan'] = $this->penlok->getNamaKec($data['data']['kode_desa_kelurahan'])['kode_kecamatan'];

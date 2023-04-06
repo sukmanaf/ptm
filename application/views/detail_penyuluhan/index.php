@@ -13,9 +13,11 @@
     <div class="container-fluid">
 	  <div class="card card-outline card-primary">
 	    <div class="card-header">
+	      	<a  style="" href="<?=base_url('penyuluhan')?>" class="btn btn-default">
+	        <i class="fas fa-arrow-left mr-2 text-white"></i>Kembali </a>
 	      <div class="card-tools">
-	      	      <a  style="float: right" href="<?=base_url('detail_penyuluhan/add/').$id?>" class="btn btn-warning pull-right">
-	        <i class="fas fa-plus mr-2 text-white"></i>Baru </a>
+	      	      <!-- <a  style="float: right" href="<?=base_url('detail_penyuluhan/add/').$id?>" class="btn btn-warning pull-right">
+	        <i class="fas fa-plus mr-2 text-white"></i>Baru </a> -->
 	        <div class="input-group input-group-sm">
 	          <div class="input-group-append"></div>
 	        </div>
@@ -31,7 +33,7 @@
 	            <tr>
 		              
 		              <th>No</th>
-		              <th>Kabupaten.Kota</th>
+		              <th>Kabupaten/Kota</th>
 		              <th>Kecamatan</th>
 		              <th>Desa/Kelurahan</th>
 		              <th>Target KK</th>
