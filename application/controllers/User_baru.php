@@ -81,6 +81,7 @@ class user_baru extends CI_Controller
 			'phone'	=> ($this->input->post('telepon', true) == '') ? NULL : $this->input->post('telepon', true),
 			'kode_provinsi'	=> ($this->input->post('kode_provinsi', true) == '') ? NULL : $this->input->post('kode_provinsi', true),
 			'kode_kab_kota'	=> ($this->input->post('kode_kab_kota', true) == '') ? NULL : $this->input->post('kode_kab_kota', true),
+			'tanggal_valid'	=> ($this->input->post('tanggal_valid', true) == '') ? NULL : $this->input->post('tanggal_valid', true),
 			'password'	=> ($passwordhash == '') ? NULL : $passwordhash,
 
 		];
@@ -122,7 +123,9 @@ class user_baru extends CI_Controller
 			'email'	=> ($this->input->post('email', true) == '') ? NULL : $this->input->post('email', true),
 			'phone'	=> ($this->input->post('telepon', true) == '') ? NULL : $this->input->post('telepon', true),
 			'kode_provinsi'	=> ($this->input->post('kode_provinsi', true) == '') ? NULL : $this->input->post('kode_provinsi', true),
-			'kode_kab_kota'	=> ($this->input->post('kode_kab_kota', true) == '') ? NULL : $this->input->post('kode_kab_kota', true)
+			'kode_kab_kota'	=> ($this->input->post('kode_kab_kota', true) == '') ? NULL : $this->input->post('kode_kab_kota', true),
+			'tanggal_valid'	=> ($this->input->post('tanggal_valid', true) == '') ? NULL : $this->input->post('tanggal_valid', true),
+
 
 		];
 		$data = array_merge($a, $data);

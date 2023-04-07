@@ -20,19 +20,36 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for='role'>Role</label>
-								<select name='role' id='role' class="form-control custom-select">
+								<select name='role' id='role' class="form-control custom-select" onchange="cek_npk()">
 
 								</select>
 
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group">
+							<!-- <div class="form-group">
 								<label for='npk'>NPK / NIK</label>
-								<input name='npk' id='npk' type='text' value='' class="form-control">
+								<input name='npk' id='npk' type='text' value='' class="form-control" onchange="cek_npk(this)">
+
+							</div> -->
+							<div class="form-group">
+								<label for='npk'>NPK / NIK / NIP</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<input name='npk' id='npk' type='text' value='' class="form-control">
+									</div>
+									<button type="button" class="btn btn-primary" onclick="cek_npk()" id="but-npk">Cek NPK</button>
+								</div>
 
 							</div>
 						</div>
+						<!-- <div class="col-md-2">
+							<div class="form-group">
+								<br>
+								<button type="button" class="btn btn-primary" onclick="cek_npk(this)">Cek NPK</button>
+
+							</div>
+						</div> -->
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for='username'>User Id</label>
@@ -63,7 +80,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label for='kode_provinsi'>Kode Provinsi</label>
+								<label for='kode_provinsi'> Provinsi</label>
 								<select name='kode_provinsi' id='kode_provinsi' onchange="to_kab('kode_kab_kota',this)" class="form-control select2">
 									<option value='0' selected='selected'>Semua</option>
 
@@ -74,7 +91,7 @@
 
 						<div class="col-md-6">
 							<div class="form-group">
-								<label for='kode_kab_kota'>Kode Kab Kota</label>
+								<label for='kode_kab_kota'> Kab Kota</label>
 								<select name='kode_kab_kota' id='kode_kab_kota' class="form-control select2">
 									<option value='0' selected='selected'>Semua</option>
 								</select>
@@ -85,6 +102,13 @@
 							<div class="form-group">
 								<label for='password'>Password</label>
 								<input name='password' id='password' type='password' value='' class="form-control">
+
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for='tanggal_valid'>Tanggal Valid User</label>
+								<input name='tanggal_valid' id='tanggal_valid' type='date' value='' class="form-control">
 
 							</div>
 						</div>
