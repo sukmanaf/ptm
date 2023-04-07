@@ -147,32 +147,32 @@
 
 
 						<li class="nav-item">
-							<<<<<<< HEAD <a href="http://194.233.71.171/ptm-web/dashboard" class='nav-link '>
+							<a href="http://194.233.71.171/ptm-web/dashboard" class='nav-link '>
 								<i class="nav-icon fas fa-tachometer-alt"></i>
 								<p>
 									Dashboard
 								</p>
-								</a>
-								<ul class="nav nav-treeview">
-									<li class="nav-item">
-										<a href='<?= base_url('sektor_usaha') ?>' class="nav-link">
-											<i class='nav-icon fa-circle far'></i>
-											<p>Dashboard Rekapitulasi</p>
-										</a>
-									</li>
-									<li class="nav-item">
-										<a href='<?= base_url('dashboard_realisasi') ?>' class="nav-link">
-											<i class='nav-icon fa-circle far'></i>
-											<p>Dashboard Realisasi</p>
-										</a>
-									</li>
-									<li class="nav-item">
-										<a href='<?= base_url('sektor_usaha') ?>' class="nav-link">
-											<i class='nav-icon fa-circle far'></i>
-											<p>Dashboard Fieldstaff</p>
-										</a>
-									</li>
-								</ul>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href='<?= base_url('sektor_usaha') ?>' class="nav-link">
+										<i class='nav-icon fa-circle far'></i>
+										<p>Dashboard Rekapitulasi</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href='<?= base_url('dashboard_realisasi') ?>' class="nav-link">
+										<i class='nav-icon fa-circle far'></i>
+										<p>Dashboard Realisasi</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href='<?= base_url('sektor_usaha') ?>' class="nav-link">
+										<i class='nav-icon fa-circle far'></i>
+										<p>Dashboard Fieldstaff</p>
+									</a>
+								</li>
+							</ul>
 						</li>
 						<li class='nav-item '>
 							<a href="#" class='nav-link '>
@@ -279,16 +279,7 @@
 								</li>
 
 							</ul>
-						</li>
-						=======
-						<a href="http://194.233.71.171/ptm-web/dashboard" class='nav-link '>
-							<i class="nav-icon fas fa-tachometer-alt"></i>
-							<p>
-								Dashboard
-							</p>
-						</a>
-						</li>
-						>>>>>>> 8b5faba84f9cb38773ca957e93102cab7c00fe76
+
 						<li class='nav-item '>
 							<a href="#" class='nav-link '>
 								<i class="nav-icon fas fa-copy"></i>
