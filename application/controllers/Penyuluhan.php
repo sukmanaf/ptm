@@ -28,8 +28,8 @@ class Penyuluhan extends CI_Controller {
 			$a = [
 				$key+1,@$value->nip,@$value->nama_pejabat,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,
 	
-					'<a type="button" style="display:inline" href="'.base_url('detail_penyuluhan/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'
-				// '<a type="button" href="'.base_url('penyuluhan/edit/').$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
+					'<a type="button" style="display:inline" href="'.base_url('detail_penyuluhan/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
+				'<a type="button"  style="display:inline" href="'.base_url('penyuluhan/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload" ></i></a>'
 				// '<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
 			];
 			array_push($data,$a);

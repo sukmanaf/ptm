@@ -45,57 +45,36 @@ class Detail_pemsos_responden extends CI_Controller {
 		echo json_encode($data);
 	}
 
-	public function get_lk($id)
-	{
-		$this->db->where('id_targetkk_desa', $id);
-		$get=$this->db->get('v_dt_pemsos_lk')->result();
-		$data = [];
-		foreach ($get as $key => $value) {
-			$a = [
-				$key+1,@$value->nik,@$value->nama_kab_kota,@$value->nama_kecamatan,@$value->nama_desa_kelurahan,@$value->alamat,
-				// '<a type="button" href="'.base_url('detail_pemsos_responden/edit/').$id.'/'.$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
-				'<a type="button" disabled  style="display:inline" href="'.base_url('detail_pemsos_responden/add/').$value->id.'" class="btn btn-success"><i class="fas fa-edit" ></i></a>'
-				// '<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
-			];
-			array_push($data,$a);
-		}
+	
 
-		echo json_encode($data);
-	}
-
-		public function get_ar($id)
-	{
-		$this->db->where('id_targetkk_desa', $id);
-		$get=$this->db->get('v_dt_pemsos_ar')->result();
-		$data = [];
-		foreach ($get as $key => $value) {
-			$a = [
-				$key+1,@$value->nik,@$value->nama,@$value->nama_jenis_kelamin,@$value->nama_hubungan,
-				// '<a type="button" href="'.base_url('detail_pemsos_responden/edit/').$id.'/'.$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
-				'<a type="button" disabled  style="display:inline" href="'.base_url('detail_pemsos_responden/add/').$value->id.'" class="btn btn-success"><i class="fas fa-edit" ></i></a>'
-				// '<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
-			];
-			array_push($data,$a);
-		}
-
-		echo json_encode($data);
-	}
+	
 
 		public function detail($id)
 	{
 		$data['id']=$id;
+		$data['data'] = $this->global->get_by_one('v_kuesioner_re',$id,'id_targetkk_desa');
+		// echo "<pre>";
+		// print_r ($data);
+		// echo "</pre>";exit();
+		// ===== lk ======
 		$data['sektor']=$this->global->get_all('ms_kuesioner_re10a');
 		$data['terdaftar']=$this->pemsos->terdaftar();
 		$data['tidakTerdaftar']=$this->pemsos->tidakTerdaftar();
 		$data['fieldstaff']=$this->pemsos->fieldstaff();
+		
 		// ==== ar =====
 		$data['hub_kk']=$this->pemsos->hub_kk();
 		$data['pekerjaan']=$this->pemsos->pekerjaan();
 		
-		$data['data'] = $this->global->get_by_one('v_kuesioner_re',$id,'id_targetkk_desa');
-		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Pemetaan Sosial - Desa - Baru';
+		// ===== rm ====
+
+
 		$data['lk']=$this->load->view('detail_pemsos_responden/lk',$data,true);
 		$data['ar']=$this->load->view('detail_pemsos_responden/ar',$data,true);
+		$data['rm']=$this->load->view('detail_pemsos_responden/rm',$data,true);
+		
+
+		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Pemetaan Sosial - Desa - Baru';
 		$this->skin->view('detail_pemsos_responden/detail',$data);
 	}
 	public function add($id)
@@ -286,7 +265,23 @@ class Detail_pemsos_responden extends CI_Controller {
 	}
 
 
+	public function get_lk($id)
+	{
+		$this->db->where('id_targetkk_desa', $id);
+		$get=$this->db->get('v_dt_pemsos_lk')->result();
+		$data = [];
+		foreach ($get as $key => $value) {
+			$a = [
+				$key+1,@$value->nik,@$value->nama_kab_kota,@$value->nama_kecamatan,@$value->nama_desa_kelurahan,@$value->alamat,
+				// '<a type="button" href="'.base_url('detail_pemsos_responden/edit/').$id.'/'.$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
+				// '<a type="button" disabled  style="display:inline" href="'.base_url('detail_pemsos_responden/edit_lk/').$value->id.'" class="btn btn-success"><i class="fas fa-edit" ></i></a>'
+				'<button type="button" id="del" onclick="editLk('.$value->id.')" class="btn btn-success"><i class="fas fa-edit"></i></button>'
+			];
+			array_push($data,$a);
+		}
 
+		echo json_encode($data);
+	}
 	public function create_lk()
 	{
 		// echo "<pre>";
@@ -301,6 +296,8 @@ class Detail_pemsos_responden extends CI_Controller {
 				    'kode_kab_kota' => $this->input->post('kode_kab_kota',true),
 				    'kode_kecamatan' => $this->input->post('kode_kecamatan',true),
 				    'kode_desa_kelurahan' => $this->input->post('kode_desa_kelurahan',true),
+				    'lattitude' => $this->input->post('lat',true),
+				    'longitude' => $this->input->post('lng',true),
 				    'alamat' => $this->input->post('alamat',true),
 				];
 
@@ -314,6 +311,47 @@ class Detail_pemsos_responden extends CI_Controller {
 			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
 		}
 
+	}
+
+	public function edit_lk($id='')
+	{
+		$data = $this->global->get_by_one('wa_kuesioner_lk',$id,'id');
+		echo json_encode($data);
+	}
+
+	public function update_lk()
+	{
+		$id = $this->input->post('lkid',true);
+		$data = [
+				    'lattitude' => $this->input->post('xlat',true),
+				    'longitude' => $this->input->post('xlng',true),
+				    'alamat' => $this->input->post('xalamat',true),
+				];
+		$this->db->where('id', $id);
+		$up = $this->db->update('wa_kuesioner_lk', $data);
+		if ($up) {
+			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
+		}else{
+			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
+		}
+	}
+
+		public function get_ar($id)
+	{
+		$this->db->where('id_targetkk_desa', $id);
+		$get=$this->db->get('v_dt_pemsos_ar')->result();
+		$data = [];
+		foreach ($get as $key => $value) {
+			$a = [
+				$key+1,@$value->nik,@$value->nama,@$value->nama_jenis_kelamin,@$value->nama_hubungan,
+				// '<a type="button" href="'.base_url('detail_pemsos_responden/edit/').$id.'/'.$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
+				// '<a type="button" disabled  style="display:inline" href="'.base_url('detail_pemsos_responden/add/').$value->id.'" class="btn btn-success"><i class="fas fa-edit" ></i></a>'
+				'<button type="button" id="del" onclick="editAr('.$value->id.')" class="btn btn-success"><i class="fas fa-edit"></i></button>'
+			];
+			array_push($data,$a);
+		}
+
+		echo json_encode($data);
 	}
 
 	public function create_ar()
@@ -344,6 +382,38 @@ class Detail_pemsos_responden extends CI_Controller {
 			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
 		}
 
+	}
+
+	public function edit_ar($id='')
+	{
+		$data = $this->global->get_by_one('wa_kuesioner_ar',$id,'id');
+		echo json_encode($data);
+	}
+
+	public function update_ar()
+	{
+		$id = $this->input->post('arid',true);
+		$data = [
+					'nama' =>  $this->input->post('xnama_anggota_keluarga',true),
+				    'jenis_kelamin' =>  $this->input->post('xjenis_kelamin',true),
+				    'tanggal_lahir' =>  $this->input->post('xtanggal_lahir',true),
+				    'status_perkawinan' =>  $this->input->post('xstatus_perkawinan',true),
+				    'kode_hubungan_dgn_kk' =>  $this->input->post('xhubungan_dengan_kk',true),
+				    'kode_pekerjaan' =>  $this->input->post('xpekerjaan',true),
+				    'pendidikan' =>  $this->input->post('xpendidikan',true),
+				    'apakah_anggota_keluarga_bekerja' =>  $this->input->post('xis_anggota_keluarga_bekerja',true),
+				    'penghasilan_anggota_keluarga_yang_bekerja' =>  $this->input->post('xpenghasilan',true),
+				];
+		// echo "<pre>";
+		// print_r ($data);
+		// echo "</pre>";exit();
+		$this->db->where('id', $id);
+		$up = $this->db->update('wa_kuesioner_ar', $data);
+		if ($up) {
+			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
+		}else{
+			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
+		}
 	}
 
 }

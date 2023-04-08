@@ -147,7 +147,7 @@
 
 
 						<li class="nav-item">
-							<<<<<<< HEAD <a href="http://194.233.71.171/ptm-web/dashboard" class='nav-link '>
+							<a href="http://194.233.71.171/ptm-web/dashboard" class='nav-link '>
 								<i class="nav-icon fas fa-tachometer-alt"></i>
 								<p>
 									Dashboard
@@ -174,7 +174,7 @@
 									</li>
 								</ul>
 						</li>
-						<li class='nav-item '>
+						<!-- <li class='nav-item '>
 							<a href="#" class='nav-link '>
 								<i class="nav-icon fas fa-copy"></i>
 								<p>
@@ -279,16 +279,8 @@
 								</li>
 
 							</ul>
-						</li>
-						=======
-						<a href="http://194.233.71.171/ptm-web/dashboard" class='nav-link '>
-							<i class="nav-icon fas fa-tachometer-alt"></i>
-							<p>
-								Dashboard
-							</p>
-						</a>
-						</li>
-						>>>>>>> 8b5faba84f9cb38773ca957e93102cab7c00fe76
+						</li> -->
+						
 						<li class='nav-item '>
 							<a href="#" class='nav-link '>
 								<i class="nav-icon fas fa-copy"></i>
@@ -407,12 +399,12 @@
 								<p>MoU dan PKS</p>
 							</a>
 						</li>
-						<li class="nav-item">
+						<!-- <li class="nav-item">
 							<a href="http://194.233.71.171/ptm-web/kegiatan_kanwil" class='nav-link '>
 								<i class="nav-icon fas fa-book"></i>
 								<p>Kegiatan Kanwil</p>
 							</a>
-						</li>
+						</li> -->
 						<li class='nav-item '>
 							<a href="#" class='nav-link '>
 								<i class="nav-icon fas fa-book"></i>

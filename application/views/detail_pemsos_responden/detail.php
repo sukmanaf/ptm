@@ -103,7 +103,7 @@
 									<div class="tab-pane fade" id="tab_3">
 										<div class="row">
 											<div class="col-md-12">
-												<div id="list_tn"></div>
+												<div id="list_tn"><?=$tn?></div>
 											</div>
 										</div>
 									</div>
@@ -187,7 +187,7 @@
 									<div class="tab-pane fade" id="tab_16">
 										<div class="row">
 											<div class="col-md-12">
-												<div id="list_cp"></div>
+												<div id="list_cp"><?=$cp?></div>
 											</div>
 										</div>
 									</div>
@@ -208,10 +208,6 @@
 		$("#nama_kelompok").keyup(function( event ) {
 			checkKelompok()
 		})
-
-		
-
-
     })
 
 

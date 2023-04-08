@@ -56,7 +56,7 @@
 				<div class="icon">
 					<i class="ion ion-calendar"></i>
 				</div>
-				<a href="<?=base_url()?>subjectobject/tahun_pertama/model_pemberdayaan" class="small-box-footer">
+				<a href="<?=base_url()?>penetapan_model" class="small-box-footer">
 					<i class="fa fa-arrow-circle-right"></i>
 				</a>
 			</div>
@@ -71,7 +71,7 @@
 				<div class="icon">
 					<i class="ion ion-calendar"></i>
 				</div>
-				<a href="<?=base_url()?>subjectobject/tahun_pertama/penyusunandata" class="small-box-footer">
+				<a href="<?=base_url()?>penyusunan_data" class="small-box-footer">
 					<i class="fa fa-arrow-circle-right"></i>
 				</a>
 			</div>
