@@ -287,10 +287,12 @@
 								</li>
 
 							</ul>
-<<<<<<< HEAD
-=======
-						</li> -->
 
+						</li> -->
+<<<<<<< HEAD
+
+=======
+>>>>>>> 1beb25b9a1b5b93b96330979bc73036c1d713375
 						<li class='nav-item '>
 							<a href="#" class='nav-link '>
 								<i class="nav-icon fas fa-copy"></i>
@@ -357,12 +359,7 @@
 												<p>Klasifikasi KBLI</p>
 											</a>
 										</li>
-										<li class="nav-item">
-											<a href='<?= base_url('realisasi_anggaran') ?>' class="nav-link">
-												<i class='nav-icon fa-circle far'></i>
-												<p>Realisasi Anggaran</p>
-											</a>
-										</li>
+										
 									</ul>
 								</li>
 								<li class='nav-item  '>
@@ -392,9 +389,22 @@
 												<p>Klasifikasi Sektor Usaha</p>
 											</a>
 										</li>
+										<li class="nav-item">
+											<a href='<?= base_url('realisasi_anggaran') ?>' class="nav-link">
+												<i class='nav-icon fa-circle far'></i>
+												<p>Realisasi Anggaran</p>
+											</a>
+										</li>
 									</ul>
 								</li>
+<<<<<<< HEAD
 							</ul>
+=======
+
+							</ul>
+						</li>
+
+>>>>>>> 1beb25b9a1b5b93b96330979bc73036c1d713375
 						<li class="nav-item">
 							<a href="<?= base_url() ?>subjectobject" class='nav-link '>
 								<i class="nav-icon fas fa-book"></i>

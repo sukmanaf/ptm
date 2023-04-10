@@ -15,7 +15,7 @@
             <label>
                 Jumlah Subjek (KK)
             </label>
-            <input id='jumlah_subjek<?=$num?>' name="jumlah_subjek[]" class="numbers jml_subjek form-control w-100" />
+            <input id='jumlah_subjek<?=$num?>' name="jumlah_subjek[]" onkeyup="cekJml(this)" class="numbers jml_subjek form-control w-100" />
         </div>
     </div>
     <div class="col-md-">

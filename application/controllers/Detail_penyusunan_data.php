@@ -9,7 +9,7 @@ class Detail_penyusunan_data extends CI_Controller {
 		parent::__construct();
 		//Do your magic here
 		$this->load->model('GlobalModel','global');
-		$this->load->model('detailPenyusunanModel','penyusunan');
+		$this->load->model('detailPenyusunanDataModel','penyusunan');
 	}
 
 	public function index()
@@ -35,10 +35,29 @@ class Detail_penyusunan_data extends CI_Controller {
 		foreach ($get as $key => $value) {
 			
 			$a = [
-				$key+1,@$value->nama_kab_kota,@$value->nama_kecamatan,@$value->nama_desa_kelurahan,@$value->jumlah,@$value->target_batas_waktu_penyelesaian,''
-				// // '<a type="button" href="'.base_url('detail_penyusunan_data/edit/').$id.'/'.$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
+				$key+1,@$value->nama_kab_kota,@$value->nama_kecamatan,@$value->nama_desa_kelurahan,@$value->jumlah,@$value->target_batas_waktu_penyelesaian,
+				// '<a type="button" href="'.base_url('detail_penyusunan_data/edit/').$id.'/'.$value->id.'" class="btn btn-success"><i class="fas fa-person"></i></a>'.
 				// '<a type="button"  style="display:inline" href="'.base_url('penyuluhan/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload" ></i></a>'
-				// '<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
+				'<button type="button" id="del" onclick="anggota('.$value->id.')" class="btn btn-primary"><i class="fas fa-user"></i></button>'
+			];
+			array_push($data,$a);
+		}
+
+		echo json_encode($data);
+	}
+
+	public function get_anggota($id)
+	{
+		$get=$this->penyusunan->getAnggota($id);
+		$data = [];
+
+		foreach ($get as $key => $value) {
+			$jk = $value->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan';			
+			$a = [
+				$key+1,@$value->nik,@$value->nama_responden_utama,@$jk
+				 // '<a type="button" href="'.base_url('detail_penyusunan_data/edit/').$id.'/'.$value->id.'" class="btn btn-success"><i class="fas fa-person"></i></a>'.
+				// '<a type="button"  style="display:inline" href="'.base_url('penyuluhan/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload" ></i></a>'
+				// '<button type="button" id="del" onclick="anggota('.$value->id.')" class="btn btn-primary"><i class="fas fa-user"></i></button>'
 			];
 			array_push($data,$a);
 		}

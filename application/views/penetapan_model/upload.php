@@ -22,13 +22,13 @@
 						<div class="row">
 							<div class="col-6">
 								<div class="form-group">
-									<label for='tanggal_sk'>Tanggal penetapan_model</label>
+									<label for='tanggal_sk'>Tanggal Penetapan Model</label>
 									<div class="input-group date"  data-target-input="nearest">
 										<!-- <input name='f' id='fc_f' type='text' value='' class="form-control datetimepicker-input" data-target="#tanggal_sk" />
 										<div class="input-group-append" data-target="#tanggal_sk" data-toggle="datetimepicker">
 											<div class="input-group-text"><i class="fa fa-calendar"></i></div>
 										</div> -->
-										<input type="date" id="tanggal_penetapan_model" class="clear form-control" name="tanggal_penetapan_model">
+										<input type="date" id="tanggal_penetapan_model" class="clear form-control" name="tanggal_penetapan_model" value="<?=date('Y-m-d')?>">
 									</div>
 									
 								</div>

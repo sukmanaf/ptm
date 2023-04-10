@@ -13,7 +13,7 @@
     <div class="container-fluid">
 	  <div class="card card-outline card-primary">
 	    <div class="card-header">
-	      	<a  style="" href="<?=base_url('penyuluhan')?>" class="btn btn-default">
+	      	<a  style="" href="<?=base_url('penetapan_model')?>" class="btn btn-default">
 	        <i class="fas fa-arrow-left mr-2 text-white"></i>Kembali </a>
 	      <div class="card-tools">
 	      	      <!-- <a  style="float: right" href="<?=base_url('detail_penetapan_model/add/').$id?>" class="btn btn-warning pull-right">
@@ -75,6 +75,10 @@
         		toastr.error("Data Gagal Dihapus!");
         	} 
 		});
+    }
+
+    function anggota() {
+		alert('ok')
     }
 
 </script>

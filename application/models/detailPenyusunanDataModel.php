@@ -50,6 +50,12 @@ class DetailPenyusunanDataModel extends CI_Model {
 		return $this->db->get('wa_targetkk_desa')->num_rows();;
 	}
 
+	public function getAnggota($id)
+	{
+		$this->db->where('id_targetkk_desa', $id);
+		return  $this->db->get('wa_kuesioner_re')->result();
+	}
+
 }
 
 /* End of file detailPenlokModel.php */

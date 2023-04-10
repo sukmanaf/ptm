@@ -68,6 +68,10 @@
 				                    </div>
 				                </div>
 				            </div>
+				             <div class="card-tools">
+						      	      <a  style="float: right" href="<?=base_url('detail_penetapan_model/add/').$id.'/'.$id_targetkk_desa?>" class="btn btn-warning pull-right">
+						        <i class="fas fa-plus mr-2 text-white"></i>Baru </a>
+	        				</div>
 				           <div class="card-body table-responsive">
 						      <div id="table-front_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
 						        <table id="table-front" class="table table-hover dataTable no-footer dtr-inline" aria-describedby="table-front_info" style="width: 1038px;">
@@ -91,7 +95,7 @@
 				                            <div class="col">
 				                                <div class="form-group">
 
-				                                  <a href="<?=base_url('detail_penetapan_model/data/').$id?>" class="form-control btn btn-secondary"><label >Tutup</label></a>
+				                                  <a href="<?=base_url('detail_penetapan_model/list_pemberdayaan/').$id.'/'.$id_targetkk_desa?>" class="form-control btn btn-secondary"><label >Tutup</label></a>
 				                                </div>
 				                            </div>
 				                            <div class="col">

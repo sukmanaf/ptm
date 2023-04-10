@@ -59,8 +59,9 @@ class detailPenetapanModelModel extends CI_Model {
 		}
 		return $str;
 	}
-	public function getResponden()
+	public function getResponden($id)
 	{
+		$this->db->where('id_targetkk_desa', $id);
 		$data = $this->db->get('wa_kuesioner_re')->result();
 		$str='<option value="">-- Pilih Nama --</option>';
 		foreach ($data as $key => $value) {
@@ -74,6 +75,20 @@ class detailPenetapanModelModel extends CI_Model {
 		$this->db->where('nik', $nik);
 		return $this->db->get('wa_model_pemberdayaan_daftar_subjek')->num_rows();
 	}
+
+	public function cekDup($id)
+	{
+		$this->db->select('id_jenis_pemberdayaan');
+		$this->db->where('id_targetkk_desa', $id);
+		$data =  $this->db->get('wa_model_pemberdayaan')->result();
+		$a=[];
+		foreach ($data as $key => $value) {
+			array_push($a, $value->id_jenis_pemberdayaan);
+		}
+
+		return $a;
+	}
+
 
 }
 
