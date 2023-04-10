@@ -34,7 +34,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="hp">Telepon/HP</label>
-								<input name="hp" id="hp" maxlength="5" type="text" value="" class="form-control clear">
+								<input name="hp" id="hp" maxlength="14" type="text" value="" class="form-control clear">
 							</div>
 						</div>
 						<div class="col-md-6">
