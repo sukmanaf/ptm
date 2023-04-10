@@ -22,13 +22,13 @@
 						<div class="row">
 							<div class="col-6">
 								<div class="form-group">
-									<label for='tanggal_sk'>Tanggal Penyuluhan</label>
+									<label for='tanggal_sk'>Tanggal penyusunan_data</label>
 									<div class="input-group date"  data-target-input="nearest">
 										<!-- <input name='f' id='fc_f' type='text' value='' class="form-control datetimepicker-input" data-target="#tanggal_sk" />
 										<div class="input-group-append" data-target="#tanggal_sk" data-toggle="datetimepicker">
 											<div class="input-group-text"><i class="fa fa-calendar"></i></div>
 										</div> -->
-										<input type="date" id="tanggal_penyuluhan" class="clear form-control" name="tanggal_penyuluhan" value="<?=date('Y-m-d')?>">
+										<input type="date" id="tanggal_penyusunan_data" class="clear form-control" name="tanggal_penyusunan_data" value="<?=date('Y-m-d')?>">
 									</div>
 									
 								</div>
@@ -75,7 +75,7 @@
 								<div class="row">
 									<div class="col">
 										<div class="form-group">
-											<a href="<?=base_url('penyuluhan')?>" class="form-control btn btn-secondary"><label >Tutup</label></a>
+											<a href="<?=base_url('penyusunan_data')?>" class="form-control btn btn-secondary"><label >Tutup</label></a>
 										</div>
 									</div>
 									<div class="col">
@@ -96,7 +96,7 @@
 												<tr>
 													<th>No</th>
 													<th>Jenis Evidence</th>
-													<th>Tanggal Penyuluhan</th>
+													<th>Tanggal penyusunan_data</th>
 													<th>Aksi</th>
 												</tr>
 											</thead>
@@ -163,7 +163,7 @@
 
 		$("#postForm").submit(function(event){
 	        event.preventDefault(); //prevent default action 
-	        var post_url = '<?php echo base_url("penyuluhan/do_upload") ?>'; //get form action url
+	        var post_url = '<?php echo base_url("penyusunan_data/do_upload") ?>'; //get form action url
 	        var request_method = $(this).attr("method"); //get form GET/POST method
 	        var form_data = new FormData(this); //Encode form elements for submission
 	        
@@ -200,7 +200,7 @@
     function loadDt() {
     	$('#table-front').DataTable({
 		    ajax: {
-		        url: '<?php echo base_url('penyuluhan/get_upload/').$id;?>',
+		        url: '<?php echo base_url('penyusunan_data/get_upload/').$id;?>',
 		        data: function ( d ) {
 	                d.<?php echo $this->security->get_csrf_token_name();?> = "<?php echo $this->security->get_csrf_hash();?>"
 	            },
@@ -217,18 +217,18 @@
     function editS(id) {
 
     	// // console.log(tab[id]);
-    	$.get( "<?php echo base_url("penyuluhan/get_edit_upload/") ?>"+id, function( data ) {
+    	$.get( "<?php echo base_url("penyusunan_data/get_edit_upload/") ?>"+id, function( data ) {
 			data = JSON.parse(data)
 			console.log(data)
     		$('#jenis_evidence').val(data.jenis_evidence).trigger("change");
-    		$('#tanggal_penyuluhan').val(data.tanggal_penyuluhan);
+    		$('#tanggal_penyusunan_data').val(data.tanggal_penyusunan_data);
     		$('#id').val(id)
 		});
 
     }
 
     function dels(id) {
-	    $.get( "<?php echo base_url("penyuluhan/delete_upload/") ?>"+id, function( response ) {
+	    $.get( "<?php echo base_url("penyusunan_data/delete_upload/") ?>"+id, function( response ) {
 			response = JSON.parse(response)
         	if (response.sts == 'success') {
         		toastr.success("Data Berhasil Dihapus!");

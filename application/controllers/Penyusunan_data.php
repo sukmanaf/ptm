@@ -1,20 +1,20 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Penlok_targetkk extends CI_Controller {
+class penyusunan_data extends CI_Controller {
 
 	public function __construct()
 	{
 		parent::__construct();
 		//Do your magic here
 		$this->load->model('GlobalModel','global');
-		$this->load->model('Penlok_targetkkModel','penlok');
+		$this->load->model('PenyusunanDataModel','penyusunan');
 	}
 
 	public function index()
 	{
-		$data['title'] = 'Home - Entry Subject Object - Tahun Pertama - Penetapan Lokasi dan Target KK';
-		$this->skin->view('penlok_targetkk/index',$data);
+		$data['title'] = 'Home - Entry Subject Object - Tahun Pertama - Penyusunan Data';
+		$this->skin->view('penyusunan_data/index',$data);
 	}
 	
 	public function get_all()
@@ -26,11 +26,11 @@ class Penlok_targetkk extends CI_Controller {
 		// echo "</pre>";exit();
 		foreach ($get as $key => $value) {
 			$a = [
-				$key+1,@$value->nip,@$value->nama_pejabat,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun_anggaran,@$value->target_kk,
-					'<a type="button"  style="display:inline" href="'.base_url('detail_penlok/data/').$value->id.'" class="btn btn-primary"><i class="fas fa-search" ></i></a>'.
-					'<a type="button"  style="display:inline" href="'.base_url('penlok_targetkk/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload" ></i></a>'.
-					'<a type="button" href="'.base_url('penlok_targetkk/edit/').$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
-					'<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
+				$key+1,@$value->nip,@$value->nama_pejabat,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,
+	
+					'<a type="button" style="display:inline" href="'.base_url('detail_penyusunan_data/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
+				'<a type="button"  style="display:inline" href="'.base_url('penyusunan_data/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload" ></i></a>'
+				// '<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
 			];
 			array_push($data,$a);
 		}
@@ -38,24 +38,7 @@ class Penlok_targetkk extends CI_Controller {
 		echo json_encode($data);
 	}
 
-	public function get_detail($id)
-	{
-		$get = $this->penetapan->get_detail($id);
-
-		$data = [];
-		foreach ($get as $key => $value) {
-			$a = [
-				$key+1,$value->nama_responden_utama,$value->keterangan,
-					'<button type="button" id="edit" onclick="editS('.$value->id.')" class="btn btn-success edit"><i class="fas fa-edit"></i></button>'.
-					'<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
-
-			];
-			array_push($data,$a);
-		}
-
-		echo json_encode($data);
-	}
-
+	
 
 	public function get_edit($id='')
 	{
@@ -67,9 +50,9 @@ class Penlok_targetkk extends CI_Controller {
 	public function add()
 	{
 
-		$data['prov']=$this->penlok->getProv();
-		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Penetapan Lokasi dan Target KK - Baru';
-		$this->skin->view('penlok_targetkk/add',$data);
+		$data['prov']=$this->penyusunan->getProv();
+		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Penyusunan Data - Baru';
+		$this->skin->view('penyusunan_data/add',$data);
 	}
 
 	public function create()
@@ -78,7 +61,7 @@ class Penlok_targetkk extends CI_Controller {
 		$kd_kabkot = $this->input->post('kode_kab_kota',true);
 		$nip = $this->input->post('nip',true);
 		
-		$checkWil = $this->penlok->cekWIlTahun($kd_kabkot,$thn_anggaran);
+		$checkWil = $this->penyusunan->cekWIlTahun($kd_kabkot,$thn_anggaran);
 
 		if ($checkWil > 0) {
 			echo json_encode(['sts' => 'fail','message' => 'kota/Kabupaten dan Tahun Anggran Sudah ada!']);
@@ -141,10 +124,11 @@ class Penlok_targetkk extends CI_Controller {
 	public function edit($id='')
 	{
 		$data['id']=$id;
-		$data['prov']=$this->penlok->getProv();
-		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Penetapan Lokasi dan Target KK - Edit';
+		// $data['prov']=$this->penyusunan->getProv();
+		$data['prov']=$this->penyusunan->getProv();
+		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Penyusunan Data - Edit';
 		$data['data'] = $this->global->get_by_one('wa_targetkk',$id,'id');
-		$this->skin->view('penlok_targetkk/edit',$data);
+		$this->skin->view('penyusunan_data/edit',$data);
 
 	}
 
@@ -159,7 +143,7 @@ class Penlok_targetkk extends CI_Controller {
 		$nip = $this->input->post('nip',true);
 		
 		if (($kd_kabkot != $kd_kabkot_old) && ($thn_anggaran != $thn_anggaran_old)) {
-			$checkWil = $this->penlok->cekWIlTahun($kd_kabkot,$thn_anggaran);
+			$checkWil = $this->penyusunan->cekWIlTahun($kd_kabkot,$thn_anggaran);
 			if ($checkWil > 0) {
 				echo json_encode(['sts' => 'fail','message' => 'kota/Kabupaten dan Tahun Anggran Sudah ada!']);
 				exit();
@@ -231,10 +215,7 @@ class Penlok_targetkk extends CI_Controller {
 
 	public function getKab($kode='')
 	{
-		$data=$this->penlok->getKab($kode);
-		// echo "<pre>";
-		// print_r ($data);
-		// echo "</pre>";exit();
+		$data=$this->penyusunan->getKab($kode);
 		$str='<option data-tahun="" data-target="" value="">-- Pilih Kabupaten/Kota --</option>';
 		if (!empty($data)) {
 			foreach ($data as $key => $value) {
@@ -261,7 +242,7 @@ class Penlok_targetkk extends CI_Controller {
 					echo json_encode(['sts' => 'fail', 'msg' => 'Jenis Lampiran Sudah Ada!']);
 					exit();
 				}
-                $config['upload_path']          = './uploads/penlok_targetkk/';
+                $config['upload_path']          = './uploads/penyusunan_data/';
                 $config['allowed_types']        = 'pdf|jpeg|jpg|png';
 
 
@@ -315,7 +296,7 @@ class Penlok_targetkk extends CI_Controller {
 				}
 
     			// $_FILES['file_foto_sk2']['name'] = $name;
-                $config['upload_path']          = './uploads/penlok_targetkk/';
+                $config['upload_path']          = './uploads/penyusunan_data/';
                 $config['allowed_types']        = 'pdf|jpeg|jpg|png';
                 
                 $this->load->library('upload', $config);
@@ -352,20 +333,21 @@ class Penlok_targetkk extends CI_Controller {
     public function upload($id='')
 	{
 		$data['id']=$id;
-		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Penetapan Lokasi dan Target KK - Upload';
+		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Penyusunan Data - Upload';
 		$data['data'] = $this->global->get_by_one('dt_pengembangan_rencana_usaha',$id,'id');
-		$this->skin->view('penlok_targetkk/upload',$data);
+		$this->skin->view('penyusunan_data/upload',$data);
 
 	}
 	public function get_upload($id)
 	{
-		$get = $this->global->get_by_result('wa_targetkk_file',$id,'targetkk_id');
+		$get = $this->global->get_by_result('fl_penyusunan_data',$id,'targetkk_id');
 
 		$data = [];
 		foreach ($get as $key => $value) {
 
+			$jenis_evidence = ucfirst(str_replace('_',' ',$value->jenis_evidence));
 			$a = [
-				$key+1,$value->nama_sk,$value->no_sk,$value->tentang,tanggal_indonesia($value->tanggal_sk),tanggal_indonesia_jam($value->created),
+				$key+1,$jenis_evidence,tanggal_indonesia($value->tanggal_penyusunan_data),
 					'<a target="_black" href="'.base_url().$value->dir_name.'" class="btn btn-warning"><i class="fas fa-eye"></i></a>'.
 					// '<button type="button" id="edit" onclick="editS('.$value->id.')" class="btn btn-success edit"><i class="fas fa-edit"></i></button>'.
 					'<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
@@ -379,37 +361,84 @@ class Penlok_targetkk extends CI_Controller {
 
 	 public function do_upload()
         {
-        	// echo "<pre>";
-        	// print_r ($_POST);
-        	// echo "</pre>";exit();
-        	if ($_FILES['files']) {
-    			$ext = pathinfo($_FILES['files']['name'], PATHINFO_EXTENSION);
-    			$jns_sk = $this->input->post('jenis_sk',true);
-    			$id_targetkk = $this->input->post('id_targetkk',true);
-    			$name = $id_targetkk.'_'.$jns_sk.'_'.date('Ymdhis').'.'.$ext;
-    			$nama_sk = ucfirst(str_replace('_', ' ', $jns_sk));
-			}
+
+			$ext = pathinfo($_FILES['files']['name'], PATHINFO_EXTENSION);
+			$jns_evidence = $this->input->post('jenis_evidence',true);
+			$id_targetkk = $this->input->post('id_targetkk',true);
+			$name = $id_targetkk.'_'.$jns_evidence.'_'.date('Ymdhis').'.'.$ext;
     		$id = $this->input->post('id',true);
         	$data = [
-        			'jenis_sk' => $jns_sk,
-        			'nama_sk' => $nama_sk,
         			'targetkk_id' => $id_targetkk,
-        			'no_sk' => $this->input->post('no_sk',true),
-        			'tentang' => $this->input->post('tentang_sk',true),
-        			'tanggal_sk' => $this->input->post('tanggal_sk',true),
+        			'jenis_evidence' => $jns_evidence,
+        			'tanggal_penyusunan_data' => $this->input->post('tanggal_penyusunan_data',true),
     			];
-    		if($id){
-            	$this->db->where('id', $id);
-				$ins = $this->db->update('wa_targetkk_file', $data);
-				if ($_FILES['files']) {
-					$this->proses_uploads($id,@$name);
-				}
+			if($id){
+        		$this->db->where('id', $id);
+				$ins = $this->db->update('fl_penyusunan_data', $data);
+			
             }else{
 
-				$this->db->insert('wa_targetkk_file', $data);
-				 $insert_id = $this->db->insert_id();
-				$this->proses_uploads($insert_id,@$name);
+				$this->db->insert('fl_penyusunan_data', $data);
+				 $id = $this->db->insert_id();
             }
+
+            if ($_FILES['files']['name']) {
+            	// echo "<pre>";
+            	// print_r ($_FILES);
+            	// echo "</pre>";exit();
+        		// check type fle upload
+        		$allowed_type = array('image/jpeg'=>1,'image/jpg'=>1,'image/png'=>1,'image/gif'=>1,'application/pdf'=>1);
+				$filetype = mime_content_type($_FILES['files']['tmp_name']);
+
+				if (@$allowed_type[$filetype]) {
+				}else{
+					echo json_encode(['sts' => 'fail', 'msg' => 'Type FIle Salah atatu File Rusak!']);
+					exit();
+				}	
+
+
+    		
+				
+
+    			// $_FILES['files']['name'] = $name;
+
+                $config['upload_path']          = './uploads/penyusunan_data/';
+                $config['allowed_types']        = 'pdf|jpeg|jpg|png';
+                $config['file_name']			= $name;
+                // $config['max_size']             = 100;
+                // $config['max_width']            = 1024;
+                // $config['max_height']           = 768;
+
+                $this->load->library('upload', $config);
+
+                if ( ! $this->upload->do_upload('files'))
+                {
+                	                        $error = array('error' => $this->upload->display_errors());
+
+					echo json_encode(['sts' => 'fail','msg' => 'Upload gagal!','error' => $error]);
+                }
+                else
+                {
+                        // $data = array('upload_data' => $this->upload->data());
+                	$ext = pathinfo($_FILES['files']['name'], PATHINFO_EXTENSION);
+	    			$jns_evidence = $this->input->post('jenis_sk',true);
+	    			$id_targetkk = $this->input->post('id_targetkk',true);
+	    			$name = $id_targetkk.'_'.$jns_evidence.'_'.date('Ymdhis').'.'.$ext;
+	    			$nama_sk = ucfirst(str_replace('_', ' ', $jns_evidence));
+                	$data = [
+	                    			'file_name' => $this->upload->data()['file_name'],
+	                    			'dir_name' => 'uploads/penyusunan_data/'.$this->upload->data()['file_name'],
+	                			];
+	                	$this->db->where('id', $id);
+    					$this->db->update('fl_penyusunan_data', $data);
+					echo json_encode(['sts' => 'success','msg' => 'Upload Lampiran Sukses!']);
+
+
+                        // $this->load->view('upload_success', $data);
+                }
+        	}else{
+					echo json_encode(['sts' => 'success','msg' => 'Upload Lampiran Sukses!']);
+        	}
         	
         }
 
@@ -432,7 +461,7 @@ class Penlok_targetkk extends CI_Controller {
 
     			// $_FILES['files']['name'] = $name;
 
-                $config['upload_path']          = './uploads/penlok_targetkk/';
+                $config['upload_path']          = './uploads/penyusunan_data/';
                 $config['allowed_types']        = 'pdf|jpeg|jpg|png';
                 $config['file_name']			= $name;
                 // $config['max_size']             = 100;
@@ -452,7 +481,7 @@ class Penlok_targetkk extends CI_Controller {
                         // $data = array('upload_data' => $this->upload->data());
                 	$data = [
 	                    			'file_name' => $this->upload->data()['file_name'],
-	                    			'dir_name' => 'uploads/penlok_targetkk/'.$this->upload->data()['file_name'],
+	                    			'dir_name' => 'uploads/penyusunan_data/'.$this->upload->data()['file_name'],
 	                			];
 	                	$this->db->where('id', $id);
     					$this->db->update('wa_targetkk_file', $data);
@@ -468,7 +497,7 @@ class Penlok_targetkk extends CI_Controller {
 
         public function get_edit_upload($id='')
 	{
-		$data = $this->global->get_by_one('wa_targetkk_file',$id,'id');
+		$data = $this->global->get_by_one('fl_penyusunan_data',$id,'id');
 		echo json_encode($data);
 		
 	}
@@ -477,7 +506,7 @@ class Penlok_targetkk extends CI_Controller {
 	{
 		
 		$this->db->where('id', $id);
-		$del = $this->db->delete('wa_targetkk_file');
+		$del = $this->db->delete('fl_penyusunan_data');
 		if($del)
 		{
 			echo json_encode(['sts' => 'success']);
