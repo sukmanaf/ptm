@@ -15,6 +15,7 @@ class Prestasi_kinerja extends CI_Controller
 	{
 		$data['title'] = 'Home - Dashboard Realisasi ';
 		$this->skin->view('prestasi_kinerja/index', $data);
+		$this->load->view('prestasi_kinerja/js');
 	}
 	function tampildata($table = '', $colum = '', $val_colum = '', $combo = '')
 	{
@@ -41,21 +42,22 @@ class Prestasi_kinerja extends CI_Controller
 
 		if ($idtab == 'pertama') {
 			$this->db->where('tahun_anggaran', $tahun);
-			$get = $this->global->get_all('v_prestasi_kinerja');
+			$get = $this->global->get_all('v_dashboard_prestasi_kinerja');;
 			foreach ($get as $key => $value) {
+				$this->db->where('targetkk_id', @$value->id);
+				$dt = $this->db->get('wa_targetkk_file')->row();
+				if (isset($dt)) {
+					$val = "<a class='btn btn-primary btn-md' target='_blank' href='" . base_url($dt->dir_name) . "'><i class='fa fa-download'></i></a>";
+					// $val = $dt->file_name;
+				} else {
+					$val = '-';
+				}
 				$a = [
 					$key + 1,
-					"<div data-toggle='modal' style='cursor:pointer;' data-target='#modal-xl' onclick=to_kab('" . @$value->kode_provinsi . "','pertama_kab')>" . @$value->nama_provinsi . "</div>",
-					number_format(@$value->anggaran_penlok),
-					number_format(@$value->realisasi_penlok),
-					number_format(@$value->anggaran_penyuluhan),
-					number_format(@$value->realisasi_penyuluhan),
-					number_format(@$value->anggaran_pemsos),
-					number_format(@$value->realisasi_pemsos),
-					number_format(@$value->anggaran_pemberdayaan),
-					number_format(@$value->realisasi_pemberdayaan),
-					number_format(@$value->anggaran_penyusunan_data),
-					number_format(@$value->realisasi_penyusunan_data)
+					@$value->nama_kantor,
+					@$value->tanggal_sk1,
+					@$value->tanggal_upload,
+					$val
 
 				];
 				array_push($data, $a);
@@ -65,36 +67,36 @@ class Prestasi_kinerja extends CI_Controller
 		echo json_encode($data);
 	}
 
-	public function get_kab($idprov = '', $idtab)
-	{
-		$data = [];
+	// public function get_kab($idprov = '', $idtab)
+	// {
+	// 	$data = [];
 
-		if ($idtab == 'pertama_kab') {
-			$this->db->where('kode_provinsi', $idprov);
-			$get = $this->global->get_all('v_prestasi_kinerja_kab');
-			foreach ($get as $key => $value) {
-				$a = [
-					$key + 1,
-					@$value->nama_provinsi,
-					@$value->nama_kab_kota,
-					number_format(@$value->anggaran_penlok),
-					number_format(@$value->realisasi_penlok),
-					number_format(@$value->anggaran_penyuluhan),
-					number_format(@$value->realisasi_penyuluhan),
-					number_format(@$value->anggaran_pemsos),
-					number_format(@$value->realisasi_pemsos),
-					number_format(@$value->anggaran_pemberdayaan),
-					number_format(@$value->realisasi_pemberdayaan),
-					number_format(@$value->anggaran_penyusunan_data),
-					number_format(@$value->realisasi_penyusunan_data)
+	// 	if ($idtab == 'pertama_kab') {
+	// 		$this->db->where('kode_provinsi', $idprov);
+	// 		$get = $this->global->get_all('v_dashboard_prestasi_kinerja_kab');
+	// 		foreach ($get as $key => $value) {
+	// 			$a = [
+	// 				$key + 1,
+	// 				@$value->nama_provinsi,
+	// 				@$value->nama_kab_kota,
+	// 				@$value->anggaran_penlok),
+	// 				@$value->realisasi_penlok),
+	// 				@$value->anggaran_penyuluhan),
+	// 				@$value->realisasi_penyuluhan),
+	// 				@$value->anggaran_pemsos),
+	// 				@$value->realisasi_pemsos),
+	// 				@$value->anggaran_pemberdayaan),
+	// 				@$value->realisasi_pemberdayaan),
+	// 				@$value->anggaran_penyusunan_data),
+	// 				@$value->realisasi_penyusunan_data)
 
-				];
-				array_push($data, $a);
-			}
-		}
+	// 			];
+	// 			array_push($data, $a);
+	// 		}
+	// 	}
 
-		echo json_encode($data);
-	}
+	// 	echo json_encode($data);
+	// }
 
 
 	public function add()
