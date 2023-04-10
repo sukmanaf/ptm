@@ -155,7 +155,7 @@
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href='<?= base_url('sektor_usaha') ?>' class="nav-link">
+									<a href='<?= base_url('dashboard') ?>' class="nav-link">
 										<i class='nav-icon fa-circle far'></i>
 										<p>Dashboard Rekapitulasi</p>
 									</a>
@@ -167,9 +167,15 @@
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href='<?= base_url('sektor_usaha') ?>' class="nav-link">
+									<a href='<?= base_url('') ?>' class="nav-link">
 										<i class='nav-icon fa-circle far'></i>
 										<p>Dashboard Fieldstaff</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href='<?= base_url('prestasi_kinerja') ?>' class="nav-link">
+										<i class='nav-icon fa-circle far'></i>
+										<p>Index Prestasi Kinerja</p>
 									</a>
 								</li>
 							</ul>
@@ -229,13 +235,13 @@
 											</a>
 										</li>
 										<li class="nav-item">
-											<a href='http://194.233.71.171/ptm-web/master_data/admin_pusat/kantor_pertanahan' class="nav-link">
+											<a href='<?= base_url('kantor_pertanahan') ?>' class="nav-link">
 												<i class='nav-icon fa-circle far'></i>
 												<p>Kantor Pertanahan</p>
 											</a>
 										</li>
 										<li class="nav-item">
-											<a href='http://194.233.71.171/ptm-web/master_data/admin_pusat/kamus_kbli' class="nav-link">
+											<a href='kamus_kbli' class="nav-link">
 												<i class='nav-icon fa-circle far'></i>
 												<p>Klasifikasi KBLI</p>
 											</a>
@@ -281,7 +287,7 @@
 								</li>
 
 							</ul>
-<<<<<<< HEAD
+
 						</li> -->
 						<li class='nav-item '>
 							<a href="#" class='nav-link '>
@@ -387,8 +393,10 @@
 										</li>
 									</ul>
 								</li>
+
 							</ul>
 						</li>
+
 						<li class="nav-item">
 							<a href="<?= base_url() ?>subjectobject" class='nav-link '>
 								<i class="nav-icon fas fa-book"></i>
@@ -650,7 +658,7 @@
 	<!-- AdminLTE for demo purposes -->
 	<!-- <script src="<?= base_url() ?>assets/dist/js/demo.js"></script> -->
 
-
+	<script src="http://194.233.71.171/ptm-web/lib/adminlte/plugins/chart.js/Chart.min.js"></script>
 	<!-- Make sure you put this AFTER Leaflet's CSS -->
 	<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 	<!-- Include daettime picker.js CDN -->

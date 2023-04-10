@@ -41,7 +41,7 @@
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
-							<label for="">Tahun</label>
+							<label for="">Tahun Kegiatan</label>
 							<select id="tahap" name="" onchange="to_change(this)" required class="form-control select2" style="width: 100%;">
 								<option value="pertama"> Pertama</option>
 								<option value="kedua"> Kedua</option>

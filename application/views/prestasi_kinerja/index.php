@@ -41,11 +41,24 @@
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
-							<label for="">Tahun</label>
-							<select id="tahap" name="" onchange="to_change(this)" required class="form-control select2" style="width: 100%;">
+							<label for="">Tahun Kegiatan</label>
+							<select id="tk" name="" onchange="to_change(this,'tahapan')" required class="form-control select2" style="width: 100%;">
 								<option value="pertama"> Pertama</option>
 								<option value="kedua"> Kedua</option>
 								<option value="ketiga"> Ketiga</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="">Tahapan</label>
+							<select id="tahap" name="" onchange="to_change(this)" required class="form-control select2" style="width: 100%;">
+								<option value='penlok'>Penetapan Lokasi dan target KK</option>
+								<option value='penyuluhan'>Penyuluhan</option>
+								<option value='pemetaan'>Pemetaan Sosial</option>
+								<option value='pemberdayaan'>Penetapan Model Pemberdayaan</option>
+								<option value='penyusunan'>Penyusunan Data Penerima Akses </option>
+
 							</select>
 						</div>
 					</div>
@@ -56,25 +69,9 @@
 							<tr>
 								<th>No</th>
 								<th>Satker</th>
-								<th colspan="2">Tanggal SK</th>
-								<th colspan="2">Tanggal Upload</th>
-								<th colspan="2">View Doc</th>
-								<th colspan="2">Penetapan Model Pemberdayaan</th>
-								<th colspan="2">Penyusunan Data Penerima Akses</th>
-							</tr>
-							<tr>
-								<th></th>
-								<th></th>
-								<th>A</th>
-								<th>R</th>
-								<th>A</th>
-								<th>R</th>
-								<th>A</th>
-								<th>R</th>
-								<th>A</th>
-								<th>R</th>
-								<th>A</th>
-								<th>R</th>
+								<th>Tanggal SK</th>
+								<th>Tanggal Upload</th>
+								<th>View Doc</th>
 							</tr>
 						</thead>
 					</table>
@@ -126,11 +123,11 @@
 							<th>No</th>
 							<th>Propinsi</th>
 							<th>Kab/Kota</th>
-							<th colspan="2">Penetapan Lokasi</th>
-							<th colspan="2">Penyuluhan</th>
-							<th colspan="2">Pemetaan Sosial</th>
-							<th colspan="2">Penetapan Model Pemberdayaan</th>
-							<th colspan="2">Penyusunan Data Penerima Akses</th>
+							<th>Penetapan Lokasi</th>
+							<th>Penyuluhan</th>
+							<th>Pemetaan Sosial</th>
+							<th>Penetapan Model Pemberdayaan</th>
+							<th>Penyusunan Data Penerima Akses</th>
 						</tr>
 						<tr>
 							<th></th>
@@ -156,76 +153,3 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
-	function to_kab(a, idtabkab) {
-		b = a.value;
-		if (b === undefined) {
-			b = a
-		}
-		var tab = $('#table-front' + idtabkab).DataTable();
-		tab.destroy()
-		loadDtKab(b, idtabkab)
-	}
-
-	function to_change(a) {
-		b = a.value;
-		if (b === undefined) {
-			b = a
-		}
-		var tahun = $("#tahun").val()
-		var tahap = $("#tahap").val()
-		var tab = $('#table-front' + tahap).DataTable();
-		tab.destroy()
-		loadDt(tahap, tahun)
-	}
-	$(document).ready(function() {
-		loadDt('pertama', 2023);
-	});
-
-	function loadDt(idtab, tahun) {
-
-		$('#table-frontpertama').css('display', 'none')
-		$('#table-frontpertama_wrapper').css('display', 'none')
-		$('#table-frontkedua_wrapper').css('display', 'none')
-		$('#table-frontketiga_wrapper').css('display', 'none')
-		$('#table-frontkedua').css('display', 'none')
-		$('#table-frontketiga').css('display', 'none')
-		$('#table-front' + idtab).css('display', 'block')
-
-
-		$('#table-front' + idtab).DataTable({
-			ajax: {
-				url: '<?php echo base_url(); ?>prestasi_kinerja/get_all/' + idtab + "/" + tahun,
-				data: function(d) {
-					d.<?php echo $this->security->get_csrf_token_name(); ?> = "<?php echo $this->security->get_csrf_hash(); ?>"
-				},
-				dataSrc: ''
-			}
-		})
-	}
-
-	function loadDtKab(kdprov, idtabkab) {
-
-		$('#table-front' + idtabkab).DataTable({
-			ajax: {
-				url: '<?php echo base_url(); ?>prestasi_kinerja/get_kab/' + kdprov + "/" + idtabkab,
-				data: function(d) {
-					d.<?php echo $this->security->get_csrf_token_name(); ?> = "<?php echo $this->security->get_csrf_hash(); ?>"
-				},
-				dataSrc: ''
-			}
-		})
-	}
-
-	function dels(id) {
-		$.get("<?= base_url('prestasi_kinerja/delete/') ?>" + id, function(response) {
-			response = JSON.parse(response)
-			if (response.sts == 'success') {
-				toastr.success("Data Sudah Terhapus!");
-				$('#table-front').DataTable().ajax.reload();
-			} else {
-				toastr.error("Data Gagal Dihapus!");
-			}
-		});
-	}
-</script>

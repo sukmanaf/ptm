@@ -82,7 +82,7 @@
 
 							</div>
 						</div>
-						<div class="col-md-2">
+						<!-- <div class="col-md-2">
 							<div class="form-group">
 								<label for='realisasi_penlok'>Realisasi</label>
 								<input name='realisasi_penlok' id='realisasi_penlok' type='text' value='' class="form-control" onkeyup="hitung('anggaran_penlok+realisasi_penlok','sisa_anggaran_penlok+persentase_penlok')" onkeypress="return isNumber(event)">
@@ -108,7 +108,7 @@
 								</div>
 
 							</div>
-						</div>
+						</div> -->
 					</div>
 
 					<div class="row">
@@ -124,7 +124,7 @@
 
 							</div>
 						</div>
-						<div class="col-md-2">
+						<!-- <div class="col-md-2">
 							<div class="form-group">
 								<label for='realisasi_penyuluhan'>Realisasi</label>
 								<input name='realisasi_penyuluhan' id='realisasi_penyuluhan' type='text' value='' class="form-control" onkeyup="hitung('anggaran_penyuluhan+realisasi_penyuluhan','sisa_anggaran_penyuluhan+persentase_penyuluhan')" onkeypress="return isNumber(event)">
@@ -149,7 +149,7 @@
 								</div>
 
 							</div>
-						</div>
+						</div> -->
 					</div>
 
 					<div class="row">
@@ -165,7 +165,7 @@
 
 							</div>
 						</div>
-						<div class="col-md-2">
+						<!-- <div class="col-md-2">
 							<div class="form-group">
 								<label for='realisasi_pemsos'>Realisasi</label>
 								<input name='realisasi_pemsos' id='realisasi_pemsos' type='text' value='' class="form-control" onkeyup="hitung('anggaran_pemsos+realisasi_pemsos','sisa_anggaran_pemsos+persentase_pemsos')" onkeypress="return isNumber(event)">
@@ -190,7 +190,7 @@
 								</div>
 
 							</div>
-						</div>
+						</div> -->
 					</div>
 
 					<div class="row">
@@ -206,7 +206,7 @@
 
 							</div>
 						</div>
-						<div class="col-md-2">
+						<!-- <div class="col-md-2">
 							<div class="form-group">
 								<label for='realisasi_pemberdayaan'>Realisasi</label>
 								<input name='realisasi_pemberdayaan' id='realisasi_pemberdayaan' type='text' value='' class="form-control" onkeyup="hitung('anggaran_pemberdayaan+realisasi_pemberdayaan','sisa_anggaran_pemberdayaan+persentase_pemberdayaan')" onkeypress="return isNumber(event)">
@@ -231,7 +231,7 @@
 								</div>
 
 							</div>
-						</div>
+						</div> -->
 					</div>
 
 					<div class="row">
@@ -247,7 +247,7 @@
 
 							</div>
 						</div>
-						<div class="col-md-2">
+						<!-- <div class="col-md-2">
 							<div class="form-group">
 								<label for='realisasi_penyusunan_data'>Realisasi</label>
 								<input name='realisasi_penyusunan_data' id='realisasi_penyusunan_data' type='text' value='' class="form-control" onkeyup="hitung('anggaran_penyusunan_data+realisasi_penyusunan_data','sisa_anggaran_penyusunan_data+persentase_penyusunan_data')" onkeypress="return isNumber(event)">
@@ -272,7 +272,7 @@
 								</div>
 
 							</div>
-						</div>
+						</div> -->
 					</div>
 
 
