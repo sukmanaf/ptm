@@ -26,8 +26,8 @@ class Penetapan_model extends CI_Controller {
 			$a = [
 				$key+1,@$value->nip,@$value->nama_pejabat,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,
 	
-					'<a type="button" style="display:inline" href="'.base_url('detail_penetapan_model/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'
-				// '<a type="button" href="'.base_url('penyuluhan/edit/').$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
+					'<a type="button" style="display:inline" href="'.base_url('detail_penetapan_model/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
+				'<a type="button"  style="display:inline" href="'.base_url('penetapan_model/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload" ></i></a>'
 				// '<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
 			];
 			array_push($data,$a);
@@ -333,7 +333,7 @@ class Penetapan_model extends CI_Controller {
 		$data['id']=$id;
 		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Penetapan Model Pemberdayaan - Upload';
 		$data['data'] = $this->global->get_by_one('dt_pengembangan_rencana_usaha',$id,'id');
-		$this->skin->view('penyuluhan/upload',$data);
+		$this->skin->view('penetapan_model/upload',$data);
 
 	}
 	public function get_upload($id)
@@ -368,15 +368,15 @@ class Penetapan_model extends CI_Controller {
         	$data = [
         			'targetkk_id' => $id_targetkk,
         			'jenis_evidence' => $jns_evidence,
-        			'tanggal_penyuluhan' => $this->input->post('tanggal_penyuluhan',true),
+        			'tanggal_model_pemberdayaan' => $this->input->post('tanggal_model_pemberdayaan',true),
     			];
 			if($id){
         		$this->db->where('id', $id);
-				$ins = $this->db->update('fl_penyuluhan', $data);
+				$ins = $this->db->update('fl_penetapan_model_pemberdayaan', $data);
 			
             }else{
 
-				$this->db->insert('fl_penyuluhan', $data);
+				$this->db->insert('fl_penetapan_model_pemberdayaan', $data);
 				 $id = $this->db->insert_id();
             }
 
@@ -400,7 +400,7 @@ class Penetapan_model extends CI_Controller {
 
     			// $_FILES['files']['name'] = $name;
 
-                $config['upload_path']          = './uploads/penyuluhan/';
+                $config['upload_path']          = './uploads/model_pemberdayaan/';
                 $config['allowed_types']        = 'pdf|jpeg|jpg|png';
                 $config['file_name']			= $name;
                 // $config['max_size']             = 100;

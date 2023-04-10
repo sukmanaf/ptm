@@ -38,10 +38,7 @@
 									<label for='tanggal_sk'>Jenis Evidence</label>
 									<div class="input-group date"  data-target-input="nearest">
 										<select class="form-control" name="jenis_evidence">
-											<option value="surat_udangan">Surat Undangan</option>
-											<option value="daftar_hadir">Daftar Hadir</option>
-											<option value="notulensi">Notilensi</option>
-											<option value="berita_acara">Berita Acara</option>
+											<option value="laporan_akhir">Laporan Akhir</option>
 										</select>										
 									</div>
 									

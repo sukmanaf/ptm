@@ -89,7 +89,7 @@
 				                                        <label>
 				                                            Jumlah Subjek (KK)
 				                                        </label>
-				                                        <input id='jumlah_subjek1' name="jumlah_subjek[]" class="form-control jml_subjek numbers" />
+				                                        <input id='jumlah_subjek1' name="jumlah_subjek[]" onkeyup="cekJml(this)"  class="form-control jml_subjek numbers" />
 				                                        <span><i>maksimal input <?=$targetKK['target_kk']?></i></span>
 				                                    </div>
 				                                </div>
@@ -140,14 +140,16 @@
     $(document).ready(function(){
     	
     	$('#titleId').html('<?=$title?>')
-    	$('.jml_subjek').keyup(function(event){
-		 // play with event
-		 // use $(this) to determine which element triggers this event
-		 var bts = '<?=$targetKK["target_kk"]?>';
-		 	if ($('#'+this.id).val() > bts) {
-		 		$('#'+this.id).val(bts)
-		 	}
-		});
+  //   	$('.jml_subjek').keyup(function(event){
+		//  // play with event
+		//  // use $(this) to determine which element triggers this event
+		//  var bts = '<?=$targetKK["target_kk"]?>';
+		//  var jml = $('#'+this.id).val()
+		//  	if (parseInt(jml) > parseInt(bts)) {
+		//  		$('#'+this.id).val(bts)
+		//  		console.log('ok')
+		//  	}
+		// });
 
 		$("#nama_kelompok").keyup(function( event ) {
 			var namaKel = $("#nama_kelompok").val();
@@ -216,5 +218,13 @@
     	$('#itemPenetapanModelPemberdayaan'+v).remove()
     }
 
+    function cekJml(val) {
+    	var bts = '<?=$targetKK["target_kk"]?>';
+		 var jml = $('#'+val.id).val()
+		 	if (parseInt(jml) > parseInt(bts)) {
+		 		$('#'+val.id).val(bts)
+		 		console.log('ok')
+		 	}
+    }
 	
 </script>

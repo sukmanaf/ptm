@@ -67,8 +67,15 @@ class Detail_penetapan_model extends CI_Controller {
 		$data=[];
 		$id_jenis_pemberdayaan = $this->input->post('id_jenis_pemberdayaan',true);
 		$jumlah_subjek = $this->input->post('jumlah_subjek',true);
+		$targetkk = $this->input->post('id_targetkk_desa',true);
 
+		$cekDup = $this->penetapan_model->cekDup($targetkk);
+		
 		foreach ($id_jenis_pemberdayaan as $key => $value) {
+			if (in_array($id_jenis_pemberdayaan[$key], $cekDup)) {
+				echo json_encode(['sts' => 'fail','message' => 'Model Penetapan Sudah Ada!']);
+				exit();
+			}
 			$a = [
 					'tahun_anggaran' => $this->input->post('tahun_anggaran',true),
 				    'kode_provinsi' => $this->input->post('kode_provinsi',true),
@@ -179,7 +186,7 @@ class Detail_penetapan_model extends CI_Controller {
 		$data['id_targetkk_desa']=$id_targetkk_desa;
 		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - penetapan_model - Desa';
 		$data['data'] = $this->global->get_by_one('v_model_pemberdayaan',$id,'id');
-		$data['responden'] = $this->penetapan_model->getResponden('wa_kuesioner_re');
+		$data['responden'] = $this->penetapan_model->getResponden($id_targetkk_desa);
 
 		$data['targetKK'] = $this->global->get_by_one('v_kuesioner_re',$id_targetkk_desa,'id_targetkk_desa');
 

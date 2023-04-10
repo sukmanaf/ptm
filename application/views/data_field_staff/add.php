@@ -176,6 +176,8 @@
 				if (response.sts == 'success') {
 					toastr.success(response.message);
 					$('.clear').val("")
+					window.location.replace('<?= base_url("data_field_staff") ?>');
+
 					// $('#table-front').DataTable().ajax.reload();
 				} else {
 					toastr.error(response.message);

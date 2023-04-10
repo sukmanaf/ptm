@@ -13,7 +13,7 @@
     <div class="container-fluid">
 	  <div class="card card-outline card-primary">
 	    <div class="card-header">
-	      	<a  style="" href="<?=base_url('penyuluhan')?>" class="btn btn-default">
+	      	<a  style="" href="<?=base_url('penyusunan_data')?>" class="btn btn-default">
 	        <i class="fas fa-arrow-left mr-2 text-white"></i>Kembali </a>
 	      <div class="card-tools">
 	      	      <!-- <a  style="float: right" href="<?=base_url('detail_penyusunan_data/add/').$id?>" class="btn btn-warning pull-right">
@@ -47,6 +47,33 @@
 	</div>
 </section>
 
+
+
+<div class="modal" tabindex="-1" id="modalTable">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+      </div>
+      <div class="modal-body">
+ 			<table class="table" id="table-modal">
+ 				<thead>
+ 					<th>No</th>
+ 					<th>NIK</th>
+ 					<th>Nama</th>
+ 					<th>Jenis Kelamin</th>
+ 				</thead>
+ 			</table>	
+ 	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="$('.modal').modal('hide')">Close</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+       </form>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
 
     $(document).ready(function(){
@@ -75,6 +102,22 @@
         		toastr.error("Data Gagal Dihapus!");
         	} 
 		});
+    }
+
+    function anggota(val) {
+    	$('#table-modal').dataTable().fnClearTable();
+    	$('#table-modal').dataTable().fnDestroy();
+    	$('#table-modal').DataTable({
+		    ajax: {
+		        url: '<?php echo base_url("detail_penyusunan_data/get_anggota/");?>'+val,
+		        data: function ( d ) {
+	                d.<?php echo $this->security->get_csrf_token_name();?> = "<?php echo $this->security->get_csrf_hash();?>"
+	            },
+		        dataSrc: ''
+		    }
+		})
+
+		$('#modalTable').modal('show')
     }
 
 </script>
