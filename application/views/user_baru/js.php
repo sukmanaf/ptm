@@ -43,6 +43,7 @@
             $("#telepon").val(dt[0].phone)
             $("#email").val(dt[0].email)
             $("#username").val(dt[0].username)
+            $("#tanggal_valid").val(dt[0].tanggal_valid)
             $("#password").val('')
         }
 
@@ -53,18 +54,25 @@
 
         $("#postForm").submit(function(event) {
             event.preventDefault(); //prevent default action 
-            var post_url = '<?php echo base_url("user_baru/create") ?>'; //get form action url
-            if (id != '') {
-                post_url = '<?php echo base_url("user_baru/update") ?>'; //get form action url
-            }
             var request_method = $(this).attr("method"); //get form GET/POST method
             var form_data = new FormData(this); //Encode form elements for submission
             var npk = $("#npk").val()
             var dt = tampil_data('ms_user', 'npk', npk);
-            if (dt.length > 0) {
-                toastr.error('NPK / NIP / NIK Sudah Terdaftar !!')
-                return
+
+            var post_url = '<?php echo base_url("user_baru/create") ?>'; //get form action url
+            if (id != '') {
+                post_url = '<?php echo base_url("user_baru/update") ?>'; //get form action url
+                if (dt.length > 0 && dt[0].npk != npk) {
+                    toastr.error('NPK / NIP / NIK Sudah Terdaftar !!')
+                    return
+                }
+            } else {
+                if (dt.length > 0) {
+                    toastr.error('NPK / NIP / NIK Sudah Terdaftar !!')
+                    return
+                }
             }
+
 
             $.ajax({
                 url: post_url,

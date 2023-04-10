@@ -290,7 +290,7 @@
 <<<<<<< HEAD
 =======
 						</li> -->
-						
+
 						<li class='nav-item '>
 							<a href="#" class='nav-link '>
 								<i class="nav-icon fas fa-copy"></i>
@@ -394,8 +394,7 @@
 										</li>
 									</ul>
 								</li>
->>>>>>> 1f72d19d1f5c61843f0ff3106149f27bff079adb
-
+							</ul>
 						<li class="nav-item">
 							<a href="<?= base_url() ?>subjectobject" class='nav-link '>
 								<i class="nav-icon fas fa-book"></i>
@@ -408,15 +407,7 @@
 								<p>MoU dan PKS</p>
 							</a>
 						</li>
-<<<<<<< HEAD
-=======
-						<!-- <li class="nav-item">
-							<a href="http://194.233.71.171/ptm-web/kegiatan_kanwil" class='nav-link '>
-								<i class="nav-icon fas fa-book"></i>
-								<p>Kegiatan Kanwil</p>
-							</a>
-						</li> -->
->>>>>>> 1f72d19d1f5c61843f0ff3106149f27bff079adb
+
 						<li class='nav-item '>
 							<a href="#" class='nav-link '>
 								<i class="nav-icon fas fa-book"></i>

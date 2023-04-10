@@ -88,6 +88,13 @@
 
 							</div>
 						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for='tanggal_valid'>Tanggal Valid User</label>
+								<input name='tanggal_valid' id='tanggal_valid' type='date' value='' class="form-control">
+
+							</div>
+						</div>
 					</div>
 
 
