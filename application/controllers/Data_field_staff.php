@@ -75,12 +75,12 @@ class Data_field_staff extends CI_Controller
 	{
 
 		$data = [
-			'npk'	=> $this->input->post('npk', true),
-			'fullname'	=> $this->input->post('nama', true),
-			'phone'	=> $this->input->post('hp', true),
-			'assignment_end_date'	=> $this->input->post('tgl_akhir', true),
-			'kode_provinsi'	=> $this->input->post('kode_provinsi', true),
-			'kode_kab_kota'	=> $this->input->post('kode_kab_kota', true),
+			'npk'	=> ($this->input->post('npk', true) == '') ? NULL : $this->input->post('npk', true),
+			'fullname'	=> ($this->input->post('nama', true) == '') ? NULL : $this->input->post('nama', true),
+			'phone'	=> ($this->input->post('hp', true) == '') ? NULL : $this->input->post('hp', true),
+			'assignment_end_date'	=> ($this->input->post('tgl_akhir', true) == '') ? '0000-00-00' : $this->input->post('tgl_akhir', true),
+			'kode_provinsi'	=> ($this->input->post('kode_provinsi', true) == '') ? NULL : $this->input->post('kode_provinsi', true),
+			'kode_kab_kota'	=> ($this->input->post('kode_kab_kota', true) == '') ? NULL : $this->input->post('kode_kab_kota', true),
 		];
 
 		$ins =  $this->db->insert('wa_surveyor', $data);
@@ -123,12 +123,12 @@ class Data_field_staff extends CI_Controller
 	{
 		$id = $this->input->post('id', true);
 		$data = [
-			'npk'	=> $this->input->post('npk', true),
-			'fullname'	=> $this->input->post('nama', true),
-			'phone'	=> $this->input->post('hp', true),
-			'assignment_end_date'	=> $this->input->post('tgl_akhir', true),
-			'kode_provinsi'	=> $this->input->post('kode_provinsi', true),
-			'kode_kab_kota'	=> $this->input->post('kode_kab_kota', true),
+			'npk'	=> ($this->input->post('npk', true) == '') ? NULL : $this->input->post('npk', true),
+			'fullname'	=> ($this->input->post('nama', true) == '') ? NULL : $this->input->post('nama', true),
+			'phone'	=> ($this->input->post('hp', true) == '') ? NULL : $this->input->post('hp', true),
+			'assignment_end_date'	=> ($this->input->post('tgl_akhir', true) == '') ? '0000-00-00' : $this->input->post('tgl_akhir', true),
+			'kode_provinsi'	=> ($this->input->post('kode_provinsi', true) == '') ? NULL : $this->input->post('kode_provinsi', true),
+			'kode_kab_kota'	=> ($this->input->post('kode_kab_kota', true) == '') ? NULL : $this->input->post('kode_kab_kota', true),
 		];
 
 

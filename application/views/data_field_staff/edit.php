@@ -35,17 +35,14 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="hp">Telepon/HP</label>
-<<<<<<< HEAD
 								<input name="hp" id="hp" maxlength="13" type="text" value="" class="form-control clear">
-=======
-								<input name="hp" id="hp" maxlength="14" type="text" value="" class="form-control clear">
->>>>>>> 1beb25b9a1b5b93b96330979bc73036c1d713375
+
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="deskripsi">Tanggal Akhir Penugasan</label>
-								<input name="tgl_akhir" id="tgl_akhir" type="date" value="" class="form-control clear">
+								<input name="tgl_akhir" id="tgl_akhir" type="date" value="" class="form-control clear" required oninvalid="this.setCustomValidity('Harap isi Tanggal Akhir Penugasan !!')" oninput="this.setCustomValidity('')">
 							</div>
 						</div>
 					</div>
