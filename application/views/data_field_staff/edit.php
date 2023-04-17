@@ -35,13 +35,14 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="hp">Telepon/HP</label>
-								<input name="hp" id="hp" maxlength="5" type="text" value="" class="form-control clear">
+								<input name="hp" id="hp" maxlength="13" type="text" value="" class="form-control clear">
+
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="deskripsi">Tanggal Akhir Penugasan</label>
-								<input name="tgl_akhir" id="tgl_akhir" type="date" value="" class="form-control clear">
+								<input name="tgl_akhir" id="tgl_akhir" type="date" value="" class="form-control clear" required oninvalid="this.setCustomValidity('Harap isi Tanggal Akhir Penugasan !!')" oninput="this.setCustomValidity('')">
 							</div>
 						</div>
 					</div>
@@ -67,7 +68,27 @@
 							</div>
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for='file_foto_sk2'>File</label>
+								<div class="custom-file">
+									<input name='files' id='files' type='file' class="clear">
+									<!-- <label class="custom-file-label" for='files'>Pilih file</label> -->
+								</div>
 
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="col-form-label" for="inputSuccess">
+								</label>
+								<button type="button" class="form-control btn btn-default" data-toggle="modal" data-target="#modal-2">
+									Lihat File
+								</button>
+							</div>
+						</div>
+					</div>
 
 
 					<div class="row">
@@ -95,6 +116,7 @@
 
 <script type="text/javascript">
 	var id = "<?php echo $id; ?>"
+
 
 	function to_kab(idElmt, a, set = '') {
 		b = a.value;

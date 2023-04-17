@@ -52,7 +52,7 @@
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="">Tahapan</label>
-							<select id="tahap" name="" onchange="to_change(this)" required class="form-control select2" style="width: 100%;">
+							<select id="tahap" name="" onchange="to_change(this,'yuhu')" required class="form-control select2" style="width: 100%;">
 								<option value='penlok'>Penetapan Lokasi dan target KK</option>
 								<option value='penyuluhan'>Penyuluhan</option>
 								<option value='pemetaan'>Pemetaan Sosial</option>

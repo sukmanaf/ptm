@@ -34,13 +34,14 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="hp">Telepon/HP</label>
-								<input name="hp" id="hp" maxlength="5" type="text" value="" class="form-control clear">
+								<input name="hp" id="hp" maxlength="13" type="text" value="" class="form-control clear">
+
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="deskripsi">Tanggal Akhir Penugasan</label>
-								<input name="tgl_akhir" id="tgl_akhir" type="date" value="" class="form-control clear">
+								<input name="tgl_akhir" id="tgl_akhir" type="date" value="" class="form-control clear" required oninvalid="this.setCustomValidity('Harap isi Tanggal Akhir Penugasan !!')" oninput="this.setCustomValidity('')">
 							</div>
 						</div>
 					</div>
@@ -65,8 +66,29 @@
 								</select>
 							</div>
 						</div>
-					</div>
 
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for='file_foto_sk2'>File</label>
+								<div class="custom-file">
+									<input name='files' id='files' type='file' class="clear">
+									<!-- <label class="custom-file-label" for='files'>Pilih file</label> -->
+								</div>
+
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="col-form-label" for="inputSuccess">
+								</label>
+								<button type="button" class="form-control btn btn-default" data-toggle="modal" data-target="#modal-2">
+									Lihat File
+								</button>
+							</div>
+						</div>
+					</div>
 
 
 					<div class="row">
@@ -88,6 +110,27 @@
 				</form>
 			</div>
 		</div>
+	</div>
+	<div class="modal fade" id="modal-2">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Preview</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<iframe id="sk2_prewview" src="" class="w-100" style="height:500px;width: 100%" frameborder="0"></iframe>
+
+				</div>
+				<div class="modal-footer justify-content-between">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.container-fluid -->
 </section>
@@ -144,11 +187,17 @@
 	}
 
 	$(document).ready(function() {
-		$('.lampiran').on('change', function() {
+		$('#files').on('change', function() {
 			// var fuUpload = document.getElementById("lampiran1");
-			if (this.files[0].type != 'application/pdf') {
+			if (this.files[0].type != 'image/jpeg' && this.files[0].type != 'image/jpg' && this.files[0].type != 'image/png' && this.files[0].type != 'image/gif' && this.files[0].type != 'application/pdf') {
 				toastr.error('Tipe File Salah atau File Rusak!')
 				$(this).val('')
+				$('#sk2_prewview').attr('src', '');
+			} else {
+				console.log(URL.createObjectURL(this.files[0]))
+				var url = URL.createObjectURL(this.files[0]);
+				$('#sk2_prewview').attr('src', url);
+
 			}
 		});
 

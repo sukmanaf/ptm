@@ -200,7 +200,7 @@ $role = $this->session->userdata('login')['role_user'];
 								</li>
 							</ul>
 						</li>
-						<!-- <li class='nav-item '>
+						<li class='nav-item '>
 							<a href="#" class='nav-link '>
 								<i class="nav-icon fas fa-copy"></i>
 								<p>
@@ -307,8 +307,7 @@ $role = $this->session->userdata('login')['role_user'];
 								</li>
 
 							</ul>
-
-						</li> -->
+						</li> 
 						<li class='nav-item '>
 							<a href="#" class='nav-link '>
 								<i class="nav-icon fas fa-copy"></i>
@@ -433,6 +432,7 @@ $role = $this->session->userdata('login')['role_user'];
 							</ul>
 						</li>
 					<?php endif?>
+
 						<li class="nav-item">
 							<a href="<?= base_url() ?>subjectobject" class='nav-link '>
 								<i class="nav-icon fas fa-book"></i>
@@ -448,7 +448,6 @@ $role = $this->session->userdata('login')['role_user'];
 								<p>MoU dan PKS</p>
 							</a>
 						</li>
-
 						<li class='nav-item '>
 							<a href="#" class='nav-link '>
 								<i class="nav-icon fas fa-book"></i>

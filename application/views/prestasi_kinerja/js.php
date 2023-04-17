@@ -9,7 +9,7 @@
         loadDtKab(b, idtabkab)
     }
 
-    function to_change(a, kat = 'pertama') {
+    function to_change(a, kat = '') {
         b = a.value;
         if (b === undefined) {
             b = a
@@ -17,7 +17,7 @@
         var tahun = $("#tahun").val()
         var tk = $("#tk").val()
         var dt = '';
-        if (kat != '') {
+        if (kat != 'yuhu') {
             $("#tahap").empty()
             if (tk == 'pertama') {
                 dt = "<option value='penlok'>Penetapan Lokasi dan target KK</option>" +
@@ -38,29 +38,29 @@
             }
         }
         $("#tahap").append(dt)
-
         var tab = $('#table-frontpertama').DataTable();
         tab.destroy()
-        loadDt('pertama', tahun)
+        var tahap = $("#tahap").val()
+        loadDt('pertama', tahun, tahap)
     }
     $(document).ready(function() {
-        loadDt('pertama', 2023);
+        loadDt('pertama', 2023, 'penlok');
     });
 
-    function loadDt(idtab, tahun) {
+    function loadDt(idtab, tahun, kate) {
 
-        $('#table-frontpertama').css('display', 'none')
-        $('#table-frontpertama_wrapper').css('display', 'none')
+        // $('#table-frontpertama').css('display', 'none')
+        // $('#table-frontpertama_wrapper').css('display', 'none')
         $('#table-frontkedua_wrapper').css('display', 'none')
         $('#table-frontketiga_wrapper').css('display', 'none')
         $('#table-frontkedua').css('display', 'none')
         $('#table-frontketiga').css('display', 'none')
-        $('#table-front' + idtab).css('display', 'block')
+        // $('#table-front' + idtab).css('display', 'block')
 
 
         $('#table-front' + idtab).DataTable({
             ajax: {
-                url: '<?php echo base_url(); ?>prestasi_kinerja/get_all/' + idtab + "/" + tahun,
+                url: '<?php echo base_url(); ?>prestasi_kinerja/get_all/' + idtab + "/" + tahun + "/" + kate,
                 data: function(d) {
                     d.<?php echo $this->security->get_csrf_token_name(); ?> = "<?php echo $this->security->get_csrf_hash(); ?>"
                 },

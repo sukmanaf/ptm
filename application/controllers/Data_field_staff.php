@@ -57,10 +57,19 @@ class Data_field_staff extends CI_Controller
 		$get = $this->global->get_all('v_data_field_staff');
 		$data = [];
 		foreach ($get as $key => $value) {
+			// $this->db->where('targetkk_id', @$value->id);
+			// $dt = $this->db->get('fl_field_staff')->row();
+			if (@$value->dir_name != NULL) {
+				$val = "<a title ='File Tersedia !!' class='btn btn-primary btn-md' target='_blank' href='" . base_url(@$value->dir_name) . "'><i class='fa fa-download'></i></a>";
+				// $val = $dt->file_name;
+			} else {
+				$val = "<a title ='Tidak Ada File !!' class='btn btn-primary btn-md' href='#'><i class='fa fa-download'></i></a>";
+			}
 			$a = [
 				$key + 1, @$value->npk, @$value->fullname, @$value->phone, @$value->assignment_end_date, @$value->nama_provinsi, @$value->nama_kab_kota,
 				'<a type="button" href="' . base_url('data_field_staff/edit/') . $value->id . '" class="btn btn-success"><i class="fas fa-edit"></i></a>' .
-					'<button type="button" id="del" onclick="dels(' . $value->id . ')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
+					'<button type="button" id="del" onclick="dels(' . $value->id . ')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>' .
+					$val
 
 			];
 			array_push($data, $a);
@@ -87,15 +96,31 @@ class Data_field_staff extends CI_Controller
 	{
 
 		$data = [
-			'npk'	=> $this->input->post('npk', true),
-			'fullname'	=> $this->input->post('nama', true),
-			'phone'	=> $this->input->post('hp', true),
-			'assignment_end_date'	=> $this->input->post('tgl_akhir', true),
-			'kode_provinsi'	=> $this->input->post('kode_provinsi', true),
-			'kode_kab_kota'	=> $this->input->post('kode_kab_kota', true),
+			'npk'	=> ($this->input->post('npk', true) == '') ? NULL : $this->input->post('npk', true),
+			'fullname'	=> ($this->input->post('nama', true) == '') ? NULL : $this->input->post('nama', true),
+			'phone'	=> ($this->input->post('hp', true) == '') ? NULL : $this->input->post('hp', true),
+			'assignment_end_date'	=> ($this->input->post('tgl_akhir', true) == '') ? '0000-00-00' : $this->input->post('tgl_akhir', true),
+			'kode_provinsi'	=> ($this->input->post('kode_provinsi', true) == '') ? NULL : $this->input->post('kode_provinsi', true),
+			'kode_kab_kota'	=> ($this->input->post('kode_kab_kota', true) == '') ? NULL : $this->input->post('kode_kab_kota', true),
 		];
 
 		$ins =  $this->db->insert('wa_surveyor', $data);
+		$id = $this->db->insert_id();
+
+		if (is_uploaded_file($_FILES['files']['tmp_name'])) {
+			$sourcePath = $_FILES['files']['tmp_name'];
+			$namf = $_FILES['files']['name'];
+			$rep = str_replace(" ", "_", $namf);
+			$fil = date('Ymd') . date("his") . $rep;
+			$targetPath = "uploads/data_field_staff/" . $fil;
+			move_uploaded_file($sourcePath, FCPATH . $targetPath);
+			$data_f = [
+				'targetkk_id' => $id,
+				'file_name' => $fil,
+				'dir_name' => $targetPath,
+			];
+			$ins =  $this->db->insert('fl_field_staff', $data_f);
+		}
 		if ($ins) {
 
 
@@ -119,21 +144,36 @@ class Data_field_staff extends CI_Controller
 	{
 		$id = $this->input->post('id', true);
 		$data = [
-			'npk'	=> $this->input->post('npk', true),
-			'fullname'	=> $this->input->post('nama', true),
-			'phone'	=> $this->input->post('hp', true),
-			'assignment_end_date'	=> $this->input->post('tgl_akhir', true),
-			'kode_provinsi'	=> $this->input->post('kode_provinsi', true),
-			'kode_kab_kota'	=> $this->input->post('kode_kab_kota', true),
+			'npk'	=> ($this->input->post('npk', true) == '') ? NULL : $this->input->post('npk', true),
+			'fullname'	=> ($this->input->post('nama', true) == '') ? NULL : $this->input->post('nama', true),
+			'phone'	=> ($this->input->post('hp', true) == '') ? NULL : $this->input->post('hp', true),
+			'assignment_end_date'	=> ($this->input->post('tgl_akhir', true) == '') ? '0000-00-00' : $this->input->post('tgl_akhir', true),
+			'kode_provinsi'	=> ($this->input->post('kode_provinsi', true) == '') ? NULL : $this->input->post('kode_provinsi', true),
+			'kode_kab_kota'	=> ($this->input->post('kode_kab_kota', true) == '') ? NULL : $this->input->post('kode_kab_kota', true),
 		];
-		print_r($data);
-		die();
+
 
 		if ($id) {
 			$this->db->where('id', $id);
 			$ins =  $this->db->update('wa_surveyor', $data);
 		} else {
 			$ins =  $this->db->insert('wa_surveyor', $data);
+		}
+
+		if (is_uploaded_file($_FILES['files']['tmp_name'])) {
+			$this->db->delete('fl_field_staff', array('targetkk_id' => $id));
+			$sourcePath = $_FILES['files']['tmp_name'];
+			$namf = $_FILES['files']['name'];
+			$rep = str_replace(" ", "_", $namf);
+			$fil = date('Ymd') . date("his") . $rep;
+			$targetPath = "uploads/data_field_staff/" . $fil;
+			move_uploaded_file($sourcePath, FCPATH . $targetPath);
+			$data_f = [
+				'targetkk_id' => $id,
+				'file_name' => $fil,
+				'dir_name' => $targetPath,
+			];
+			$ins =  $this->db->insert('fl_field_staff', $data_f);
 		}
 		if ($ins) {
 			echo json_encode(['sts' => 'success', 'message' => 'Data Berhasil Disimpan!']);

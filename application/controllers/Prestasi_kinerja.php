@@ -36,27 +36,51 @@ class Prestasi_kinerja extends CI_Controller
 		}
 		echo json_encode($data);
 	}
-	public function get_all($idtab = '', $tahun)
+	public function get_all($idtab = '', $tahun, $kate = '')
 	{
 		$data = [];
 
 		if ($idtab == 'pertama') {
 			$this->db->where('tahun_anggaran', $tahun);
-			$get = $this->global->get_all('v_dashboard_prestasi_kinerja');;
+			$get = $this->global->get_all('v_dashboard_prestasi_kinerja');
 			foreach ($get as $key => $value) {
 				$this->db->where('targetkk_id', @$value->id);
-				$dt = $this->db->get('wa_targetkk_file')->row();
+
+				if ($kate == 'penlok') {
+					$dt = $this->db->get('wa_targetkk_file')->row();
+				} else  if ($kate == 'penyuluhan') {
+					$dt = $this->db->get('fl_penyuluhan')->row();
+				} else  if ($kate == 'pemetaan') {
+					$dt = $this->db->get('wa_targetkk_file')->row();
+				} else  if ($kate == 'pemberdayaan') {
+					$dt = $this->db->get('fl_penetapan_model_pemberdayaan')->row();
+				} else  if ($kate == 'penyusunan') {
+					$dt = $this->db->get('fl_penyusunan_data')->row();
+				}
 				if (isset($dt)) {
 					$val = "<a class='btn btn-primary btn-md' target='_blank' href='" . base_url($dt->dir_name) . "'><i class='fa fa-download'></i></a>";
-					// $val = $dt->file_name;
+					if ($kate == 'penlok') {
+						$tglsk = date("d/m/Y", strtotime($dt->tanggal_sk));
+					} else if ($kate == 'penyuluhan') {
+						$tglsk = date("d/m/Y", strtotime($dt->tanggal_penyuluhan));
+					} else if ($kate == 'pemberdayaan') {
+						$tglsk = date("d/m/Y", strtotime($dt->tanggal_model_pemberdayaan));
+					} else if ($kate == 'penyusunan') {
+						$tglsk = date("d/m/Y", strtotime($dt->tanggal_penyusunan_data));
+					}
+					$tglup = date("d/m/Y", strtotime(substr($dt->created, 0, 10)));
 				} else {
 					$val = '-';
+					$tglsk = '';
+					$tglup = '';
 				}
+
+
 				$a = [
 					$key + 1,
 					@$value->nama_kantor,
-					@$value->tanggal_sk1,
-					@$value->tanggal_upload,
+					$tglsk,
+					$tglup,
 					$val
 
 				];
