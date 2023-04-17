@@ -19,13 +19,23 @@ class Pengembangan extends CI_Controller {
 	
 	public function get_all()
 	{
-		$get=$this->global->get_all('v_datatable_desa');
+		$role = $this->session->userdata('login')['role_user'];
+		$kabkot = $this->session->userdata('login')['kode_kab_kota'];
+		if ($role == 5) {
+			$this->db->where('kode_kab_kota', $kabkot);
+		}
+		$get=$this->global->get_all('v_dt_penlok_ketiga');
+
 		$data = [];
 		foreach ($get as $key => $value) {
 			$a = [
-				$key+1,$value->nama_provinsi,$value->nama_kab_kota,$value->nama_kecamatan,$value->nama_desa_kelurahan,
-				'<a type="button" style="display:inline" href="'.base_url('pengembangan/upload/').$value->kode_kel.'" class="btn btn-primary"><i class="fas fa-upload"></i></a>'.
-				'<a type="button" style="display:inline" href="'.base_url('pengembangan/edit/').$value->kode_kel.'" class="btn btn-success"><i class="fas fa-plus"></i></a>'
+				$key+1,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,
+				rupiah(@$value->anggaran_rencana_usaha),rupiah(@$value->realisasi_rencana_usaha),
+				'<a type="button" style="display:inline" href="'.base_url('pengembangan/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload"></i></a>'.
+				'<a type="button" style="display:inline" href="'.base_url('detail_pengembangan/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
+				'<button type="button" id="realisasi" onclick="realisasi(\''.$value->kode_kab_kota.'\','.$value->tahun_anggaran.',\''.$value->nama_kab_kota.'\')" class="btn btn-warning "><i class="fas fa-edit"></i></button>'.
+				'<a type="button" style="display:inline" target="_blank" href="'.base_url('export_pdf/pengembangan_usaha_a/').$value->kode_kab_kota.'" title="Export Laporan A" class="btn btn-info"><b>A</b></a>'.
+				'<a type="button" style="display:inline" target="_blank" href="'.base_url('export_pdf/pengembangan_usaha_b/').$value->kode_kab_kota.'" title="Export Laporan B" class="btn btn-secondary"><b>B</b></a>'
 			];
 			array_push($data,$a);
 		}
@@ -152,7 +162,7 @@ class Pengembangan extends CI_Controller {
 	{
 		$data['id']=$id;
 		$data['nik']=$this->db->get('wa_kuesioner_re')->result();
-		$data['title']= 'Home - Master Data - Admin Pusat - Sektor Usaha - Baru';
+		$data['title']= 'Home - Entry Subject Object - Tahun Ketiga - Penggunaan Rancangan Usaha - Baru';
 		$data['data'] = $this->global->get_by_one('dt_pengembangan_rencana_usaha',$id,'id');
 		$this->skin->view('pengembangan/edit',$data);
 
@@ -161,7 +171,7 @@ class Pengembangan extends CI_Controller {
 	public function upload($id='')
 	{
 		$data['id']=$id;
-		$data['title']= 'Home - Master Data - Admin Pusat - Sektor Usaha - Upload';
+		$data['title']= 'Home - Entry Subject Object - Tahun Ketiga - Penggunaan Rancangan Usaha - Upload';
 		$data['data'] = $this->global->get_by_one('dt_pengembangan_rencana_usaha',$id,'id');
 		$this->skin->view('pengembangan/upload',$data);
 
@@ -363,6 +373,30 @@ class Pengembangan extends CI_Controller {
     				'luas' => $luas == '' ? 0:  $luas ,
     			]);
     }
+
+
+	public function getRealisasi($kab='',$tahun)
+	{
+		$data=$this->pengembangan->getRealisasi($kab,$tahun);
+		echo json_encode($data);
+	}
+	
+	public function edit_realisasi()
+	{
+		$data =[
+					'realisasi_rencana_usaha' => str_replace('.', '', $this->input->post('realisasi',true))
+
+					];
+			$this->db->where('kode_kab_kota', $this->input->post('kode_kab_kota',true));
+			$this->db->where('tahun_anggaran', $this->input->post('tahun_anggaran',true));
+		$ins =	$this->db->update('wa_anggaran_ketiga', $data);
+		if($ins){
+			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
+		}else{
+			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
+		}
+
+	}
 }
 
 

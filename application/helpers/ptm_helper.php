@@ -43,5 +43,18 @@ function tanggal_indonesia_jam($tanggal) {
 
 	return $date[2] . ' ' . $bulan[$date[1]] . ' ' . $date[0]. ' Pukul ' . @$date[3]; // hasil yang di kembalikan
 }
+
+function rupiah($angka,$koma=''){
+	$koma = $koma == '' ? 0 : $koma;
+	$hasil_rupiah = "Rp " . number_format($angka,$koma,',','.');
+	return $hasil_rupiah;
+ 
+}
+ function format_number($angka,$koma=''){
+	$koma = $koma == '' ? 0 : $koma;
+	$hasil_rupiah =number_format($angka,$koma,',','.');
+	return $hasil_rupiah;
+ 
+}
  
 ?>

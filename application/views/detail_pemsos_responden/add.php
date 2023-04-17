@@ -260,6 +260,20 @@
 				                    </div>
 				                </div>
 				            </div>
+				            <div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="files1">Pilih File</label>
+										<input name="files1" id="files1" required="" type="file" class="form-control-file clear">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="files2">Pilih File</label>
+										<input name="files2" id="files2"  type="file" class="form-control-file clear">
+									</div>
+								</div>
+							</div>
 				        </div>
 				        
 

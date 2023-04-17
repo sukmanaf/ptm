@@ -33,8 +33,15 @@ class Detail_pemsos_responden extends CI_Controller {
 		// echo "</pre>";exit();
 		foreach ($get as $key => $value) {
 			$jk = $value->jenis_kelamin == "L" ? 'Laki-laki' : 'Perempuan';
+			$btn_file='';
+			if (!empty($value->file)) {
+				$files = explode(',', $value->file);
+				foreach ($files as $k => $v) {
+					$btn_file .='<a type="button"  style="display:inline" target="_blank" href="'.base_url().$v.'" class="btn btn-warning"><i class="fas fa-eye" ></i></a>';
+				}
+			}
 			$a = [
-				$key+1,@$value->nik,@$value->nama_responden_utama,$jk,
+				$key+1,@$value->nik,@$value->nama_responden_utama,$jk,$btn_file,
 				// '<a type="button" href="'.base_url('detail_pemsos_responden/edit/').$id.'/'.$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
 				'<a type="button"  style="display:inline" href="'.base_url('detail_pemsos_responden/detail/').$value->id_targetkk_desa.'" class="btn btn-success"><i class="fas fa-edit" ></i></a>'
 				// '<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
@@ -83,6 +90,11 @@ class Detail_pemsos_responden extends CI_Controller {
 		$data['sektor']=$this->global->get_all('ms_kuesioner_re10a');
 		$data['terdaftar']=$this->pemsos->terdaftar();
 		$data['tidakTerdaftar']=$this->pemsos->tidakTerdaftar();
+		$role = $this->session->userdata('login')['role_user'];
+		$kabkot = $this->session->userdata('login')['kode_kab_kota'];
+		if ($role == 5) {
+			$this->db->where('kode_kab_kota', $kabkot);
+		}
 		$data['fieldstaff']=$this->pemsos->fieldstaff();
 		
 		$data['data'] = $this->global->get_by_one('wa_targetkk_desa',$id,'id');
@@ -93,7 +105,17 @@ class Detail_pemsos_responden extends CI_Controller {
 
 	public function create()
 	{
-
+		foreach ($_FILES as $key => $value) {
+			$allowed_type = array('image/jpeg'=>1,'image/jpg'=>1,'image/png'=>1,'image/gif'=>1,'application/pdf'=>1);
+				if (!empty($_FILES[$key]['name'])) {
+					$filetype = mime_content_type($_FILES[$key]['tmp_name']);
+					if (@$allowed_type[$filetype]) {
+					}else{
+						echo json_encode(['sts' => 'fail', 'message' => 'Type FIle Salah atatu File Rusak!']);
+						exit();
+					}			
+				}
+		}
 		$nokk = $this->input->post('no_kk',true);
 
 		if (strlen($nokk) != 16) {
@@ -145,6 +167,7 @@ class Detail_pemsos_responden extends CI_Controller {
 				];
 
 		$ins =  $this->db->insert('wa_kuesioner_re', $data);
+		$insert_id = $this->db->insert_id();
 		if ($ins) {
 			
 			if($istelf == 1){
@@ -159,9 +182,8 @@ class Detail_pemsos_responden extends CI_Controller {
 				$a=['nik' => $nik,'kode_status_tanah_belum_terdaftar'=>$tanah_terdaftar];
 				$this->db->insert('wa_kuesioner_re09b', $a);
 			}
-		// echo "<pre>";
-		// print_r ($_POST);
-		// echo "</pre>";exit();
+			$this->do_upload($insert_id);
+
 
 			$this->db->insert_batch('wa_kuesioner_re10', $arr);
 
@@ -222,6 +244,54 @@ class Detail_pemsos_responden extends CI_Controller {
 			echo json_encode(['sts' => 'fail']);
 		}
 	}
+
+	public function do_upload($id)
+    {
+        	// echo "<pre>";
+        	// print_r ($_FILES);
+        	// echo "</pre>";exit();
+
+			
+    	foreach ($_FILES as $key => $value) {
+            if ($_FILES[$key]['name']) {
+        		
+    			$ext = pathinfo($_FILES[$key]['name'], PATHINFO_EXTENSION);
+				$name = $id.'_'.$key.'_'.date('Ymdhis').'.'.$ext;
+				
+
+    			$_FILES[$key]['name'] = $name;
+
+                $config['upload_path']          = './uploads/kuesioner_re/';
+                $config['allowed_types']        = 'pdf|jpeg|jpg|png';
+
+                $this->load->library('upload', $config);
+
+                if ( ! $this->upload->do_upload($key))
+                {
+                	$error = array('error' => $this->upload->display_errors());
+
+					echo json_encode(['sts' => 'fail','msg' => 'Upload gagal!','error' => $error]);
+                }
+                else
+                {
+     //                    // $data = array('upload_data' => $this->upload->data());
+                	$data = [
+                					'wa_kuesioner_re_id' => $id,
+	                    			'file_name' => $this->upload->data()['file_name'],
+	                    			'dir_name' => 'uploads/kuesioner_re/'.$this->upload->data()['file_name'],
+	                			];
+    					$this->db->insert('fl_kuesioner_re', $data);
+					// echo json_encode(['sts' => 'success','msg' => 'Upload Lampiran Sukses!']);
+
+
+                        // $this->load->view('upload_success', $data);
+                }
+        	}else{
+					// echo json_encode(['sts' => 'success','msg' => 'Upload Lampiran Sukses!']);
+        	}
+        }
+        	
+    }
 
 		public function getSubsektor($kode='')
 	{

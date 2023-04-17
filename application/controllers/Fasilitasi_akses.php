@@ -13,18 +13,27 @@ class Fasilitasi_akses extends CI_Controller {
 
 	public function index()
 	{
-		$data['title'] = 'Home - Master Data - Admin Pusat - Fasilitas Akses Pemasaran';
+		$data['title'] = 'Home - Entry Subject Object - Tahun Ketiga -  Fasilitasi Akses Pemasaran';
 		$this->skin->view('fasilitasi_akses/index',$data);
 	}
 	public function get_all()
 	{
 
-		$get=$this->global->get_all('v_fasilitasi_akses');
+		$role = $this->session->userdata('login')['role_user'];
+		$kabkot = $this->session->userdata('login')['kode_kab_kota'];
+		if ($role == 5) {
+			$this->db->where('kode_kab_kota', $kabkot);
+		}
+		$get=$this->global->get_all('v_dt_penlok_ketiga');
 		$data = [];
 		foreach ($get as $key => $value) {
 			$a = [
-				$key+1,$value->nama_provinsi,$value->nama_kab_kota,$value->nama_kecamatan,$value->nama_desa_kelurahan,
-				'<a type="button" href="'.base_url('fasilitasi_akses/edit/').$value->kode_kel.'" class="btn btn-success"><i class="fas fa-plus"></i></a>'
+				
+				$key+1,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,
+				rupiah(@$value->anggaran_akses_pemasaran),rupiah(@$value->realisasi_akses_pemasaran),
+				'<a type="button" title="Detail Data" style="display:inline" href="'.base_url('detail_fasilitasi_akses/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
+				'<button type="button" id="realisasi" onclick="realisasi(\''.$value->kode_kab_kota.'\','.$value->tahun_anggaran.',\''.$value->nama_kab_kota.'\')" title="Edit" class="btn btn-warning "><i class="fas fa-edit"></i></button>'.
+				'<a type="button" title="Download PDF" target="_blank" style="display:inline" href="'.base_url('export_pdf/fasilitasi_akses/').$value->kode_kab_kota.'" class="btn btn-info"><i class="fas fa-file"></i></a>'
 
 
 			];
@@ -72,7 +81,7 @@ class Fasilitasi_akses extends CI_Controller {
 
 		$data['nik']=$this->db->get('wa_kuesioner_re')->result();
 		
-		$data['title']= 'Home - Master Data - Admin Pusat - Fasilitas Akses Pemasaran - Baru';
+		$data['title']= 'Home - Entry Subject Object - Tahun Ketiga -  Fasilitasi Akses Pemasaran - Baru';
 		$this->skin->view('fasilitasi_akses/add',$data);
 	}
 
@@ -107,7 +116,7 @@ class Fasilitasi_akses extends CI_Controller {
 	{
 		$data['id'] = $id;
 		$data['nik']=$this->db->get('wa_kuesioner_re')->result();
-		$data['title']= 'Home - Master Data - Admin Pusat - Fasilitas Akses Pemasaran - Edit';
+		$data['title']= 'Home - Entry Subject Object - Tahun Ketiga -  Fasilitasi Akses Pemasaran - Edit';
 		$data['data'] = $this->global->get_by_one('tes_data',$id,'id');
 		$this->skin->view('fasilitasi_akses/edit',$data);
 
@@ -177,6 +186,30 @@ class Fasilitasi_akses extends CI_Controller {
     				'luas' => $luas,
     			]);
     }
+
+
+	public function getRealisasi($kab='',$tahun)
+	{
+		$data=$this->fasilitasi_akses->getRealisasi($kab,$tahun);
+		echo json_encode($data);
+	}
+	
+	public function edit_realisasi()
+	{
+		$data =[
+					'realisasi_akses_pemasaran' => str_replace('.', '', $this->input->post('realisasi',true))
+
+					];
+			$this->db->where('kode_kab_kota', $this->input->post('kode_kab_kota',true));
+			$this->db->where('tahun_anggaran', $this->input->post('tahun_anggaran',true));
+		$ins =	$this->db->update('wa_anggaran_ketiga', $data);
+		if($ins){
+			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
+		}else{
+			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
+		}
+
+	}
 }
 
 

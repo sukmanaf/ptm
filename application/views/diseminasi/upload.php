@@ -28,6 +28,7 @@
 										<option value="lampiran_2">Lampiran 2</option>
 										<option value="lampiran_3">Lampiran 3</option>
 										<option value="lampiran_4">Lampiran 4</option>
+										<option value="laporan_akhir">Laporan Akhir</option>
 									</select>
 								</div>
 							</div>

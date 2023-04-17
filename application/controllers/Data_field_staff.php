@@ -20,6 +20,10 @@ class Data_field_staff extends CI_Controller
 	function tampildata($table = '', $colum = '', $val_colum = '', $combo = '')
 	{
 		// $table='data_kegiatan';
+		$role = $this->session->userdata('login')['role_user'];
+		$kabkot = $this->session->userdata('login')['kode_kab_kota'];
+		
+		
 		$tab = explode("~", $table)[0];
 
 		if ($combo != '') {
@@ -28,16 +32,28 @@ class Data_field_staff extends CI_Controller
 			$this->db->select("$nama as nama");
 			$this->db->select("$kode as kode");
 		}
+
 		if ($colum == '') {
+			if ($role == 5 && $tab == 'ms_kab_kota') {
+				$this->db->where('kode', $kabkot);
+			}
 			$data = $this->db->get($tab)->result_array();
 		} else {
 			$val_colum = str_replace('~', '/', $val_colum);
+			if ($role == 5 && $tab == 'ms_kab_kota') {
+				$this->db->where('kode', $kabkot);
+			}
 			$data = $this->db->get_where($tab, array($colum => str_replace('_', ' ', $val_colum)))->result_array();
 		}
 		echo json_encode($data);
 	}
 	public function get_all()
 	{
+		$role = $this->session->userdata('login')['role_user'];
+		$kabkot = $this->session->userdata('login')['kode_kab_kota'];
+		if ($role == 5) {
+			$this->db->where('kode_kab_kota', $kabkot);
+		}
 		$get = $this->global->get_all('v_data_field_staff');
 		$data = [];
 		foreach ($get as $key => $value) {
@@ -56,7 +72,12 @@ class Data_field_staff extends CI_Controller
 
 	public function add()
 	{
-
+		
+		$role = $this->session->userdata('login')['role_user'];
+		$prov = $this->session->userdata('login')['kode_provinsi'];
+		if ($role == 5) {
+			$this->db->where('kode', $prov);
+		}
 		$data['key'] = $this->db->get('ms_provinsi')->result();
 		$data['title'] = 'Home - Master Data - Admin Pusat - Data Field Staff - Baru';
 		$this->skin->view('data_field_staff/add', $data);

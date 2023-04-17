@@ -32,7 +32,18 @@ class DiseminasiModel extends CI_Model {
 		return $this->db->get('dt_diseminasi')->result();
 	}
 
-	
+	public function getData($id='')
+	{
+		$this->db->where('targetkk_id', $id);
+		return $this->db->get('v_dt_targetkk_perkota')->result();
+	}
+	public function getRealisasi($kab='',$tahun='')
+	{
+		$this->db->where('wa_anggaran_ketiga.tahun_anggaran', $tahun);
+		$this->db->where('wa_anggaran_ketiga.kode_kab_kota', $kab);
+		$this->db->join('ms_kab_kota', 'ms_kab_kota.kode = wa_anggaran_ketiga.kode_kab_kota', 'left');
+		return $this->db->get('wa_anggaran_ketiga')->row_array();
+	}
 
 }
 

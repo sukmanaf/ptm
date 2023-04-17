@@ -57,7 +57,9 @@ class Detail_penetapan_model extends CI_Controller {
 		$data['addPemberdayaan'] = $this->load->view('detail_penetapan_model/append',$data,true);
 		$data['data'] = $this->global->get_by_one('v_kuesioner_re',$id_targetkk_desa,'id_targetkk_desa');
 		$data['targetKK'] = $this->global->get_by_one('wa_targetkk',$id,'id');
-
+		// echo "<pre>";
+		// print_r ($data['data']);
+		// echo "</pre>";exit();
 		$this->skin->view('detail_penetapan_model/add',$data);
 	}
 

@@ -9,10 +9,12 @@ class Dashboard extends CI_Controller
 		parent::__construct();
 		//Do your magic here
 		$this->load->model('GlobalModel', 'global');
+		
 	}
 
 	public function index()
 	{
+
 		$data['title'] = 'Home - Dashboard Realisasi ';
 		$this->skin->view('dashboard/index', $data);
 		$this->load->view('dashboard/js');

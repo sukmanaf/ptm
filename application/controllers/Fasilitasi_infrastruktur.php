@@ -20,13 +20,22 @@ class Fasilitasi_infrastruktur extends CI_Controller {
 	public function get_all()
 	{
 
-		$get=$this->global->get_all('v_fasilitasi_infrastruktur');
+		$role = $this->session->userdata('login')['role_user'];
+		$kabkot = $this->session->userdata('login')['kode_kab_kota'];
+		if ($role == 5) {
+			$this->db->where('kode_kab_kota', $kabkot);
+		}
+		$get=$this->global->get_all('v_dt_penlok_ketiga');
 		$data = [];
 		foreach ($get as $key => $value) {
 			$a = [
-				$key+1,$value->nama_provinsi,$value->nama_kab_kota,$value->nama_kecamatan,$value->nama_desa_kelurahan,
-				'<a type="button" href="'.base_url('fasilitasi_infrastruktur/edit/').$value->kode_kel.'" class="btn btn-success"><i class="fas fa-plus"></i></a>'
-
+				
+				$key+1,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,
+				rupiah(@$value->anggaran_insfratruktur_pendukung),rupiah(@$value->realisasi_insfratruktur_pendukung),
+				'<a type="button" title="Detail Data" style="display:inline" href="'.base_url('detail_fasilitasi_infrastruktur/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
+				'<button type="button" title="Edit" id="realisasi" onclick="realisasi(\''.$value->kode_kab_kota.'\','.$value->tahun_anggaran.',\''.$value->nama_kab_kota.'\')" class="btn btn-warning "><i class="fas fa-edit"></i></button>'.
+				'<a type="button" title="Download PDF" target="_blank" style="display:inline" href="'.base_url('export_pdf/fasilitasi_infrastruktur_sarana/').$value->kode_kab_kota.'" class="btn btn-info btn-sm">Export Sarana</a>'.
+				'<a type="button" title="Download PDF" target="_blank" style="display:inline" href="'.base_url('export_pdf/fasilitasi_infrastruktur_prasarana/').$value->kode_kab_kota.'" class="btn btn-info btn-sm">Export Prasarana</a>'
 
 			];
 			array_push($data,$a);
@@ -223,6 +232,28 @@ class Fasilitasi_infrastruktur extends CI_Controller {
 		echo json_encode($str);
 	}
 
+	public function getRealisasi($kab='',$tahun)
+	{
+		$data=$this->fasilitasi_infrastruktur->getRealisasi($kab,$tahun);
+		echo json_encode($data);
+	}
+	
+	public function edit_realisasi()
+	{
+		$data =[
+					'realisasi_insfratruktur_pendukung' => str_replace('.', '', $this->input->post('realisasi',true))
+
+					];
+			$this->db->where('kode_kab_kota', $this->input->post('kode_kab_kota',true));
+			$this->db->where('tahun_anggaran', $this->input->post('tahun_anggaran',true));
+		$ins =	$this->db->update('wa_anggaran_ketiga', $data);
+		if($ins){
+			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
+		}else{
+			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
+		}
+
+	}
 
 }
 

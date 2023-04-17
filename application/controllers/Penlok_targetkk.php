@@ -19,6 +19,11 @@ class Penlok_targetkk extends CI_Controller {
 	
 	public function get_all()
 	{
+		$role = $this->session->userdata('login')['role_user'];
+		$kabkot = $this->session->userdata('login')['kode_kab_kota'];
+		if ($role == 5) {
+			$this->db->where('kode_kab_kota', $kabkot);
+		}
 		$get=$this->global->get_all('v_dt_penlok_targetkk');
 		$data = [];
 		// echo "<pre>";
@@ -26,9 +31,9 @@ class Penlok_targetkk extends CI_Controller {
 		// echo "</pre>";exit();
 		foreach ($get as $key => $value) {
 			$a = [
-				$key+1,@$value->nip,@$value->nama_pejabat,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun_anggaran,@$value->target_kk,
+				$key+1,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun_anggaran,@$value->target_kk,rupiah($value->anggaran_penlok),rupiah($value->realisasi_penlok),
 					'<a type="button"  style="display:inline" href="'.base_url('detail_penlok/data/').$value->id.'" class="btn btn-primary"><i class="fas fa-search" ></i></a>'.
-					'<a type="button"  style="display:inline" href="'.base_url('penlok_targetkk/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload" ></i></a>'.
+					'<a type="button"  style="display:inline" href="'.base_url('penlok_targetkk/upload/').$value->id.'" class="btn btn-warning"><i class="fas fa-upload" ></i></a>'.
 					'<a type="button" href="'.base_url('penlok_targetkk/edit/').$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
 					'<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
 			];
@@ -37,6 +42,8 @@ class Penlok_targetkk extends CI_Controller {
 
 		echo json_encode($data);
 	}
+
+
 
 	public function get_detail($id)
 	{
@@ -74,6 +81,9 @@ class Penlok_targetkk extends CI_Controller {
 
 	public function create()
 	{
+		// echo "<pre>";
+		// print_r ($_POST);
+		// echo "</pre>";exit();
 		$thn_anggaran = $this->input->post('tahun_anggaran',true);
 		$kd_kabkot = $this->input->post('kode_kab_kota',true);
 		$nip = $this->input->post('nip',true);
@@ -81,6 +91,7 @@ class Penlok_targetkk extends CI_Controller {
 		$checkWil = $this->penlok->cekWIlTahun($kd_kabkot,$thn_anggaran);
 
 		if ($checkWil > 0) {
+
 			echo json_encode(['sts' => 'fail','message' => 'kota/Kabupaten dan Tahun Anggran Sudah ada!']);
 			exit();
 		}
@@ -114,23 +125,13 @@ class Penlok_targetkk extends CI_Controller {
 		$ins =  $this->db->insert('wa_targetkk', $data);
 		$id = $this->db->insert_id();
 		if ($ins) {
-			// foreach ($_FILES as $key => $value) {
-			// 	if (!empty($value['name'])) {
-					
-		 //    		$ext = pathinfo($_FILES[$key]['name'], PATHINFO_EXTENSION);
-		 //    		$name = $id.'sk'.str_replace('file_foto_sk','',$key).'.'.$ext;
-		 //    		$_FILES[$key]['name']=$name;
-			// 		if ($key == 'file_foto_sk1') {
-			// 			$this->upload_sk1($id);
-						
-			// 		}
-			// 		if ($key == 'file_foto_sk2') {
-			// 			$this->upload_sk2($id);
-						
-			// 		}
-			// 	}
-			// }
-			// exit();
+			$data =[
+					'realisasi_penlok' => str_replace('.', '', $this->input->post('realisasi_anggaran',true))
+
+					];
+			$this->db->where('kode_kab_kota', $this->input->post('kode_kab_kota',true));
+			$this->db->where('tahun_anggaran', $this->input->post('tahun_anggaran',true));
+			$this->db->update('wa_realisasi_anggaran', $data);
 			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
 		}else{
 			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
@@ -144,6 +145,7 @@ class Penlok_targetkk extends CI_Controller {
 		$data['prov']=$this->penlok->getProv();
 		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Penetapan Lokasi dan Target KK - Edit';
 		$data['data'] = $this->global->get_by_one('wa_targetkk',$id,'id');
+		$data['anggaran'] = $this->global->get_by_arr('wa_realisasi_anggaran',['kode_kab_kota' => $data['data']['kode_kab_kota'],'tahun_anggaran'  => $data['data']['tahun_anggaran']])[0];
 		$this->skin->view('penlok_targetkk/edit',$data);
 
 	}
@@ -194,22 +196,13 @@ class Penlok_targetkk extends CI_Controller {
 			$ins =  $this->db->update('wa_targetkk', $data);
 
 		if ($ins) {
-			// foreach ($_FILES as $key => $value) {
-			// 	if (!empty($value['name'])) {
-					
-		 //    		$ext = pathinfo($_FILES[$key]['name'], PATHINFO_EXTENSION);
-		 //    		$name = $id.'sk'.str_replace('file_foto_sk','',$key).'.'.$ext;
-		 //    		$_FILES[$key]['name']=$name;
-			// 		if ($key == 'file_foto_sk1') {
-			// 			$this->upload_sk1($id);
-						
-			// 		}
-			// 		if ($key == 'file_foto_sk2') {
-			// 			$this->upload_sk2($id);
-						
-			// 		}
-			// 	}
-			// }
+				$data =[
+						'realisasi_penlok' => str_replace('.', '', $this->input->post('realisasi_anggaran',true))
+
+						];
+			$this->db->where('kode_kab_kota', $this->input->post('kode_kab_kota',true));
+			$this->db->where('tahun_anggaran', $this->input->post('tahun_anggaran',true));
+			$this->db->update('wa_realisasi_anggaran', $data);
 			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
 		}else{
 			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
@@ -232,13 +225,58 @@ class Penlok_targetkk extends CI_Controller {
 	public function getKab($kode='')
 	{
 		$data=$this->penlok->getKab($kode);
-		// echo "<pre>";
-		// print_r ($data);
-		// echo "</pre>";exit();
+
 		$str='<option data-tahun="" data-target="" value="">-- Pilih Kabupaten/Kota --</option>';
 		if (!empty($data)) {
 			foreach ($data as $key => $value) {
-				$str.='<option data-tahun="'.$value->tahun_anggaran.'" data-target="'.$value->target_kk.'" value="'.$value->kode.'">'.$value->nama_kab_kota.'</option>';
+				$str.='<option  value="'.$value->kode.'">'.$value->nama_kab_kota.'</option>';
+			}
+		}
+		echo json_encode($str);
+	}
+	public function getKabEdit($kode='',$kab)
+	{
+		$data=$this->penlok->getKab($kode);
+
+		$str='<option data-tahun="" data-target="" value="">-- Pilih Kabupaten/Kota --</option>';
+		if (!empty($data)) {
+			foreach ($data as $key => $value) {
+				if ($value->kode == $kab) {
+					$str.='<option selected value="'.$value->kode.'">'.$value->nama_kab_kota.'</option>';
+				}else{
+					$str.='<option  value="'.$value->kode.'">'.$value->nama_kab_kota.'</option>';
+				}
+			}
+		}
+		echo json_encode($str);
+	}
+
+
+	public function getYearAnggaran($kode='')
+	{
+		$data=$this->penlok->getYearAnggaran($kode);
+
+		$str='<option data-anggaran="" data-target="" value="">-- Pilih Tahun --</option>';
+		if (!empty($data)) {
+			foreach ($data as $key => $value) {
+				$str.='<option data-anggaran="'.$value->anggaran_penlok.'" data-target="'.$value->target_kk.'" value="'.$value->tahun_anggaran.'">'.$value->tahun_anggaran.'</option>';
+			}
+		}
+		echo json_encode($str);
+	}
+
+	public function getYearAnggaranEdit($kode='',$tahun)
+	{
+		$data=$this->penlok->getYearAnggaran($kode);
+
+		$str='<option data-anggaran="" data-target="" value="">-- Pilih Tahun --</option>';
+		if (!empty($data)) {
+			foreach ($data as $key => $value) {
+				if ($value->tahun_anggaran == $tahun) {
+					$str.='<option selected data-anggaran="'.$value->anggaran_penlok.'" data-target="'.$value->target_kk.'" value="'.$value->tahun_anggaran.'">'.$value->tahun_anggaran.'</option>';
+				}else{
+					$str.='<option data-anggaran="'.$value->anggaran_penlok.'" data-target="'.$value->target_kk.'" value="'.$value->tahun_anggaran.'">'.$value->tahun_anggaran.'</option>';
+				}
 			}
 		}
 		echo json_encode($str);

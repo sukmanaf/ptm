@@ -13,7 +13,21 @@ class DetailPemsosModel extends CI_Model {
 	{
 		$this->db->where('id_targetkk_desa', $id);
 		$this->db->order_by('id', 'desc');
-		return $this->db->get('wa_kuesioner_re')->result();
+		$data = $this->db->get('wa_kuesioner_re')->result();
+		foreach ($data as $key => $value) {
+			$this->db->where('wa_kuesioner_re_id', $value->id);
+			$a = $this->db->get('fl_kuesioner_re')->result();
+			$str = '';
+			if (!empty($a)) {
+
+				foreach ($a as $k => $v) {
+					$str .= $v->dir_name.',';
+				}
+			}
+			$str =substr($str, 0,-1);
+			$data[$key]->file = $str;
+		}
+		return $data;
 	}
 
 	public function getDataKab($id)

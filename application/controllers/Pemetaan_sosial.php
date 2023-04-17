@@ -19,16 +19,32 @@ class Pemetaan_sosial extends CI_Controller {
 	
 	public function get_all()
 	{
-		$get=$this->global->get_all('v_dt_penlok_targetkk');
-		$data = [];
 		// echo "<pre>";
-		// print_r ($get);
+		// print_r ($this->session->userdata('login'));
 		// echo "</pre>";exit();
+		$role = $this->session->userdata('login')['role_user'];
+		$kabkot = $this->session->userdata('login')['kode_kab_kota'];
+		if ($role == 7 || $role == 5) {
+			$this->db->where('kode_kab_kota', $kabkot);
+		}
+		$get=$this->global->get_all('v_dt_penlok_targetkk');
+		// echo $this->db->last_query();
+		$data = [];
+
 		foreach ($get as $key => $value) {
+			if ($role != 7) {
+				$anggaran = rupiah($value->anggaran_pemsos);
+				$realisasi = rupiah($value->realisasi_pemsos);
+				$edit = '<button type="button" id="realisasi" onclick="realisasi(\''.$value->kode_kab_kota.'\','.$value->tahun_anggaran.',\''.$value->nama_kab_kota.'\')" class="btn btn-warning "><i class="fas fa-edit"></i></button>';
+			}else{
+				$anggaran = '-';
+				$realisasi = '-';
+				$edit = '';
+			}
 			$a = [
-				$key+1,@$value->nip,@$value->nama_pejabat,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,
-	
-					'<a type="button" style="display:inline" href="'.base_url('detail_pemsos/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'
+				$key+1,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,$anggaran,$realisasi,
+					'<a type="button" style="display:inline" href="'.base_url('detail_pemsos/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.$edit
+
 				// '<a type="button" href="'.base_url('pemetaan_sosial/edit/').$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
 				// '<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
 			];
@@ -96,22 +112,21 @@ class Pemetaan_sosial extends CI_Controller {
 		$ins =  $this->db->insert('wa_targetkk', $data);
 		$id = $this->db->insert_id();
 		if ($ins) {
-			// foreach ($_FILES as $key => $value) {
-			// 	if (!empty($value['name'])) {
+			foreach ($_FILES as $key => $value) {
+				if (!empty($value['name'])) {
 					
-		 //    		$ext = pathinfo($_FILES[$key]['name'], PATHINFO_EXTENSION);
-		 //    		$name = $id.'sk'.str_replace('file_foto_sk','',$key).'.'.$ext;
-		 //    		$_FILES[$key]['name']=$name;
-			// 		if ($key == 'file_foto_sk1') {
-			// 			$this->upload_sk1($id);
+		    		$ext = pathinfo($_FILES[$key]['name'], PATHINFO_EXTENSION);
+		    		$name = $id.'sk'.str_replace('file_foto_sk','',$key).'.'.$ext;
+		    		$_FILES[$key]['name']=$name;
+					if ($key == 'file_foto_sk1') {
+						$this->upload_sk1($id);
 						
-			// 		}
-			// 		if ($key == 'file_foto_sk2') {
-			// 			$this->upload_sk2($id);
-						
-			// 		}
-			// 	}
-			// }
+					}
+					if ($key == 'file_foto_sk2') {
+						$this->upload_sk2($id);
+					}
+				}
+			}
 			// exit();
 			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
 		}else{
@@ -512,6 +527,29 @@ class Pemetaan_sosial extends CI_Controller {
 		}else{
 			echo json_encode(['sts' => 'fail']);
 		}
+	}
+
+	public function getRealisasi($kab='',$tahun)
+	{
+		$data=$this->pemsos->getRealisasi($kab,$tahun);
+		echo json_encode($data);
+	}
+	
+	public function edit_realisasi()
+	{
+		$data =[
+					'realisasi_pemsos' => str_replace('.', '', $this->input->post('realisasi_pemsos',true))
+
+					];
+			$this->db->where('kode_kab_kota', $this->input->post('kode_kab_kota',true));
+			$this->db->where('tahun_anggaran', $this->input->post('tahun_anggaran',true));
+		$ins =	$this->db->update('wa_realisasi_anggaran', $data);
+		if($ins){
+			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
+		}else{
+			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
+		}
+
 	}
 
 }

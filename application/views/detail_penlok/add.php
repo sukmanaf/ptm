@@ -63,8 +63,8 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for='jumlah'>Target KK Desa/Kelurahan</label>
-									<input name='jumlah' id='jumlah' type='text' reaquired value='' required="" class="form-control numbers">
-									<input name='sisa' id='sisa' type='hidden' reaquired value='<?=intVal($data['target_kk']-$data['kuota_terpakai'])?>'class="form-control numbers">
+									<input name='jumlah' id='jumlah' type='text' onkeyup="targetChange($(this).val())" reaquired value='' required="" class="form-control numbers">
+									<input name='sisa' id='sisa' type='hidden'  reaquired value='<?=intVal($data['target_kk']-$data['kuota_terpakai'])?>'class="form-control numbers">
 									<span><i>* tidak bisa melebihi sisa kuota, sisa kuota <?=intVal($data['target_kk']-$data['kuota_terpakai'])?></i></span>
 								</div>
 							</div>
@@ -76,7 +76,7 @@
 										<div class="input-group-append" data-target="#target_batas_waktu_penyelesaian" data-toggle="datetimepicker">
 											<div class="input-group-text"><i class="fa fa-calendar"></i></div>
 										</div> -->
-												<input type="date" class="form-control" name="target_batas_waktu_penyelesaian">
+												<input type="date" required="" class="form-control" name="target_batas_waktu_penyelesaian">
 
 									</div>
 									
@@ -191,7 +191,7 @@
 	        	if (response.sts == 'success') {
 	        		toastr.success(response.message);
 	        		setTimeout(function() {
-	        			location.reload()
+	        			window.location.replace('<?=base_url()?>/detail_penlok/data/<?=$id?>')
 	        		}, 3000);
 	        	}else{
 	        		toastr.error(response.message);
@@ -214,6 +214,17 @@
 		});
     }
 
+
+     function targetChange(val) {
+    	var anggaran = <?=intVal($data['target_kk']-$data['kuota_terpakai'])?>; 
+        var val = val.split('.').join('');
+        if (parseInt(val) >= anggaran) {
+        	$('#jumlah').val(anggaran)
+        }else{
+        	$('#jumlah').val(val)
+	    }
+
+	}
    
 
 	

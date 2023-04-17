@@ -20,6 +20,7 @@
                 
 						<div class="row">
 							<div class="col-md-6">
+								
 								<div class="form-group">
 									<label for='fc_o'>Kab Kota</label>
 									<input type="text" name="" value="<?=@$datakab['nama_kab_kota']?>" class="form-control" readonly >
@@ -67,7 +68,7 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for='jumlah'>Target KK Desa/Kelurahan</label>
-									<input name='jumlah' id='jumlah' type='text' reaquired value='<?=@$data["jumlah"]?>' class="form-control numbers">
+									<input name='jumlah' id='jumlah' type='text' onkeyup="targetChange($(this).val())" reaquired value='<?=@$data["jumlah"]?>' class="form-control numbers">
 									<input name='sisa' id='sisa' type='hidden' reaquired value='<?=intVal($datakab['target_kk']-$datakab['kuota_terpakai']+$data['jumlah'])?>'class="form-control numbers">
 									
 									<span><i>* tidak bisa melebihi sisa kuota, sisa kuota <?=intVal($datakab['target_kk']-$datakab['kuota_terpakai']+$data['jumlah'])?></i></span>
@@ -89,7 +90,7 @@
 												// $datesk2 =  date_format($date2,"Y-m-d");
 
 												?>
-										<input type="date" class="form-control" name="target_batas_waktu_penyelesaian" value="<?=@$data['target_batas_waktu_penyelesaian']?>">
+										<input type="date" class="form-control" required="" name="target_batas_waktu_penyelesaian" value="<?=@$data['target_batas_waktu_penyelesaian']?>">
 
 									</div>
 									
@@ -207,7 +208,7 @@
 	        	if (response.sts == 'success') {
 	        		toastr.success(response.message);
 	        		setTimeout(function() {
-	        			location.reload()
+	        			window.location.replace('<?=base_url()?>/detail_penlok/data/<?=$datakab['id']?>')
 	        		}, 3000);
 	        	}else{
 	        		toastr.error(response.message);
@@ -240,4 +241,15 @@
    
 
 	
+     function targetChange(val) {
+    	var anggaran = <?=intVal($datakab['target_kk']-$datakab['kuota_terpakai']+$data['jumlah'])?>; 
+        var val = val.split('.').join('');
+        console.log(anggaran)
+        if (parseInt(val) >= anggaran) {
+        	$('#jumlah').val(anggaran)
+        }else{
+        	$('#jumlah').val(val)
+	    }
+
+	}
 </script>

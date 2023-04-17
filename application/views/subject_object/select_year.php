@@ -1,4 +1,6 @@
-						
+<?php
+$role = $this->session->userdata('login')['role_user'];
+?>						
 <div class="col-md-12">
 	<div class="row">
 		<div class="col-lg-4 col-xs-6">
@@ -15,7 +17,8 @@
 				</a>
 			</div>
 		</div>
-
+		<?php if ($role != 7): ?>
+			
 		<div class="col-lg-4 col-xs-6">
 
 			<div class="small-box bg-info">
@@ -47,6 +50,7 @@
 				</a>
 			</div>
 		</div>
+		<?php endif ?>
 	</div>
 
 </div>

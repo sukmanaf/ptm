@@ -273,6 +273,7 @@
     });
 
     function loadDtLk() {
+        return false
     	$('#LKtable').dataTable().fnClearTable();
     	$('#LKtable').dataTable().fnDestroy();
     	$('#LKtable').DataTable({
