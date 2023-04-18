@@ -12,10 +12,18 @@ class Penlok_targetkkModel extends CI_Model {
 	}
 	public function getKab($prov='')
 	{
-		$this->db->select('ms_kab_kota.*,wa_realisasi_anggaran.target_kk,wa_realisasi_anggaran.tahun_anggaran');
+		$this->db->select('ms_kab_kota.*');
 		$this->db->join('ms_kab_kota', 'ms_kab_kota.kode = wa_realisasi_anggaran.kode_kab_kota', 'left');
 		$this->db->where('ms_kab_kota.kode_provinsi', $prov);
-		$this->db->group_by('ms_kab_kota.id,wa_realisasi_anggaran.tahun_anggaran,ms_kab_kota.kode,wa_realisasi_anggaran.target_kk,ms_kab_kota.nama_kab_kota,ms_kab_kota.kode_provinsi');
+		$this->db->group_by('ms_kab_kota.id,ms_kab_kota.kode,ms_kab_kota.nama_kab_kota,ms_kab_kota.kode_provinsi');
+		return $this->db->get('wa_realisasi_anggaran')->result();
+	}
+	public function getYearAnggaran($kab='')
+	{
+		$this->db->select('ms_kab_kota.*,wa_realisasi_anggaran.target_kk,wa_realisasi_anggaran.tahun_anggaran,wa_realisasi_anggaran.anggaran_penlok');
+		$this->db->join('ms_kab_kota', 'ms_kab_kota.kode = wa_realisasi_anggaran.kode_kab_kota', 'left');
+		$this->db->where('ms_kab_kota.kode', $kab);
+		$this->db->group_by('ms_kab_kota.id,wa_realisasi_anggaran.tahun_anggaran,ms_kab_kota.kode,wa_realisasi_anggaran.target_kk,ms_kab_kota.nama_kab_kota,ms_kab_kota.kode_provinsi,wa_realisasi_anggaran.anggaran_penlok');
 		return $this->db->get('wa_realisasi_anggaran')->result();
 	}
 
@@ -25,6 +33,8 @@ class Penlok_targetkkModel extends CI_Model {
 		$this->db->where('tahun_anggaran', $tahun);
 		return $this->db->get('wa_targetkk')->num_rows();;
 	}
+
+	
 
 }
 

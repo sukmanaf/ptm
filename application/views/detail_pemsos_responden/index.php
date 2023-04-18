@@ -35,6 +35,7 @@
 		              <th>NIK</th>
 		              <th>Nama</th>
 		              <th>Jenis Kelamin</th>
+		              <th>File</th>
 		              <th style="width: 100px !important">Aksi</th>
 	            </tr>
 	          </thead>

@@ -18,10 +18,10 @@ class Export_pdf extends CI_Controller {
 	}
 
 
-	public function fasilitasi_infrastruktur_sarana()
+	public function fasilitasi_infrastruktur_sarana($kode)
 	{
 
-		$datas = $this->global->print_fasilitasi_infrastruktur('sarana');		
+		$datas = $this->global->print_fasilitasi_infrastruktur($kode,'sarana');		
 
 
 		$pdf = new FPDF('L', 'mm','Letter');
@@ -108,10 +108,10 @@ class Export_pdf extends CI_Controller {
         $pdf->Output();
 	
 	}
-	public function fasilitasi_infrastruktur_prasarana()
+	public function fasilitasi_infrastruktur_prasarana($kode)
 	{
 
-		$datas = $this->global->print_fasilitasi_infrastruktur('prasarana');		
+		$datas = $this->global->print_fasilitasi_infrastruktur($kode,'prasarana');		
 		// echo "<pre>";
 		// print_r ($data);
 		// echo "</pre>";exit();
@@ -201,10 +201,10 @@ class Export_pdf extends CI_Controller {
 	}
 
 
-	public function pengembangan_usaha_a()
+	public function pengembangan_usaha_a($kode)
 	{
 
-		$datas = $this->global->print_pengembangan();		
+		$datas = $this->global->print_pengembangan($kode);		
 		
 		$pdf = new PDF_MC_Table('L', 'mm','Letter');
 		foreach ($datas as $k => $v) {
@@ -317,10 +317,10 @@ class Export_pdf extends CI_Controller {
         $pdf->Output();
 	
 	}
-	public function pengembangan_usaha_b()
+	public function pengembangan_usaha_b($kode)
 	{
 
-		$datas = $this->global->print_pengembangan();		
+		$datas = $this->global->print_pengembangan($kode);		
 		
 		$pdf = new PDF_MC_Table('L', 'mm','Letter');
 		foreach ($datas as $k => $v) {
@@ -395,10 +395,10 @@ class Export_pdf extends CI_Controller {
 	
 	}
 
-	public function fasilitasi_akses()
+	public function fasilitasi_akses($kode)
 	{
 
-		$datas = $this->global->print_fasilitasi_akses('sarana');		
+		$datas = $this->global->print_fasilitasi_akses($kode,'sarana');		
 		// echo "<pre>";
 		// print_r ($datas);
 		// echo "</pre>";exit();
@@ -539,10 +539,10 @@ class Export_pdf extends CI_Controller {
 	}
 
 	
-	public function diseminasi()
+	public function diseminasi($kode)
 	{
 
-		$datas = $this->global->print_pengembangan();		
+		$datas = $this->global->print_diseminasi($kode);		
 		
 		$pdf = new PDF_MC_Table('L', 'mm','Letter');
 		foreach ($datas as $k => $v) {
@@ -610,15 +610,17 @@ class Export_pdf extends CI_Controller {
 	
 	}
 
-	public function diseminasi_not_in()
+	public function diseminasi_not_in($kode)
 	{
 
-		$datas = $this->db->get('v_print_diseminasi_not_in')->result();		
+		$datas = $this->global->print_diseminasi_not_in($kode);		
+			
 		// echo "<pre>";
 		// print_r ($datas);
 		// echo "</pre>";exit();
 		$pdf = new PDF_MC_Table('P', 'mm','Letter');
-	    $pdf->AddPage();
+		foreach ($datas as $k => $v) {
+		    $pdf->AddPage();
 
 		$pdf->SetFont('Arial','B',12);
 		$pdf->Cell(0,5,"Subjek Yang Tidak Mendapatkan Pendampingan Kegiatan ",0,1,'C');
@@ -642,7 +644,7 @@ class Export_pdf extends CI_Controller {
 		$pdf->SetTextColor(0,0,0);
 
 		$pdf->SetFont('Arial','',8);
-		foreach ($datas as $key => $value) {
+		foreach ($v as $key => $value) {
 			
 		 $pdf->Row(Array(
 				$key+1,
@@ -652,7 +654,9 @@ class Export_pdf extends CI_Controller {
 				$value->keterangan,
 		 ));
 		}
-		// =========================
+
+		}
+				// =========================
 		
         $pdf->Output();
 	

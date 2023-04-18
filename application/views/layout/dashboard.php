@@ -32,9 +32,18 @@
 	<link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 	<!-- leafletjs -->
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+
+	<style type="text/css">
+		.table{
+			width: 100% !important;
+		}
+	</style>
 </head>
 
 <body class="hold-transition sidebar-mini">
+<?php
+$role = $this->session->userdata('login')['role_user'];
+?>	
 	<div class="wrapper">
 		<!-- Navbar -->
 		<nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -43,7 +52,16 @@
 				<li class="nav-item">
 					<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
 				</li>
+				<li class="nav-item" style="float:right">
+				</li>
+			
 
+			</ul>
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+
+						<a class="btn btn-dark btn-sm" href="<?=base_url('login/logout')?>" >Logout</a>
+				</li>
 			</ul>
 
 			<!-- Right navbar links -->
@@ -70,7 +88,8 @@
 					</div>
 					<div class="info">
 						<a href="#" class="d-block">Administrator</a>
-						<a href="#" data-toggle="modal" data-target="#modal-logout"><i class="fa fa-circle text-success"></i> Online</a>
+						<a href="#" data-toggle="modal" data-target="#modal-logout"><i class="fa fa-circle text-success"></i> Online</a><br>
+						<!-- <span onclick="logout()">Logout</span> -->
 					</div>
 				</div>
 
@@ -145,6 +164,7 @@
 					</li> -->
 
 
+						<?php if ($role != 7): ?>
 
 						<li class="nav-item">
 							<a href="http://194.233.71.171/ptm-web/dashboard" class='nav-link '>
@@ -287,6 +307,131 @@
 								</li>
 
 							</ul>
+						</li> 
+						<li class='nav-item '>
+							<a href="#" class='nav-link '>
+								<i class="nav-icon fas fa-copy"></i>
+								<p>
+									Master Data
+									<i class="fas fa-angle-left right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<?php if ($role != 5): ?>
+
+								<li class='nav-item '>
+									<a href="#" class='nav-link  menu-open'>
+										<i class="far fa-circle nav-icon"></i>
+										<p>
+											Admin Pusat
+											<i class="right fas fa-angle-left"></i>
+										</p>
+									</a>
+									<ul class="nav nav-treeview">
+										<li class="nav-item">
+											<a href='<?= base_url('sektor_usaha') ?>' class="nav-link">
+												<i class='nav-icon fa-circle far'></i>
+												<p>Sektor Usaha</p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href='<?= base_url('sub_sektor_usaha') ?>' class="nav-link">
+												<i class='nav-icon fa-circle far'></i>
+												<p>Sub Sektor Usaha</p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href='<?= base_url('jenis_sektor_usaha') ?>' class="nav-link">
+												<i class='nav-icon fa-circle far'></i>
+												<p>Jenis Sektor Usaha</p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href='<?= base_url('model_pemberdayaan') ?>' class="nav-link">
+												<i class='nav-icon fa-circle far'></i>
+												<p>Model Pemberdayaan</p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href='<?= base_url('jenis_pendampingan') ?>' class="nav-link">
+												<i class='nav-icon fa-circle far'></i>
+												<p>Jenis Pendampingan</p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href='<?= base_url('group_instansi_swasta') ?>' class="nav-link">
+												<i class='nav-icon fa-circle far'></i>
+												<p>Grup Instansi / Swasta</p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href='<?= base_url('kantor_pertanahan') ?>' class="nav-link">
+												<i class='nav-icon fa-circle far'></i>
+												<p>Kantor Pertanahan</p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href='<?= base_url('kamus_kbli') ?>' class="nav-link">
+												<i class='nav-icon fa-circle far'></i>
+												<p>Klasifikasi KBLI</p>
+											</a>
+										</li>
+										
+									</ul>
+								</li>
+								<?php endif ?>
+								
+								<li class='nav-item  '>
+									<a href="#" class='nav-link  '>
+										<i class="far fa-circle nav-icon"></i>
+										<p>
+											Admin Daerah
+											<i class="right fas fa-angle-left"></i>
+										</p>
+									</a>
+									<ul class="nav nav-treeview">
+										<li class="nav-item">
+											<a href='<?= base_url('detail_instansi_swasta') ?>' class="nav-link">
+												<i class='nav-icon fa-circle far'></i>
+												<p>Detail Instansi / Swasta</p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href='<?= base_url('data_field_staff') ?>' class="nav-link">
+												<i class='nav-icon fa-circle far'></i>
+												<p>Data Field Staff</p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href='<?= base_url('klasifikasi_sektor_usaha') ?>' class="nav-link">
+												<i class='nav-icon fa-circle far'></i>
+												<p>Klasifikasi Sektor Usaha</p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href='<?= base_url('realisasi_anggaran') ?>' class="nav-link">
+												<i class='nav-icon fa-circle far'></i>
+												<p>Anggaran Tahun Pertama</p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href='<?= base_url('realisasi_anggaran_kedua') ?>' class="nav-link">
+												<i class='nav-icon fa-circle far'></i>
+												<p>Anggaran Tahun Kedua</p>
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href='<?= base_url('realisasi_anggaran_ketiga') ?>' class="nav-link">
+												<i class='nav-icon fa-circle far'></i>
+												<p>Anggaran Tahun Ketiga</p>
+											</a>
+										</li>
+									</ul>
+								</li>
+
+							</ul>
+						</li>
+					<?php endif?>
 
 						<li class="nav-item">
 							<a href="<?= base_url() ?>subjectobject" class='nav-link '>
@@ -294,6 +439,9 @@
 								<p>Entry Subject Object</p>
 							</a>
 						</li>
+
+					<?php if ($role != 7): ?>
+
 						<li class="nav-item">
 							<a href="http://194.233.71.171/ptm-web/mou_pks" class='nav-link '>
 								<i class="nav-icon fas fa-book"></i>
@@ -340,6 +488,7 @@
 								</li>
 							</ul>
 						</li>
+
 						<li class="nav-item '">
 							<a href="http://194.233.71.171/ptm-web/peta" class='nav-link '>
 								<i class="nav-icon fas fa-map"></i>
@@ -383,6 +532,8 @@
 								</li>
 							</ul>
 						</li>
+						<?php if ($role != 5): ?>
+
 						<li class='nav-item '>
 							<a href="#" class='nav-link '>
 								<i class="nav-icon fas fa-book"></i>
@@ -488,7 +639,10 @@
 							</a>
 						</li>
 
+						<?php endif?>
 
+
+					<?php endif?>
 
 					</ul>
 				</nav>
@@ -581,6 +735,10 @@
 
 			});
 		});
+
+		function logout() {
+			
+		}
 	</script>
 </body>
 

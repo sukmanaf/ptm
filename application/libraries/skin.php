@@ -14,6 +14,9 @@ class Skin
 
 	public function view($name='',$val)
 	{
+		if(empty($this->ci->session->userdata('login'))){
+			redirect('login','refresh');
+		}
 		$data['body']=$this->ci->load->view($name, $val, true);
 		// echo $data['body'];exit();
 		$this->ci->load->view('layout/dashboard', $data);

@@ -19,6 +19,11 @@ class Penyuluhan extends CI_Controller {
 	
 	public function get_all()
 	{
+		$role = $this->session->userdata('login')['role_user'];
+		$kabkot = $this->session->userdata('login')['kode_kab_kota'];
+		if ($role == 5) {
+			$this->db->where('kode_kab_kota', $kabkot);
+		}
 		$get=$this->global->get_all('v_dt_penlok_targetkk');
 		$data = [];
 		// echo "<pre>";
@@ -26,11 +31,10 @@ class Penyuluhan extends CI_Controller {
 		// echo "</pre>";exit();
 		foreach ($get as $key => $value) {
 			$a = [
-				$key+1,@$value->nip,@$value->nama_pejabat,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,
-	
-					'<a type="button" style="display:inline" href="'.base_url('detail_penyuluhan/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
-				'<a type="button"  style="display:inline" href="'.base_url('penyuluhan/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload" ></i></a>'
-				// '<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
+				$key+1,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,rupiah($value->anggaran_penyuluhan),rupiah($value->realisasi_penyuluhan),
+				'<a type="button" style="display:inline" href="'.base_url('detail_penyuluhan/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
+				'<a type="button"  style="display:inline" href="'.base_url('penyuluhan/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload" ></i></a>'.
+				'<button type="button" id="realisasi" onclick="realisasi(\''.$value->kode_kab_kota.'\','.$value->tahun_anggaran.',\''.$value->nama_kab_kota.'\')" class="btn btn-warning "><i class="fas fa-edit"></i></button>'
 			];
 			array_push($data,$a);
 		}
@@ -513,6 +517,30 @@ class Penyuluhan extends CI_Controller {
 		}else{
 			echo json_encode(['sts' => 'fail']);
 		}
+	}
+
+
+	public function getRealisasi($kab='',$tahun)
+	{
+		$data=$this->penyuluhan->getRealisasi($kab,$tahun);
+		echo json_encode($data);
+	}
+
+	public function edit_realisasi()
+	{
+		$data =[
+					'realisasi_penyuluhan' => str_replace('.', '', $this->input->post('realisasi_penyuluhan',true))
+
+					];
+			$this->db->where('kode_kab_kota', $this->input->post('kode_kab_kota',true));
+			$this->db->where('tahun_anggaran', $this->input->post('tahun_anggaran',true));
+		$ins =	$this->db->update('wa_realisasi_anggaran', $data);
+		if($ins){
+			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
+		}else{
+			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
+		}
+
 	}
 
 }

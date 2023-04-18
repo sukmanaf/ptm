@@ -13,19 +13,30 @@ class Diseminasi extends CI_Controller {
 
 	public function index()
 	{
-		$data['title'] = 'Home - Entry Subject Object - Tahun Ketiga - Penggunaan Rancangan Usaha';
+		$data['title'] = 'Home - Entry Subject Object - Tahun Ketiga - Diseminasi Model Akses Reforma Agrari';
 		$this->skin->view('diseminasi/index',$data);
 	}
 	
 	public function get_all()
 	{
-		$get=$this->global->get_all('v_datatable_desa');
+		$role = $this->session->userdata('login')['role_user'];
+		$kabkot = $this->session->userdata('login')['kode_kab_kota'];
+		if ($role == 5) {
+			$this->db->where('kode_kab_kota', $kabkot);
+		}
+		$get=$this->global->get_all('v_dt_penlok_ketiga');
 		$data = [];
 		foreach ($get as $key => $value) {
 			$a = [
-				$key+1,$value->nama_provinsi,$value->nama_kab_kota,$value->nama_kecamatan,$value->nama_desa_kelurahan,
-					'<a type="button" style="display:inline" href="'.base_url('diseminasi/upload/').$value->kode_kel.'" class="btn btn-primary"><i class="fas fa-upload"></i></a>'.
-				'<a type="button" href="'.base_url('diseminasi/edit/').$value->kode_kel.'" class="btn btn-success"><i class="fas fa-plus"></i></a>'
+				
+				$key+1,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,
+				rupiah(@$value->anggaran_diseminasi),rupiah(@$value->realisasi_diseminasi),
+				'<a type="button" style="display:inline" href="'.base_url('diseminasi/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload"></i></a>'.
+				'<a type="button" style="display:inline" href="'.base_url('detail_diseminasi/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
+				'<button type="button" id="realisasi" onclick="realisasi(\''.$value->kode_kab_kota.'\','.$value->tahun_anggaran.',\''.$value->nama_kab_kota.'\')" class="btn btn-warning "><i class="fas fa-edit"></i></button>'.
+				'<a type="button" title="Download PDF" target="_blank" style="display:inline" href="'.base_url('export_pdf/diseminasi/').$value->kode_kab_kota.'" class="btn btn-info btn-sm">Export Pendampingan</a>'.
+				'<a type="button" title="Download PDF" target="_blank" style="display:inline" href="'.base_url('export_pdf/diseminasi_not_in/').$value->kode_kab_kota.'" class="btn btn-info btn-sm">Export Tidak Pendampingan </a>'
+					
 			];
 			array_push($data,$a);
 		}
@@ -90,7 +101,7 @@ class Diseminasi extends CI_Controller {
 	{
 
 		$data['nik']=$this->db->get('wa_kuesioner_re')->result();
-		$data['title']= 'Home - Entry Subject Object - Tahun Ketiga - Penggunaan Rancangan Usaha - Baru';
+		$data['title']= 'Home - Entry Subject Object - Tahun Ketiga - Diseminasi Model Akses Reforma Agrari - Baru';
 		$this->skin->view('diseminasi/add',$data);
 	}
 
@@ -117,7 +128,7 @@ class Diseminasi extends CI_Controller {
 	{
 		$data['id']=$id;
 		$data['nik']=$this->db->get('wa_kuesioner_re')->result();
-		$data['title']= 'Home - Master Data - Admin Pusat - Diseminasi - Baru';
+		$data['title']= 'Home - Entry Subject Object - Tahun Ketiga - Diseminasi Model Akses Reforma Agrari - Baru';
 		$data['data'] = $this->global->get_by_one('dt_diseminasi',$id,'id');
 		$this->skin->view('diseminasi/edit',$data);
 
@@ -126,7 +137,7 @@ class Diseminasi extends CI_Controller {
 	public function upload($id='')
 	{
 		$data['id']=$id;
-		$data['title']= 'Home - Master Data - Admin Pusat - Sektor Usaha - Upload';
+		$data['title']= 'Home - Entry Subject Object - Tahun Ketiga - Diseminasi Model Akses Reforma Agrari - Upload';
 		$data['data'] = $this->global->get_by_one('dt_diseminasi',$id,'id');
 		$this->skin->view('diseminasi/upload',$data);
 
@@ -161,14 +172,7 @@ class Diseminasi extends CI_Controller {
 		$this->db->where('id', $id);
 		$del = $this->db->delete('dt_diseminasi');
 		if ($del) {
-			$this->db->where('file_id', $id);
-			$data = $this->db->get('fl_diseminasi')->result();
-
-			foreach ($data as $key => $value) {
-				unlink($value->dir_name);
-			}
-			$this->db->where('file_id', $id);
-			$this->db->delete('fl_diseminasi');
+			
 			echo json_encode(['sts' => 'success']);
 		}else{
 			echo json_encode(['sts' => 'fail']);
@@ -322,6 +326,29 @@ public function do_upload()
 			'luas' => $luas == '' ? 0:  $luas ,
 		]);
     }
+
+	public function getRealisasi($kab='',$tahun)
+	{
+		$data=$this->diseminasi->getRealisasi($kab,$tahun);
+		echo json_encode($data);
+	}
+	
+	public function edit_realisasi()
+	{
+		$data =[
+					'realisasi_diseminasi' => str_replace('.', '', $this->input->post('realisasi',true))
+
+					];
+			$this->db->where('kode_kab_kota', $this->input->post('kode_kab_kota',true));
+			$this->db->where('tahun_anggaran', $this->input->post('tahun_anggaran',true));
+		$ins =	$this->db->update('wa_anggaran_ketiga', $data);
+		if($ins){
+			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
+		}else{
+			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
+		}
+
+	}
 }
 
 

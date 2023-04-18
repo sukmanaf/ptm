@@ -18,7 +18,7 @@
 								<h3 class="card-title"><strong>List Pemetaan Sosial</strong></h3>
 		
 								<div class="card-tools">
-									<a href='/ptm-web/subject_object/tahun_pertama/pemetaan_sosial/kuesioner?idkabkot=3204&amp;idkec=320415&amp;iddeskel=3204152004&amp;namakec=Pangalengan&amp;namadeskel=Sukamanah' class="btn btn-warning">
+									<a href='<?=base_url('detail_pemsos_responden/data/').$id?>' class="btn btn-warning">
 										<i class="fas fa-arrow-left mr-2 text-white"></i>Kembali
 									</a>
 								</div>

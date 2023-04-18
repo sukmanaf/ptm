@@ -8,7 +8,7 @@ class Penetapan_model extends CI_Controller {
 		parent::__construct();
 		//Do your magic here
 		$this->load->model('GlobalModel','global');
-		$this->load->model('PenyuluhanModel','penyuluhan');
+		$this->load->model('penetapanModelModel','penetapan_model');
 	}
 
 	public function index()
@@ -19,15 +19,20 @@ class Penetapan_model extends CI_Controller {
 	
 	public function get_all()
 	{
+		$role = $this->session->userdata('login')['role_user'];
+		$kabkot = $this->session->userdata('login')['kode_kab_kota'];
+		if ($role == 5) {
+			$this->db->where('kode_kab_kota', $kabkot);
+		}
 		$get=$this->global->get_all('v_dt_penlok_targetkk');
 		$data = [];
 
 		foreach ($get as $key => $value) {
 			$a = [
-				$key+1,@$value->nip,@$value->nama_pejabat,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,
-	
-					'<a type="button" style="display:inline" href="'.base_url('detail_penetapan_model/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
-				'<a type="button"  style="display:inline" href="'.base_url('penetapan_model/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload" ></i></a>'
+				$key+1,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,rupiah($value->anggaran_pemberdayaan),rupiah($value->realisasi_pemberdayaan),
+				'<a type="button" style="display:inline" href="'.base_url('detail_penetapan_model/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
+				'<a type="button"  style="display:inline" href="'.base_url('penetapan_model/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload" ></i></a>'.
+				'<button type="button" id="realisasi" onclick="realisasi(\''.$value->kode_kab_kota.'\','.$value->tahun_anggaran.',\''.$value->nama_kab_kota.'\')" class="btn btn-warning "><i class="fas fa-edit"></i></button>'
 				// '<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
 			];
 			array_push($data,$a);
@@ -48,7 +53,7 @@ class Penetapan_model extends CI_Controller {
 	public function add()
 	{
 
-		$data['prov']=$this->penyuluhan->getProv();
+		$data['prov']=$this->penetapan_model->getProv();
 		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Penetapan Model Pemberdayaan - Baru';
 		$this->skin->view('penyuluhan/add',$data);
 	}
@@ -59,7 +64,7 @@ class Penetapan_model extends CI_Controller {
 		$kd_kabkot = $this->input->post('kode_kab_kota',true);
 		$nip = $this->input->post('nip',true);
 		
-		$checkWil = $this->penyuluhan->cekWIlTahun($kd_kabkot,$thn_anggaran);
+		$checkWil = $this->penetapan_model->cekWIlTahun($kd_kabkot,$thn_anggaran);
 
 		if ($checkWil > 0) {
 			echo json_encode(['sts' => 'fail','message' => 'kota/Kabupaten dan Tahun Anggran Sudah ada!']);
@@ -122,8 +127,8 @@ class Penetapan_model extends CI_Controller {
 	public function edit($id='')
 	{
 		$data['id']=$id;
-		// $data['prov']=$this->penyuluhan->getProv();
-		$data['prov']=$this->penyuluhan->getProv();
+		// $data['prov']=$this->penetapan_model->getProv();
+		$data['prov']=$this->penetapan_model->getProv();
 		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Penetapan Model Pemberdayaan - Edit';
 		$data['data'] = $this->global->get_by_one('wa_targetkk',$id,'id');
 		$this->skin->view('penyuluhan/edit',$data);
@@ -141,7 +146,7 @@ class Penetapan_model extends CI_Controller {
 		$nip = $this->input->post('nip',true);
 		
 		if (($kd_kabkot != $kd_kabkot_old) && ($thn_anggaran != $thn_anggaran_old)) {
-			$checkWil = $this->penyuluhan->cekWIlTahun($kd_kabkot,$thn_anggaran);
+			$checkWil = $this->penetapan_model->cekWIlTahun($kd_kabkot,$thn_anggaran);
 			if ($checkWil > 0) {
 				echo json_encode(['sts' => 'fail','message' => 'kota/Kabupaten dan Tahun Anggran Sudah ada!']);
 				exit();
@@ -213,7 +218,7 @@ class Penetapan_model extends CI_Controller {
 
 	public function getKab($kode='')
 	{
-		$data=$this->penyuluhan->getKab($kode);
+		$data=$this->penetapan_model->getKab($kode);
 		$str='<option data-tahun="" data-target="" value="">-- Pilih Kabupaten/Kota --</option>';
 		if (!empty($data)) {
 			foreach ($data as $key => $value) {
@@ -511,6 +516,28 @@ class Penetapan_model extends CI_Controller {
 		}else{
 			echo json_encode(['sts' => 'fail']);
 		}
+	}
+	public function getRealisasi($kab='',$tahun)
+	{
+		$data=$this->penetapan_model->getRealisasi($kab,$tahun);
+		echo json_encode($data);
+	}
+	
+	public function edit_realisasi()
+	{
+		$data =[
+					'realisasi_pemberdayaan' => str_replace('.', '', $this->input->post('realisasi_penetapan_model',true))
+
+					];
+			$this->db->where('kode_kab_kota', $this->input->post('kode_kab_kota',true));
+			$this->db->where('tahun_anggaran', $this->input->post('tahun_anggaran',true));
+		$ins =	$this->db->update('wa_realisasi_anggaran', $data);
+		if($ins){
+			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
+		}else{
+			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
+		}
+
 	}
 
 }

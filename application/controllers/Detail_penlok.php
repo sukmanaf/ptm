@@ -75,6 +75,10 @@ class Detail_penlok extends CI_Controller {
 			echo json_encode(['sts' => 'fail','message' => 'Jumlah Target KK tidak Bisa Melebihi Sisa Kuota!']);
 			exit();
 		}
+		if ($jml == 0) {
+			echo json_encode(['sts' => 'fail','message' => 'Jumlah Target KK Minimal 1!']);
+			exit();
+		}
 
 		$data = [
 
@@ -117,6 +121,12 @@ class Detail_penlok extends CI_Controller {
 	{
 		
 		$id = $this->input->post('id',true);
+		$jml = $this->input->post('jumlah',true);
+		if ($jml == 0) {
+			echo json_encode(['sts' => 'fail','message' => 'Jumlah Target KK Minimal 1!']);
+			exit();
+		}
+
 		$data = [
 					
 					'targetkk_id'	=> $this->input->post('targetkk_id',true),

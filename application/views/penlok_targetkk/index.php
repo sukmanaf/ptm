@@ -34,12 +34,12 @@
 	            <tr>
 		              
 		              <th>No</th>
-		              <th>NIP</th>
-		              <th>Nama Pejabat</th>
 		              <th>Provinsi</th>
 		              <th>Kab Kota</th>
 		              <th>Tahun Anggaran</th>
 		              <th>Target KK</th>
+		              <th>Anggran</th>
+		              <th>Realisasi</th>
 		              <th style="width: 100px !important">Aksi</th>
 	            </tr>
 	          </thead>
