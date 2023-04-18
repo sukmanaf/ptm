@@ -2,6 +2,7 @@
     var id = "<?php echo $id; ?>";
 
     function cek_npk() {
+
         var npk = $("#npk").val()
         var field = $("#role").val()
 
@@ -13,6 +14,7 @@
         if (field == 6) {
             if (npk != '') {
                 var dt = tampil_data('wa_surveyor', 'npk', npk);
+                console.log(dt)
                 combo('kode_provinsi', 'ms_provinsi~nama_provinsi~kode', 'kode', dt[0].kode_provinsi, dt[0].kode_provinsi)
                 combo("kode_kab_kota", 'ms_kab_kota~nama_kab_kota~kode', 'kode', dt[0].kode_kab_kota, dt[0].kode_kab_kota)
                 $("#fullname").val(dt[0].fullname)

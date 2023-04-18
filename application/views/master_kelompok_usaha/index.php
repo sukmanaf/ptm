@@ -13,7 +13,7 @@
     <div class="container-fluid">
 	  <div class="card card-outline card-primary">
 	    <div class="card-header">
-	    		      <a  style="float: right" href="<?=base_url('master_skala_usaha/add')?>" class="btn btn-warning pull-right">
+	    	<a  style="float: right" href="<?=base_url('master_kelompok_usaha/add')?>" class="btn btn-warning pull-right">
 	        <i class="fas fa-plus mr-2 text-white"></i>Baru </a>
 	      <div class="card-tools">
 	        <div class="input-group input-group-sm">
@@ -30,12 +30,11 @@
 	          <thead>
 	            <tr>
 	              <th>No</th>
-	              <th>Jenis Usaha</th>
-	              <th>Mikro </th>
-	              <th>Kecil </th>
-	              <th>Menengah</th>
-	              <th>Besar</th>
-	              <th>Variabel Klasifikasi</th>
+	              <th>No Induk Kelompok</th>
+	              <th>Nama Kelompok</th>
+	              <th>Tanggal Pembentukan</th>
+	              <th>No SK</th>
+	              <th>File SK</th>
 	              <th>Aksi</th>
 	            </tr>
 	          </thead>
@@ -54,7 +53,7 @@
     function loadDt() {
     	$('#table-front').DataTable({
 		    ajax: {
-		        url: '<?php echo base_url();?>master_skala_usaha/get_all',
+		        url: '<?php echo base_url();?>master_kelompok_usaha/get_all',
 		        data: function ( d ) {
 	                d.<?php echo $this->security->get_csrf_token_name();?> = "<?php echo $this->security->get_csrf_hash();?>"
 	            },
@@ -64,7 +63,7 @@
     }
 
     function dels(id) {
-    	$.get( "<?=base_url('master_skala_usaha/delete/')?>"+id, function( response ) {
+    	$.get( "<?=base_url('master_kelompok_usaha/delete/')?>"+id, function( response ) {
 		  	response = JSON.parse(response)
         	if (response.sts == 'success') {
         		toastr.success("Data Sudah Terhapus!");

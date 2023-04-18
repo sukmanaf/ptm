@@ -37,59 +37,62 @@
 		.table{
 			width: 100% !important;
 		}
+		.wrapper{
+			margin-top: 15%!important;
+		}
 	</style>
 </head>
 
 <body class='hold-transition login-page' style="overflow-x: hidden;">
 
-		<div class="wrapper">
+		<div class="wrapper" >
 			
-<div class="login-box">
-  <div class="login-logo">
-    <a href="http://localhost/ptm/assets#"><img src="/img/bpn-logo-96.png" /></a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="card">
-    <div class="card-body login-card-body">
-      <h4>
-        <p class="login-box-msg">Login untuk memulai</p>
-      </h4>
+			<div class="login-box">
+			  <div class="login-logo">
+			    <a href="http://localhost/ptm/assets#"><img src="<?=base_url()?>/uploads/bpn-logo.png" /></a>
+			  </div>
+			  <!-- /.login-logo -->
+			  <div class="card">
+			    <div class="card-body login-card-body">
+			      <h4>
+			        <p class="login-box-msg">Login untuk memulai</p>
+			      </h4>
 
-	<form action="#" id="postForm" class="form-horizontal" enctype="multipart/form-data" method="post">
-    		<input type="hidden" name="tokn" value="3a54bedaf3ba1a85384707092fa7b3de" style="display: none">
+				<form action="#" id="postForm" class="form-horizontal" enctype="multipart/form-data" method="post">
+			    		<input type="hidden" name="tokn" value="3a54bedaf3ba1a85384707092fa7b3de" style="display: none">
 
-        <div class="input-group mb-3">
-          <input name="user_id" type="text" class="form-control" placeholder="User ID">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-user"></span>
-            </div>
-          </div>
-        </div>
-        <div class="input-group mb-3">
-          <input name="password" type="password" class="form-control" placeholder="Password">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <!-- <input name="remember_me" type="checkbox" id="remember"> -->
-              <!-- <label for="remember"> -->
-                <!-- Jangan bertanya lagi -->
-              <!-- </label> -->
-            </div>
-          </div>
-          <!-- /.col -->
-          <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
-          </div>
-          <!-- /.col -->
-        </div>
-        <br>
+			        <div class="input-group mb-3">
+			          <input name="user_id" type="text" class="form-control" placeholder="User ID">
+			          <div class="input-group-append">
+			            <div class="input-group-text">
+			              <span class="fas fa-user"></span>
+			            </div>
+			          </div>
+			        </div>
+			        <div class="input-group mb-3">
+			          <input name="password" type="password" class="form-control" placeholder="Password">
+			          <div class="input-group-append">
+			            <div class="input-group-text">
+			              <span class="fas fa-lock"></span>
+			            </div>
+			          </div>
+			        </div>
+			        <div class="row">
+			          <div class="col-8">
+			            <div class="icheck-primary">
+			              <!-- <input name="remember_me" type="checkbox" id="remember"> -->
+			              <!-- <label for="remember"> -->
+			                <!-- Jangan bertanya lagi -->
+			              <!-- </label> -->
+			            </div>
+			          </div>
+			          <!-- /.col -->
+			          <div class="col-4">
+			            <button type="submit" class="btn btn-primary btn-block">Login</button>
+			          </div>
+			          <!-- /.col -->
+			        </div>
+			        <br>
         <!-- <p class="mb-0">Belum memiliki akun?&nbsp;<a href="http://localhost/ptm/assets/auth/register">Daftar di sini</a></p>
         <p>Lupa password?&nbsp;<a href="http://localhost/ptm/assets/auth/lupa">Buat password baru di sini</a></p> -->
 

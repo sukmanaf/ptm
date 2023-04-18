@@ -12,7 +12,7 @@ class Master_skala_peternakan extends CI_Controller {
 
 	public function index()
 	{
-		$data['title'] = 'Home - MAsterdata - Admin Pusat - MAster Skala Peternkan';
+		$data['title'] = 'Home - Masterdata - Admin Pusat - Master Skala Peternakan';
 		$this->skin->view('Master_skala_peternakan/index',$data);
 	}
 	
@@ -38,7 +38,7 @@ class Master_skala_peternakan extends CI_Controller {
 	{
 
 		$data['nik']=$this->db->get('wa_kuesioner_re')->result();
-		$data['title']= 'Home - Entry Subject Object - Tahun Ketiga - Penggunaan Rancangan Usaha - Baru';
+		$data['title']= 'Home - Masterdata - Admin Pusat - Master Skala Peternakan - Baru';
 		$this->skin->view('master_skala_peternakan/add',$data);
 	}
 
@@ -66,7 +66,7 @@ class Master_skala_peternakan extends CI_Controller {
 
 	public function edit($id='')
 	{
-		$data['title']= 'Home - Master Data - Admin Pusat - master_skala_peternakan - Baru';
+		$data['title']= 'Home - Masterdata - Admin Pusat - Master Skala Perikanan - Baru';
 		$data['data'] = $this->global->get_by_one('ms_skala_peternakan',$id,'id');
 		$this->skin->view('master_skala_peternakan/edit',$data);
 

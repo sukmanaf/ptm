@@ -30,9 +30,7 @@
 						<thead>
 							<tr>
 								<th>No</th>
-								<th> Kantor ID</th>
 								<th> Nama Provinsi</th>
-								<th> Nama Kab/Kota</th>
 								<th> Nama Kantor</th>
 							</tr>
 						</thead>
