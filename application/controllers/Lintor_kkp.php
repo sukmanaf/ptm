@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Lintor_kementan extends CI_Controller
+class Lintor_kkp extends CI_Controller
 {
 
     public function __construct()
@@ -13,14 +13,14 @@ class Lintor_kementan extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Home - Manajemen File - Lintor Kementan';
-        $this->skin->view('lintor_kementan/index', $data);
+        $data['title'] = 'Home - Manajemen File- Lintor KKP ';
+        $this->skin->view('lintor_kkp/index', $data);
     }
     function download_template()
     {
-        $data['db'] = $this->db->get('wa_lintor_kementan')->result_array();
+        $data['db'] = $this->db->get('wa_lintor_kkp')->result_array();
 
-        $this->load->view('lintor_kementan/temp_excel', $data);
+        $this->load->view('lintor_kkp/temp_excel', $data);
     }
     public function generateXls()
     {
@@ -28,7 +28,7 @@ class Lintor_kementan extends CI_Controller
         $fileName = 'data-' . time() . '.xlsx';
         // load excel library
         $this->load->library('excel');
-        $listInfo = $this->db->get('wa_lintor_kementan')->result();
+        $listInfo = $this->db->get('wa_lintor_kkp')->result();
 
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
@@ -81,17 +81,19 @@ class Lintor_kementan extends CI_Controller
     }
     public function get_all()
     {
-        $get = $this->global->get_all('wa_lintor_kementan');
+        $get = $this->global->get_all('wa_lintor_kkp');
         $data = [];
         foreach ($get as $key => $value) {
 
             $a = [
                 @$value->nomor,
-                @$value->nama_petani,
+                @$value->nama_nelayan,
                 @$value->alamat,
-                @$value->nomor_sk_pengesahan,
-                @$value->nomor_register,
-                @$value->nama_kelompok_tani,
+                @$value->nik,
+                @$value->nomor_kusuka,
+                @$value->nomor_kartu_nelayan,
+                @$value->nomor_aqua_card,
+                @$value->nama_kelompok,
                 @$value->bantuan_pernah_diterima,
                 @$value->keterangan,
 
@@ -107,8 +109,8 @@ class Lintor_kementan extends CI_Controller
     {
 
         $data['key'] = $this->db->get('ms_provinsi')->result();
-        $data['title'] = 'Home - Master Data - Admin Pusat - Data Field Staff - Baru';
-        $this->skin->view('lintor_kementan/add', $data);
+        $data['title'] = 'Home - Manajemen File - Lintor KKP ';
+        $this->skin->view('lintor_kkp/add', $data);
     }
 
     public function create()
@@ -119,7 +121,7 @@ class Lintor_kementan extends CI_Controller
 
         if (is_uploaded_file($_FILES['files']['tmp_name'])) {
             $this->db->where('1', '1');
-            $this->db->delete('wa_lintor_kementan');
+            $this->db->delete('wa_lintor_kkp');
             $path = $_FILES["files"]["tmp_name"];
             $object = PHPExcel_IOFactory::load($path);
             foreach ($object->getWorksheetIterator() as $worksheet) {
@@ -129,25 +131,29 @@ class Lintor_kementan extends CI_Controller
                     $nomor = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
                     $nama = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
                     $alamat = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-                    $nomor_sk_pengesahan = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
-                    $nomor_register = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
-                    $nama_kelompok_tani = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
-                    $bantuan = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
-                    $keterangan = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+                    $nik = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                    $nomor_kusuka = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+                    $nomor_kartu_nelayan = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+                    $nomor_aqua_card = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
+                    $nama_kelompok = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+                    $bantuan_pernah_diterima = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
+                    $keterangan = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
                     $temp_data[] = array(
                         'nomor'    => $nomor,
-                        'nama_petani'    => $nama,
+                        'nama_nelayan'    => $nama,
                         'alamat'    => $alamat,
-                        'nomor_sk_pengesahan'    => $nomor_sk_pengesahan,
-                        'nomor_register'    => $nomor_register,
-                        'nama_kelompok_tani'    => $nama_kelompok_tani,
-                        'bantuan_pernah_diterima'    => $bantuan,
+                        'nik'    => $nik,
+                        'nomor_kusuka'    => $nomor_kusuka,
+                        'nomor_kartu_nelayan'    => $nomor_kartu_nelayan,
+                        'nomor_aqua_card'    => $nomor_aqua_card,
+                        'nama_kelompok'    => $nama_kelompok,
+                        'bantuan_pernah_diterima'    => $bantuan_pernah_diterima,
                         'keterangan'    => $keterangan,
                     );
                 }
             }
             // print_r($temp_data);
-            $insert = $this->db->insert_batch('wa_lintor_kementan', $temp_data);
+            $insert = $this->db->insert_batch('wa_lintor_kkp', $temp_data);
             if ($insert) {
                 echo json_encode(['sts' => 'success', 'message' => 'Data Berhasil Disimpan!']);
             } else {
@@ -162,10 +168,10 @@ class Lintor_kementan extends CI_Controller
     {
 
 
-        $data['title'] = 'Home - Master Data - Admin Pusat - Data Field Staff - Baru';
+        $data['title'] = 'Home - Master Data - Admin Pusat - Lintor KKP - Baru';
         $data['data'] = $this->global->get_by_one('wa_surveyor', $id, 'id');
         $data['id'] = $id;
-        $this->skin->view('lintor_kementan/edit', $data);
+        $this->skin->view('lintor_kkp/edit', $data);
     }
 
     public function update()
@@ -194,7 +200,7 @@ class Lintor_kementan extends CI_Controller
             $namf = $_FILES['files']['name'];
             $rep = str_replace(" ", "_", $namf);
             $fil = date('Ymd') . date("his") . $rep;
-            $targetPath = "uploads/lintor_kementan/" . $fil;
+            $targetPath = "uploads/lintor_kkp/" . $fil;
             move_uploaded_file($sourcePath, FCPATH . $targetPath);
             $data_f = [
                 'targetkk_id' => $id,
@@ -222,5 +228,5 @@ class Lintor_kementan extends CI_Controller
     }
 }
 
-/* End of file lintor_kementan.php */
-/* Location: ./application/controllers/lintor_kementan.php */
+/* End of file lintor_kkp.php */
+/* Location: ./application/controllers/lintor_kkp.php */
