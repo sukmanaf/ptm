@@ -22,9 +22,9 @@ class Dashboard extends CI_Controller
 	function tampil_data_dashboard($id = '', $tahun = '', $wilayah = '')
 	{
 
-		$this->db->where('kode_desa_kelurahan is NOT NULL', NULL, FALSE);
+		$this->db->where('kode_desa_kelurahan is NOT NULL', NULL, true);
 		if ($tahun != '') {
-			$this->db->where('tgl_kunjungan_pertama', $tahun);
+			$this->db->like('tgl_kunjungan_pertama', $tahun);
 		}
 		if ($wilayah != '') {
 			if (strlen($wilayah) == 2) {
@@ -85,12 +85,82 @@ class Dashboard extends CI_Controller
 					}
 				}
 			}
+		} elseif ($id == 'agraria') {
+			$sql_sektor = array('1' => 'Januari', '2' => 'Februari', '3' => 'Maret', '4' => 'April', '5' => 'Mei', '6' => 'Juni', '7' => 'Juli', '8' => 'Agustus', '9' => 'September', '10' => 'Oktober', '11' => 'November', '12' => 'Desember');
+			// print_r($sql_sektor);
+			// die();
+			if ($wilayah == '') {
+				$this->db->select_sum('jumlah');
+				$this->db->select('bulan');
+				$this->db->group_by("bulan");
+			}
+			$sql = $this->db->get('v_dashboard_akses_reforma_agraria')->result_array();
+			// $sql_sektor = $this->db->get('ms_kuesioner_ar07')->result_array();
+			if (count($sql) == 0) {
+				$datax = array();
+			} else {
+				for ($a = 1; $a < count($sql_sektor) + 1; $a++) {
+
+					// echo $sql_sektor[$a];
+					// echo $sql_sektor[$a];
+					for ($i = 0; $i < count($sql); $i++) {
+						if (strlen($a) < 2) {
+							$a = '0' + $a;
+						}
+						if ($sql[$i]['bulan'] == $a) {
+							$datax[] = array(
+								'name'   => $sql_sektor[$a],
+								'jumlah'     => $sql[$i]['jumlah']
+							);
+						} else {
+							if ($i == 0) {
+								$datax[] = array(
+									'name'   => $sql_sektor[$a],
+									'jumlah'     => 0
+								);
+							}
+						}
+					}
+				}
+			}
+		} elseif ($id == 'kelompok_usaha') {
+			$sql_sektor = array('1' => 'Januari', '2' => 'Februari', '3' => 'Maret', '4' => 'April', '5' => 'Mei', '6' => 'Juni', '7' => 'Juli', '8' => 'Agustus', '9' => 'September', '10' => 'Oktober', '11' => 'November', '12' => 'Desember');
+			// print_r($sql_sektor);
+			// die();
+			if ($wilayah == '') {
+				$this->db->select_sum('jumlah');
+				$this->db->select('bulan');
+				$this->db->group_by("bulan");
+			}
+			$sql = $this->db->get('v_dashboard_kelompok_usaha')->result_array();
+			// $sql_sektor = $this->db->get('ms_kuesioner_ar07')->result_array();
+			if (count($sql) == 0) {
+				$datax = array();
+			} else {
+				for ($a = 1; $a < 13; $a++) {
+					// echo $sql_sektor[$a];
+					// echo $sql_sektor[$a];
+					for ($i = 0; $i < count($sql); $i++) {
+						if ($sql[$i]['bulan'] == $a) {
+							$datax[] = array(
+								'name'   => $sql_sektor[$a],
+								'jumlah'     => $sql[$i]['jumlah']
+							);
+						} else {
+							if ($i == 0) {
+								$datax[] = array(
+									'name'   => $sql_sektor[$a],
+									'jumlah'     => 0
+								);
+							}
+						}
+					}
+				}
+			}
 		}
 
 
-		// print_r("<pre>");
-		// print_r($datax);
-		// print_r("</pre>");
+
 		echo json_encode($datax);
 	}
 	public function get_all($idtab = '', $tahun)

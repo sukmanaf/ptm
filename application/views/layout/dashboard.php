@@ -187,7 +187,7 @@ $role = $this->session->userdata('login')['role_user'];
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href='<?= base_url('') ?>' class="nav-link">
+									<a href='<?= base_url('dashboard_field_staff') ?>' class="nav-link">
 										<i class='nav-icon fa-circle far'></i>
 										<p>Dashboard Fieldstaff</p>
 									</a>
@@ -460,19 +460,19 @@ $role = $this->session->userdata('login')['role_user'];
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href='http://194.233.71.171/ptm-web/managemen_file/lintor_kementan' class="nav-link">
+									<a href='<?= base_url('lintor_kementan') ?>' class="nav-link">
 										<i class='nav-icon fa-circle far'></i>
 										<p>Lintor Kementan</p>
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href='http://194.233.71.171/ptm-web/managemen_file/lintor_kkp' class="nav-link">
+									<a href='<?= base_url('lintor_kkp') ?>' class="nav-link">
 										<i class='nav-icon fa-circle far'></i>
 										<p>Lintor KKP</p>
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href='http://194.233.71.171/ptm-web/managemen_file/lintor_kemenkop_umkm' class="nav-link">
+									<a href='<?= base_url('lintor_umkm') ?>' class="nav-link">
 										<i class='nav-icon fa-circle far'></i>
 										<p>Lintor Kemenkp/UMKM</p>
 									</a>

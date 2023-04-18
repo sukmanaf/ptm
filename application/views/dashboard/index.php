@@ -68,9 +68,9 @@
 					<div class="card card-dark">
 						<div class="card-header">
 							<h3 class="card-title">Subjek Akses Reforma Agraria</h3>
-							<div class="float-right">
+							<!-- <div class="float-right">
 								<i>Total:&nbsp;<span id="total_agraria">0</span></i>
-							</div>
+							</div> -->
 						</div>
 						<div class="card-body">
 							<div class="chart">
@@ -86,13 +86,13 @@
 					<div class="card card-dark">
 						<div class="card-header">
 							<h3 class="card-title">Kelompok Usaha</h3>
-							<div class="float-right">
-								<i>Total:&nbsp;<span id="total_kelompok_usaha">12345</span></i>
-							</div>
+							<!-- <div class="float-right">
+								<i>Total:&nbsp;<span id="total_kelompok_usaha"></span></i>
+							</div> -->
 						</div>
 						<div class="card-body">
 							<div class="chart">
-								<canvas id="" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+								<canvas id="kelompok_usaha" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
 							</div>
 						</div>
 						<!-- /.card-body -->
@@ -107,9 +107,9 @@
 					<div class="card card-dark">
 						<div class="card-header">
 							<h3 class="card-title">Koperasi</h3>
-							<div class="float-right">
+							<!-- <div class="float-right">
 								<i>Total:&nbsp;<span id="total_koperasi">0</span></i>
-							</div>
+							</div> -->
 						</div>
 						<div class="card-body">
 							<div class="chart">
@@ -125,9 +125,9 @@
 					<div class="card card-dark">
 						<div class="card-header">
 							<h3 class="card-title">Sektor Usaha</h3>
-							<div class="float-right">
+							<!-- <div class="float-right">
 								<i>Total:&nbsp;<span id="total_sektor_usaha">0</span></i>
-							</div>
+							</div> -->
 						</div>
 						<div class="card-body">
 							<div id="chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;">
@@ -146,9 +146,9 @@
 					<div class="card card-dark">
 						<div class="card-header">
 							<h3 class="card-title">Penghasilan</h3>
-							<div class="float-right">
+							<!-- <div class="float-right">
 								<i>Total:&nbsp;<span id="total_penghasilan">0</span></i>
-							</div>
+							</div> -->
 						</div>
 						<div class="card-body">
 							<div class="chart">
@@ -164,9 +164,9 @@
 					<div class="card card-dark">
 						<div class="card-header">
 							<h3 class="card-title">Pengeluaran</h3>
-							<div class="float-right">
+							<!-- <div class="float-right">
 								<i>Total:&nbsp;<span id="total_pengeluaran">0</span></i>
-							</div>
+							</div> -->
 						</div>
 						<div class="card-body">
 							<div class="chart">
@@ -185,9 +185,9 @@
 					<div class="card card-dark">
 						<div class="card-header">
 							<h3 class="card-title">Jenjang Pendidikan</h3>
-							<div class="float-right">
+							<!-- <div class="float-right">
 								<i>Total:&nbsp;<span id="total_jenjang_pendidikan">0</span></i>
-							</div>
+							</div> -->
 						</div>
 						<div class="card-body">
 							<div class="chart">
@@ -203,9 +203,9 @@
 					<div class="card card-dark">
 						<div class="card-header">
 							<h3 class="card-title">Pemetaan Sosial</h3>
-							<div class="float-right">
+							<!-- <div class="float-right">
 								<i>Total:&nbsp;<span id="total_pemetaan_sosial">0</span></i>
-							</div>
+							</div> -->
 						</div>
 						<div class="card-body">
 							<div class="chart">

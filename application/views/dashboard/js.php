@@ -6,6 +6,8 @@
         combo('provinsi', 'ms_provinsi~nama_provinsi~kode')
         tampil_data_dashboard('sektor_usaha', 2023, '')
         tampil_data_dashboard('jenjang_pendidikan', 2023, '')
+        tampil_data_dashboard('agraria', 2023, '')
+        tampil_data_dashboard('kelompok_usaha', 2023, '')
         for (let i = 1; i < 10; i++) {
             chart_pie(i)
         }
@@ -128,6 +130,8 @@
 
         tampil_data_dashboard('sektor_usaha', tahun, b)
         tampil_data_dashboard('jenjang_pendidikan', tahun, b)
+        tampil_data_dashboard('agraria', tahun, b)
+        tampil_data_dashboard('kelompok_usaha', tahun, b)
     }
 
 

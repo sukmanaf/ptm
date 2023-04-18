@@ -13,7 +13,7 @@ class Lintor_kementan extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Home - Master Data - Admin Pusat - Data Field Staff ';
+        $data['title'] = 'Home - Manajemen File - Lintor Kementan';
         $this->skin->view('lintor_kementan/index', $data);
     }
     function download_template()
@@ -118,6 +118,8 @@ class Lintor_kementan extends CI_Controller
 
 
         if (is_uploaded_file($_FILES['files']['tmp_name'])) {
+            $this->db->where('1', '1');
+            $this->db->delete('wa_lintor_kementan');
             $path = $_FILES["files"]["tmp_name"];
             $object = PHPExcel_IOFactory::load($path);
             foreach ($object->getWorksheetIterator() as $worksheet) {

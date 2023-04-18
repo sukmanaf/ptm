@@ -9,16 +9,20 @@
         // $("#but-npk").css('display', 'block !important')
         // $("#kode_provinsi").prop("disabled", false)
         // $("#kode_kab_kota").prop("disabled", false)
+
         $("#fullname").prop("readonly", false)
         $("#telepon").prop("readonly", false)
-        if (field == 6) {
+        if (field == 7) {
             if (npk != '') {
                 var dt = tampil_data('wa_surveyor', 'npk', npk);
-                console.log(dt)
-                combo('kode_provinsi', 'ms_provinsi~nama_provinsi~kode', 'kode', dt[0].kode_provinsi, dt[0].kode_provinsi)
-                combo("kode_kab_kota", 'ms_kab_kota~nama_kab_kota~kode', 'kode', dt[0].kode_kab_kota, dt[0].kode_kab_kota)
-                $("#fullname").val(dt[0].fullname)
-                $("#telepon").val(dt[0].phone)
+
+                if (dt.length > 0) {
+                    combo('kode_provinsi', 'ms_provinsi~nama_provinsi~kode', 'kode', dt[0].kode_provinsi, dt[0].kode_provinsi)
+                    combo("kode_kab_kota", 'ms_kab_kota~nama_kab_kota~kode', 'kode', dt[0].kode_kab_kota, dt[0].kode_kab_kota)
+                    $("#fullname").val(dt[0].fullname)
+                    $("#telepon").val(dt[0].phone)
+                }
+
 
             }
             // $("#kode_provinsi").prop("disabled", true)
