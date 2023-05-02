@@ -59,8 +59,7 @@
 			      </h4>
 
 				<form action="#" id="postForm" class="form-horizontal" enctype="multipart/form-data" method="post">
-			    		<input type="hidden" name="tokn" value="3a54bedaf3ba1a85384707092fa7b3de" style="display: none">
-
+			    		<input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" style="display: none">
 			        <div class="input-group mb-3">
 			          <input name="user_id" type="text" class="form-control" placeholder="User ID">
 			          <div class="input-group-append">

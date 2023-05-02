@@ -12,7 +12,7 @@ class Master_skala_usaha extends CI_Controller {
 
 	public function index()
 	{
-		$data['title'] = 'Home - MAsterdata - Admin Pusat - Master Skala Usaha';
+		$data['title'] = 'Home - MOU & PKS';
 		$this->skin->view('Master_skala_usaha/index',$data);
 	}
 	

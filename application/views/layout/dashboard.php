@@ -359,12 +359,12 @@ $role = $this->session->userdata('login')['role_user'];
 					<?php if ($role != 7): ?>
 
 						<li class="nav-item">
-							<a href="http://194.233.71.171/ptm-web/mou_pks" class='nav-link '>
+							<a href="<?=base_url()?>/moupks" class='nav-link '>
 								<i class="nav-icon fas fa-book"></i>
 								<p>MoU dan PKS</p>
 							</a>
 						</li>
-						<li class='nav-item '>
+						<!-- <li class='nav-item '>
 							<a href="#" class='nav-link '>
 								<i class="nav-icon fas fa-book"></i>
 								<p>
@@ -386,7 +386,7 @@ $role = $this->session->userdata('login')['role_user'];
 									</a>
 								</li>
 							</ul>
-						</li>
+						</li> -->
 						<li class='nav-item '>
 							<a href="#" class='nav-link '>
 								<i class="nav-icon fas fa-book"></i>
