@@ -13,7 +13,7 @@ class Lintor_umkm extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Home - Manajemen File - Lintor Kementan';
+        $data['title'] = 'Home - Manajemen File - Lintor UMKM';
         $this->skin->view('lintor_umkm/index', $data);
     }
     function download_template()
@@ -136,17 +136,19 @@ class Lintor_umkm extends CI_Controller
                     $nama_koperasi = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
                     $bantuan = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
                     $keterangan = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
-                    $temp_data[] = array(
-                        'nomor'    => $nomor,
-                        'nama_anggota_koperasi'    => $nama,
-                        'alamat'    => $alamat,
-                        'nik'    => $nik,
-                        'nomor_pengesahan_akta_koperasi'    => $nomor_pengesahan_akta_koperasi,
-                        'nomor_badan_hukum_koperasi'    => $nama_badan_hukum_koperasi,
-                        'nama_koperasi'    => $nama_koperasi,
-                        'bantuan_pernah_diterima'    => $bantuan,
-                        'keterangan'    => $keterangan,
-                    );
+                    if (!empty($nomor)) {
+                        $temp_data[] = array(
+                            'nomor'    => $nomor,
+                            'nama_anggota_koperasi'    => $nama,
+                            'alamat'    => $alamat,
+                            'nik'    => $nik,
+                            'nomor_pengesahan_akta_koperasi'    => $nomor_pengesahan_akta_koperasi,
+                            'nomor_badan_hukum_koperasi'    => $nama_badan_hukum_koperasi,
+                            'nama_koperasi'    => $nama_koperasi,
+                            'bantuan_pernah_diterima'    => $bantuan,
+                            'keterangan'    => $keterangan,
+                        );
+                    }
                 }
             }
             // print_r($temp_data);
