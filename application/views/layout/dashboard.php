@@ -200,114 +200,114 @@
 									</li>
 								</ul>
 							</li>
-							<li class='nav-item '>
-								<a href="#" class='nav-link '>
-									<i class="nav-icon fas fa-copy"></i>
-									<p>
-										Master Data
-										<i class="fas fa-angle-left right"></i>
-									</p>
-								</a>
-								<ul class="nav nav-treeview">
-									<li class='nav-item '>
-										<a href="#" class='nav-link  menu-open'>
-											<i class="far fa-circle nav-icon"></i>
-											<p>
-												Admin Pusat
-												<i class="right fas fa-angle-left"></i>
-											</p>
-										</a>
-										<ul class="nav nav-treeview">
-											<li class="nav-item">
-												<a href='<?= base_url('sektor_usaha') ?>' class="nav-link">
-													<i class='nav-icon fa-circle far'></i>
-													<p>Sektor Usaha</p>
-												</a>
-											</li>
-											<li class="nav-item">
-												<a href='<?= base_url('sub_sektor_usaha') ?>' class="nav-link">
-													<i class='nav-icon fa-circle far'></i>
-													<p>Sub Sektor Usaha</p>
-												</a>
-											</li>
-											<li class="nav-item">
-												<a href='<?= base_url('jenis_sektor_usaha') ?>' class="nav-link">
-													<i class='nav-icon fa-circle far'></i>
-													<p>Jenis Sektor Usaha</p>
-												</a>
-											</li>
-											<li class="nav-item">
-												<a href='<?= base_url('model_pemberdayaan') ?>' class="nav-link">
-													<i class='nav-icon fa-circle far'></i>
-													<p>Model Pemberdayaan</p>
-												</a>
-											</li>
-											<li class="nav-item">
-												<a href='<?= base_url('jenis_pendampingan') ?>' class="nav-link">
-													<i class='nav-icon fa-circle far'></i>
-													<p>Jenis Pendampingan</p>
-												</a>
-											</li>
-											<li class="nav-item">
-												<a href='<?= base_url('group_instansi_swasta') ?>' class="nav-link">
-													<i class='nav-icon fa-circle far'></i>
-													<p>Grup Instansi / Swasta</p>
-												</a>
-											</li>
-											<li class="nav-item">
-												<a href='<?= base_url('kantor_pertanahan') ?>' class="nav-link">
-													<i class='nav-icon fa-circle far'></i>
-													<p>Kantor Pertanahan</p>
-												</a>
-											</li>
-											<li class="nav-item">
-												<a href='kamus_kbli' class="nav-link">
-													<i class='nav-icon fa-circle far'></i>
-													<p>Klasifikasi KBLI</p>
-												</a>
-											</li>
+							<!-- <li class='nav-item '>
+									<a href="#" class='nav-link '>
+										<i class="nav-icon fas fa-copy"></i>
+										<p>
+											Master Data
+											<i class="fas fa-angle-left right"></i>
+										</p>
+									</a>
+									<ul class="nav nav-treeview">
+										<li class='nav-item '>
+											<a href="#" class='nav-link  menu-open'>
+												<i class="far fa-circle nav-icon"></i>
+												<p>
+													Admin Pusat
+													<i class="right fas fa-angle-left"></i>
+												</p>
+											</a>
+											<ul class="nav nav-treeview">
+												<li class="nav-item">
+													<a href='<?= base_url('sektor_usaha') ?>' class="nav-link">
+														<i class='nav-icon fa-circle far'></i>
+														<p>Sektor Usaha</p>
+													</a>
+												</li>
+												<li class="nav-item">
+													<a href='<?= base_url('sub_sektor_usaha') ?>' class="nav-link">
+														<i class='nav-icon fa-circle far'></i>
+														<p>Sub Sektor Usaha</p>
+													</a>
+												</li>
+												<li class="nav-item">
+													<a href='<?= base_url('jenis_sektor_usaha') ?>' class="nav-link">
+														<i class='nav-icon fa-circle far'></i>
+														<p>Jenis Sektor Usaha</p>
+													</a>
+												</li>
+												<li class="nav-item">
+													<a href='<?= base_url('model_pemberdayaan') ?>' class="nav-link">
+														<i class='nav-icon fa-circle far'></i>
+														<p>Model Pemberdayaan</p>
+													</a>
+												</li>
+												<li class="nav-item">
+													<a href='<?= base_url('jenis_pendampingan') ?>' class="nav-link">
+														<i class='nav-icon fa-circle far'></i>
+														<p>Jenis Pendampingan</p>
+													</a>
+												</li>
+												<li class="nav-item">
+													<a href='<?= base_url('group_instansi_swasta') ?>' class="nav-link">
+														<i class='nav-icon fa-circle far'></i>
+														<p>Grup Instansi / Swasta</p>
+													</a>
+												</li>
+												<li class="nav-item">
+													<a href='<?= base_url('kantor_pertanahan') ?>' class="nav-link">
+														<i class='nav-icon fa-circle far'></i>
+														<p>Kantor Pertanahan</p>
+													</a>
+												</li>
+												<li class="nav-item">
+													<a href='kamus_kbli' class="nav-link">
+														<i class='nav-icon fa-circle far'></i>
+														<p>Klasifikasi KBLI</p>
+													</a>
+												</li>
 
-										</ul>
-									</li>
-									<li class='nav-item  '>
-										<a href="#" class='nav-link  '>
-											<i class="far fa-circle nav-icon"></i>
-											<p>
-												Admin Daerah
-												<i class="right fas fa-angle-left"></i>
-											</p>
-										</a>
-										<ul class="nav nav-treeview">
-											<li class="nav-item">
-												<a href='<?= base_url('realisasi_anggaran') ?>' class="nav-link">
-													<i class='nav-icon fa-circle far'></i>
-													<p>Realisasi Anggaran</p>
-												</a>
-											</li>
-											<li class="nav-item">
-												<a href='<?= base_url('detail_instansi_swasta') ?>' class="nav-link">
-													<i class='nav-icon fa-circle far'></i>
-													<p>Detail Instansi / Swasta</p>
-												</a>
-											</li>
+											</ul>
+										</li>
+										<li class='nav-item  '>
+											<a href="#" class='nav-link  '>
+												<i class="far fa-circle nav-icon"></i>
+												<p>
+													Admin Daerah
+													<i class="right fas fa-angle-left"></i>
+												</p>
+											</a>
+											<ul class="nav nav-treeview">
+												<li class="nav-item">
+													<a href='<?= base_url('realisasi_anggaran') ?>' class="nav-link">
+														<i class='nav-icon fa-circle far'></i>
+														<p>Realisasi Anggaran</p>
+													</a>
+												</li>
+												<li class="nav-item">
+													<a href='<?= base_url('detail_instansi_swasta') ?>' class="nav-link">
+														<i class='nav-icon fa-circle far'></i>
+														<p>Detail Instansi / Swasta</p>
+													</a>
+												</li>
 
-											<li class="nav-item">
-												<a href='<?= base_url('data_field_staff') ?>' class="nav-link">
-													<i class='nav-icon fa-circle far'></i>
-													<p>Data Field Staff</p>
-												</a>
-											</li>
-											<li class="nav-item">
-												<a href='<?= base_url('klasifikasi_sektor_usaha') ?>' class="nav-link">
-													<i class='nav-icon fa-circle far'></i>
-													<p>Klasifikasi Sektor Usaha</p>
-												</a>
-											</li>
-										</ul>
-									</li>
+												<li class="nav-item">
+													<a href='<?= base_url('data_field_staff') ?>' class="nav-link">
+														<i class='nav-icon fa-circle far'></i>
+														<p>Data Field Staff</p>
+													</a>
+												</li>
+												<li class="nav-item">
+													<a href='<?= base_url('klasifikasi_sektor_usaha') ?>' class="nav-link">
+														<i class='nav-icon fa-circle far'></i>
+														<p>Klasifikasi Sektor Usaha</p>
+													</a>
+												</li>
+											</ul>
+										</li>
 
-								</ul>
-							</li>
+									</ul>
+								</li> -->
 							<li class='nav-item '>
 								<a href="#" class='nav-link '>
 									<i class="nav-icon fas fa-copy"></i>
@@ -318,6 +318,7 @@
 								</a>
 								<ul class="nav nav-treeview">
 									<?php if ($role != 5) : ?>
+
 
 										<li class='nav-item '>
 											<a href="#" class='nav-link  menu-open'>
@@ -433,6 +434,7 @@
 							</li>
 						<?php endif ?>
 
+
 						<li class="nav-item">
 							<a href="<?= base_url() ?>subjectobject" class='nav-link '>
 								<i class="nav-icon fas fa-book"></i>
@@ -441,7 +443,6 @@
 						</li>
 
 						<?php if ($role != 7) : ?>
-
 							<li class="nav-item">
 								<a href="http://194.233.71.171/ptm-web/mou_pks" class='nav-link '>
 									<i class="nav-icon fas fa-book"></i>
@@ -488,6 +489,52 @@
 									</li>
 								</ul>
 							</li>
+							<li class="nav-item">
+								<a href="<?= base_url() ?>/moupks" class='nav-link '>
+									<i class="nav-icon fas fa-book"></i>
+									<p>MoU dan PKS</p>
+								</a>
+							</li>
+							<!-- <li class='nav-item '>
+							<a href="#" class='nav-link '>
+								<i class="nav-icon fas fa-book"></i>
+								<p>
+									CPCL
+									<i class="right fas fa-angle-left"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href='http://194.233.71.171/ptm-web/cpcl/entri' class="nav-link">
+										<i class='nav-icon fa-circle far'></i>
+										<p>Entri Data CPCL</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href='http://194.233.71.171/ptm-web/cpcl/progress' class="nav-link">
+										<i class='nav-icon fa-circle far'></i>
+										<p>Progress CPCL</p>
+									</a>
+								</li>
+							</ul>
+						</li> -->
+							<li class='nav-item '>
+								<a href="#" class='nav-link '>
+									<i class="nav-icon fas fa-book"></i>
+									<p>
+										Forum Diskusi
+										<i class="right fas fa-angle-left"></i>
+									</p>
+								</a>
+								<ul class="nav nav-treeview">
+									<li class="nav-item">
+										<a href='http://194.233.71.171/ptm-web/question_answer' class="nav-link">
+											<i class='nav-icon fa-circle far'></i>
+											<p>Forum Tanya Jawab</p>
+										</a>
+									</li>
+								</ul>
+							</li>
 
 							<li class="nav-item '">
 								<a href="http://194.233.71.171/ptm-web/peta" class='nav-link '>
@@ -507,13 +554,7 @@
 								</a>
 								<ul class="nav nav-treeview">
 									<li class="nav-item">
-										<a href='http://194.233.71.171/ptm-web/report/penghasilan' class="nav-link">
-											<i class='nav-icon fa-circle far'></i>
-											<p>Distribusi Penghasilan</p>
-										</a>
-									</li>
-									<li class="nav-item">
-										<a href='http://194.233.71.171/ptm-web/report/baku' class="nav-link">
+										<a href='<?= base_url('report_baku') ?>' class="nav-link">
 											<i class='nav-icon fa-circle far'></i>
 											<p>Baku</p>
 										</a>
@@ -522,12 +563,6 @@
 										<a href='http://194.233.71.171/ptm-web/report/kuesioner' class="nav-link">
 											<i class='nav-icon fa-circle far'></i>
 											<p>Pemetaan Sosial</p>
-										</a>
-									</li>
-									<li class="nav-item">
-										<a href='http://194.233.71.171/ptm-web/report/kuesioner' class="nav-link">
-											<i class='nav-icon fa-circle far'></i>
-											<p>Realisasi Fisik</p>
 										</a>
 									</li>
 								</ul>

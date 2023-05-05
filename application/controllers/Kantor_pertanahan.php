@@ -42,7 +42,7 @@ class kantor_pertanahan extends CI_Controller
 		$data = [];
 		foreach ($get as $key => $value) {
 			$a = [
-				$key + 1, @$value->kantorid, @$value->nama_provinsi, @$value->nama_kab_kota, @$value->nama_kantor,
+				$key + 1,  @$value->nama_provinsi,@$value->nama_kantor,
 				// '<a type="button" href="' . base_url('kantor_pertanahan/edit/') . $value->id . '" class="btn btn-success"><i class="fas fa-edit"></i></a>' .
 				// 	'<button type="button" id="del" onclick="dels(' . $value->id . ')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
 

@@ -12,7 +12,7 @@ class Master_skala_usaha extends CI_Controller {
 
 	public function index()
 	{
-		$data['title'] = 'Home - MAsterdata - Admin Pusat - Master Skala Usaha';
+		$data['title'] = 'Home - MOU & PKS';
 		$this->skin->view('Master_skala_usaha/index',$data);
 	}
 	
@@ -22,7 +22,7 @@ class Master_skala_usaha extends CI_Controller {
 		$data = [];
 		foreach ($get as $key => $value) {
 			$a = [
-				$key+1,@$value->jenis_usaha,@$value->kecil,@$value->menengah,@$value->besar,
+				$key+1,@$value->jenis_usaha,@$value->mikro,@$value->kecil,@$value->menengah,@$value->besar,@$value->variabel_klasifikasi,
 				'<a type="button" href="'.base_url('master_skala_usaha/edit/').$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
 					'<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
 				
@@ -47,10 +47,13 @@ class Master_skala_usaha extends CI_Controller {
 	
 		$data = [
 					'jenis_usaha'	=> $this->input->post('jenis_usaha',true),
+					'mikro'	=> $this->input->post('mikro',true),
 					'kecil'	=> $this->input->post('kecil',true),
 					'menengah'	=> $this->input->post('menengah',true),
 					'besar'	=> $this->input->post('besar',true),
+					'variabel_klasifikasi'	=> $this->input->post('variabel_klasifikasi',true),
 				];
+
 
 		$ins =  $this->db->insert('ms_skala_usaha', $data);
 		if ($ins) {
@@ -76,9 +79,12 @@ class Master_skala_usaha extends CI_Controller {
 		$id = $this->input->post('id',true);
 		$data = [
 					'jenis_usaha'	=> $this->input->post('jenis_usaha',true),
+					'mikro'	=> $this->input->post('mikro',true),
 					'kecil'	=> $this->input->post('kecil',true),
 					'menengah'	=> $this->input->post('menengah',true),
 					'besar'	=> $this->input->post('besar',true),
+					'variabel_klasifikasi'	=> $this->input->post('variabel_klasifikasi',true),
+
 				];
 		
 		if ($id) {

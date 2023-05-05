@@ -198,8 +198,6 @@ class Detail_fasilitasi_infrastruktur extends CI_Controller {
 	public function getKab($kode='')
 	{
 		$data=$this->fasilitasi_infrastruktur->getKab($kode);
-		// $data['kec']=$this->fasilitasi_infrastruktur->getKec(1104);
-		// $data['desa']=$this->fasilitasi_infrastruktur->getDesa(110407);
 		$str='<option value="">-- Pilih Kabupaten/Kota --</option>';
 		if (!empty($data)) {
 			foreach ($data as $key => $value) {

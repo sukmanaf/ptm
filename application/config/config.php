@@ -38,6 +38,7 @@ $config['base_url'] = $root;
 
 
 $config['base_url'] = 'http://localhost/ptm';
+// $config['base_url'] = 'http://192.168.18.173/ptm';
 
 
 /*

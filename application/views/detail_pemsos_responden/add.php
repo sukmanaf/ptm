@@ -16,6 +16,7 @@
  					<form action="#" id="postForm" class="form-horizontal" enctype="multipart/form-data" method="post">
                 		<input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" style="display: none">
                 		<input type="hidden" name="targetkk_id" value="<?=$id?>">
+                		<input type="hidden" name="id_targetkk_desa" value="<?=$id_targetkk_desa?>">
 
 						<div class="card-header">
 				            <h3>

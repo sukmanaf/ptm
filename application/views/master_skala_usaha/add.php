@@ -30,19 +30,25 @@
 							<fieldset class="border rounded-3 p-3" style="width: 100%">
 				              <legend class="float-none w-auto px-3">Skala Usaha </legend>
 				              	<div class="row">
-					                <div class="col-md-4">
+					                <div class="col-md-3">
+										<div class="form-group">
+											<label for="mikro">Mikro</label>
+											<input name="mikro" id="mikro" type="text" value="" class="form-control clear">
+										</div>
+									</div>
+					                <div class="col-md-3">
 										<div class="form-group">
 											<label for="kecil">Kecil</label>
 											<input name="kecil" id="kecil" type="text" value="" class="form-control clear">
 										</div>
 									</div>
-					                <div class="col-md-4">
+					                <div class="col-md-3">
 										<div class="form-group">
 											<label for="menengah">Menengah</label>
 											<input name="menengah" id="menengah" type="text" value="" class="form-control clear">
 										</div>
 									</div>
-					                <div class="col-md-4">
+					                <div class="col-md-3">
 										<div class="form-group">
 											<label for="besar">Besar</label>
 											<input name="besar" id="besar" type="text" value="" class="form-control clear">
@@ -52,6 +58,14 @@
 						</div>
 						
 						
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="variabel_klasifikasi">Variabel Klasifikasi</label>
+									<input name="variabel_klasifikasi"  id="variabel_klasifikasi" type="text" value="" class="form-control clear">
+								</div>
+							</div>
+						</div>
 
 						<div class="row">
 							<div class="col-md-6">
