@@ -49,24 +49,25 @@
 												<div class="form-group clearfix">
 													<label for='fc_jenis_perjanjian'>Jenis Perjanjian</label> </br>
 													<div class=" d-inline">
-														<input  type="radio"  id="radio_mou" checked value="mou" name="jenis_perjanjian"   />
+														<input  type="radio" <?php if($data['jenis_perjanjian']=='mou'){echo 'checked="checked"';}?>  id="radio_mou" checked value="mou" name="jenis_perjanjian"   />
 														<label style="margin-right: 20px" for="radio_mou">MoU</label>
 													</div>
 													<div class="d-inline">
-														<input  type="radio"  id="radio_pks" value="pks" name="jenis_perjanjian"  />
+														<input  type="radio" <?php if($data['jenis_perjanjian']=='pks'){echo 'checked="checked"';}?>  id="radio_pks" value="pks" name="jenis_perjanjian"  />
 														<label for="radio_pks">PKS</label>
 													</div>
 												</div>
 											</div>
 											<div class="col-md-6 ">
+													
 												<div class="form-group clearfix">
 													<label for='fc_jenis_perjanjian'>Status Perjanjian</label></br>
 													<div class=" d-inline">
-														<input  type="radio"   id="radio_ada" onchange="mouChange()"  checked value="ada" name="status_perjanjian"   />
+														<input  type="radio" <?php if($data['status_perjanjian']=='ada'){echo 'checked="checked"';}?>  id="radio_ada" onchange="mouChange()"  checked value="ada" name="status_perjanjian"   />
 														<label style="margin-right: 20px" for="radio_ada">Sudah Ada</label>
 													</div>
 													<div class="d-inline">
-														<input  type="radio" onchange="mouChange()" id="radio_proses" value="proses" name="status_perjanjian"  />
+														<input  type="radio" <?php if($data['status_perjanjian']=='proses'){echo 'checked="checked"';}?> onchange="mouChange()" id="radio_proses" value="proses" name="status_perjanjian"  />
 														<label for="radio_proses">Dalam Proses</label>
 													</div>
 												</div>
@@ -76,7 +77,7 @@
 												<select class="select2 form-control" name="tahapan" onchange="tahapanChange()" id="tahapan">
 													<option value="">-- Pilih Tahapan --</option>
 													<?php foreach ($tahapan as $key => $value): ?>
-														<?php if ($value->kode == $data['tahapan']): ?>
+														<?php if ($value->kode_jns == $data['tahapan']): ?>
 														<option selected value="<?=$value->kode_jns?>"><?=$value->nama?></option>
 															
 														<?php else: ?>

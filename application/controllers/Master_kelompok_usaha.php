@@ -265,6 +265,22 @@ class Master_kelompok_usaha extends CI_Controller {
 
 		echo json_encode($str);
 	}
+	public function getKabSelect($kodeProv='',$kodeKab='')
+	{
+		$data=$this->global->get_by_result('ms_kab_kota',$kodeProv,'kode_provinsi');
+		$str='<option value="">-- Pilih Kabupaten/Kota --</option>';
+		if (!empty($data)) {
+			foreach ($data as $key => $value) {
+				if ($value->kode == $kodeKab) {
+						$str.='<option selected value="'.$value->kode.'">'.$value->nama_kab_kota.'</option>';
+				}else{
+						$str.='<option value="'.$value->kode.'">'.$value->nama_kab_kota.'</option>';
+				}
+			}
+		}
+
+		echo json_encode($str);
+	}
 }
 
 /* End of file Master_kelompok_usaha.php */

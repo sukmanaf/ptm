@@ -32,10 +32,12 @@ class Fasilitasi_infrastruktur extends CI_Controller {
 				
 				$key+1,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,
 				rupiah(@$value->anggaran_insfratruktur_pendukung),rupiah(@$value->realisasi_insfratruktur_pendukung),
-				'<a type="button" title="Detail Data" style="display:inline" href="'.base_url('detail_fasilitasi_infrastruktur/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
+				'<div style="display:inline-flex">
+				<a type="button" title="Detail Data" style="display:inline" href="'.base_url('detail_fasilitasi_infrastruktur/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
 				'<button type="button" title="Edit" id="realisasi" onclick="realisasi(\''.$value->kode_kab_kota.'\','.$value->tahun_anggaran.',\''.$value->nama_kab_kota.'\')" class="btn btn-warning "><i class="fas fa-edit"></i></button>'.
 				'<a type="button" title="Download PDF" target="_blank" style="display:inline" href="'.base_url('export_pdf/fasilitasi_infrastruktur_sarana/').$value->kode_kab_kota.'" class="btn btn-info btn-sm">Export Sarana</a>'.
-				'<a type="button" title="Download PDF" target="_blank" style="display:inline" href="'.base_url('export_pdf/fasilitasi_infrastruktur_prasarana/').$value->kode_kab_kota.'" class="btn btn-info btn-sm">Export Prasarana</a>'
+				'<a type="button" title="Download PDF" target="_blank" style="display:inline" href="'.base_url('export_pdf/fasilitasi_infrastruktur_prasarana/').$value->kode_kab_kota.'" class="btn btn-info btn-sm">Export Prasarana</a>
+				</div>'
 
 			];
 			array_push($data,$a);

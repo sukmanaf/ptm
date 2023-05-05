@@ -13,7 +13,7 @@ class Pemetaan_sosial extends CI_Controller {
 
 	public function index()
 	{
-		$data['title'] = 'Home - Entry Subject Object - Tahun Pertama - Penyuluhan';
+		$data['title'] = 'Home - Entry Subject Object - Tahun Pertama - Pemetaan Sosial';
 		$this->skin->view('pemetaan_sosial/index',$data);
 	}
 	
@@ -66,7 +66,7 @@ class Pemetaan_sosial extends CI_Controller {
 	{
 
 		$data['prov']=$this->pemsos->getProv();
-		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Penyuluhan - Baru';
+		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Pemetaan Sosial - Baru';
 		$this->skin->view('pemetaan_sosial/add',$data);
 	}
 
@@ -140,7 +140,7 @@ class Pemetaan_sosial extends CI_Controller {
 		$data['id']=$id;
 		// $data['prov']=$this->pemsos->getProv();
 		$data['prov']=$this->pemsos->getProv();
-		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Penyuluhan - Edit';
+		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Pemetaan Sosial - Edit';
 		$data['data'] = $this->global->get_by_one('wa_targetkk',$id,'id');
 		$this->skin->view('pemetaan_sosial/edit',$data);
 
@@ -350,7 +350,7 @@ class Pemetaan_sosial extends CI_Controller {
     public function upload($id='')
 	{
 		$data['id']=$id;
-		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Penyuluhan - Upload';
+		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Pemetaan Sosial - Upload';
 		$data['data'] = $this->global->get_by_one('dt_pengembangan_rencana_usaha',$id,'id');
 		$this->skin->view('pemetaan_sosial/upload',$data);
 

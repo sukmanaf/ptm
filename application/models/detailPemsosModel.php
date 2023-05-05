@@ -129,6 +129,26 @@ class DetailPemsosModel extends CI_Model {
 		return $str;
 	}
 
+	public function th_tanah_terdaftar()
+	{
+		$data = $this->db->get('ms_kuesioner_th01a')->result();
+		$str='<option value="">-- Pilih Status Tanah --</option>';
+		foreach ($data as $key => $value) {
+			$str .= '<option value="'.@$value->kode_status_tanah_terdaftar.'">'.$value->deskripsi.'</option>';
+		}
+		return $str;
+	}
+
+	public function th_tanah_belum_terdaftar()
+	{
+		$data = $this->db->get('ms_kuesioner_th01b')->result();
+		$str='<option value="">-- Pilih Status Tanah --</option>';
+		foreach ($data as $key => $value) {
+			$str .= '<option value="'.@$value->kode_status_tanah_belum_terdaftar.'">'.$value->deskripsi.'</option>';
+		}
+		return $str;
+	}
+
 }
 
 /* End of file detailPenlokModel.php */

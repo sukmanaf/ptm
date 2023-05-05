@@ -38,13 +38,13 @@
 							<div class="card-header">
 								<ul id="nav-tabs" class="nav nav-tabs" role="tablist">
 									<li class="nav-item" data-tab-content="ar">
-										<a class="nav-link active" data-target="#tab_1" onclick="loadDtLk()" data-toggle="tab">LK. Lokasi</a>
+										<a class="nav-link active" data-target="#tab_1" onclick="changeContent('lk')" data-toggle="tab">LK. Lokasi</a>
 									</li>
 									<li class="nav-item" data-tab-content="ar">
-										<a class="nav-link" data-target="#tab_2" onclick="loadDtAr()" data-toggle="tab">AR. Anggota Keluarga</a>
+										<a class="nav-link" data-target="#tab_2" onclick="changeContent('ar')" data-toggle="tab">AR. Anggota Keluarga</a>
 									</li>
 									<li class="nav-item" data-tab-content="tn">
-										<a class="nav-link" data-target="#tab_3" data-toggle="tab">TN. Tanah dan Hunian</a>
+										<a class="nav-link" data-target="#tab_3" onclick="changeContent('th')" data-toggle="tab">TN. Tanah dan Hunian</a>
 									</li>
 									<li class="nav-item" data-tab-content="rm">
 										<a class="nav-link" data-target="#tab_4" data-toggle="tab">RM. Hunian</a>
@@ -86,109 +86,9 @@
 							</div>
 							<div class="card-body">
 								<div class="tab-content">
-									<div class="tab-pane fade show active" id="tab_1">
-										<div class="row">
-											<div class="col-md-12">
-												<div id="list_lk"><?=$lk?></div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade " id="tab_2">
-										<div class="row">
-											<div class="col-md-12">
-												<div id="list_ar"><?=$ar?></div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab_3">
-										<div class="row">
-											<div class="col-md-12">
-												<div id="list_tn"><?=$tn?></div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab_4">
-										<div class="row">
-											<div class="col-md-12">
-												<div id="list_rm"></div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab_5">
-										<div class="row">
-											<div class="col-md-12">
-												<div id="list_ik"></div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab_6">
-										<div class="row">
-											<div class="col-md-12">
-												<div id="list_pg"></div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab_7">
-										<div class="row">
-											<div class="col-md-12">
-												<div id="list_pt"></div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab_8">
-										<div class="row">
-											<div class="col-md-12">
-												<div id="list_ptk"></div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab_9">
-										<div class="row">
-											<div class="col-md-12">
-												<div id="list_prb"></div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab_10">
-										<div class="row">
-											<div class="col-md-12">
-												<div id="list_pny"></div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab_11">
-										<div class="row">
-											<div class="col-md-12">
-												<div id="list_umkm"></div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab_12">
-										<div class="row">
-											<div class="col-md-12">
-												<div id="list_amd"></div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab_13">
-										<div class="row">
-											<div class="col-md-12">
-												<div id="list_ut"></div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab_15">
-										<div class="row">
-											<div class="col-md-12">
-												<div id="list_pd"></div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab_16">
-										<div class="row">
-											<div class="col-md-12">
-												<div id="list_cp"><?=$cp?></div>
-											</div>
+									<div class="row">
+										<div class="col-md-12" id="div_content">
+											asdddd
 										</div>
 									</div>
 								</div>
@@ -258,6 +158,14 @@
     }
     function clean() {
     	$('.clear').val("")
+    }
+    function changeContent(v) {
+    	var arr = []
+    	arr['lk'] = `<?=$lk?>`
+    	arr['ar'] = `<?=$ar?>`
+    	arr['th'] = `<?=$th?>`
+    	$('#div_content').html(arr[v])
+			
     }
 
 </script>

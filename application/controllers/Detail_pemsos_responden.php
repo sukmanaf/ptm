@@ -17,9 +17,10 @@ class Detail_pemsos_responden extends CI_Controller {
 		return false;
 	}
 
-	public function data($id='')
+	public function data($id='',$id_targetkk)
 	{
 		$data['id']=$id;
+		$data['id_targetkk']=$id_targetkk;
 		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Pemetaan Sosial - Desa';
 		$this->skin->view('detail_pemsos_responden/index',$data);
 	}
@@ -73,12 +74,15 @@ class Detail_pemsos_responden extends CI_Controller {
 		$data['hub_kk']=$this->pemsos->hub_kk();
 		$data['pekerjaan']=$this->pemsos->pekerjaan();
 		
-		// ===== rm ====
+		// ===== th ====
+		$dataTH['tanah_terdaftar']=$this->pemsos->th_tanah_terdaftar();
+		$dataTH['tanah_belum_terdaftar']=$this->pemsos->th_tanah_belum_terdaftar();
 
 
 		$data['lk']=$this->load->view('detail_pemsos_responden/lk',$data,true);
 		$data['ar']=$this->load->view('detail_pemsos_responden/ar',$data,true);
 		$data['rm']=$this->load->view('detail_pemsos_responden/rm',$data,true);
+		$data['th']=$this->load->view('detail_pemsos_responden/th',$dataTH,true);
 		
 
 		$data['title']= 'Home - Entry Subject Object - Tahun Pertama - Pemetaan Sosial - Desa - Baru';
@@ -335,10 +339,11 @@ class Detail_pemsos_responden extends CI_Controller {
 	}
 
 
-	public function get_lk($id)
+	public function get_lk($nik)
 	{
-		$this->db->where('id_targetkk_desa', $id);
+		$this->db->where('nik', $nik);
 		$get=$this->db->get('v_dt_pemsos_lk')->result();
+		// echo $this->db->last_query();
 		$data = [];
 		foreach ($get as $key => $value) {
 			$a = [
@@ -354,11 +359,14 @@ class Detail_pemsos_responden extends CI_Controller {
 	}
 	public function create_lk()
 	{
-		// echo "<pre>";
-		// print_r ($_POST);
-		// echo "</pre>";exit();
 		
-
+		$nik = $this->input->post('nik',true);
+		$this->db->where('nik', $nik);
+		$check = $this->db->get('wa_kuesioner_lk')->num_rows();
+		if ($check >= 1) {
+			echo json_encode(['sts' => 'fail','message' => 'Data Sudah Ada!']);
+			exit();
+		}
 		$data = [
 					'nik' => $this->input->post('nik',true),
 					'id_targetkk_desa' => $this->input->post('id_targetkk_desa',true),
@@ -370,8 +378,6 @@ class Detail_pemsos_responden extends CI_Controller {
 				    'longitude' => $this->input->post('lng',true),
 				    'alamat' => $this->input->post('alamat',true),
 				];
-
-
 		$ins =  $this->db->insert('wa_kuesioner_lk', $data);
 		$id = $this->db->insert_id();
 		if ($ins) {
@@ -414,9 +420,8 @@ class Detail_pemsos_responden extends CI_Controller {
 		foreach ($get as $key => $value) {
 			$a = [
 				$key+1,@$value->nik,@$value->nama,@$value->nama_jenis_kelamin,@$value->nama_hubungan,
-				// '<a type="button" href="'.base_url('detail_pemsos_responden/edit/').$id.'/'.$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
-				// '<a type="button" disabled  style="display:inline" href="'.base_url('detail_pemsos_responden/add/').$value->id.'" class="btn btn-success"><i class="fas fa-edit" ></i></a>'
-				'<button type="button" id="del" onclick="editAr('.$value->id.')" class="btn btn-success"><i class="fas fa-edit"></i></button>'
+				'<button type="button" id="edit" onclick="editAr('.$value->id.')" class="btn btn-success"><i class="fas fa-edit"></i></button>'.
+				'<button type="button" id="del" onclick="delAr('.$value->id.')" class="btn btn-danger"><i class="fas fa-trash"></i></button>'
 			];
 			array_push($data,$a);
 		}
@@ -474,15 +479,24 @@ class Detail_pemsos_responden extends CI_Controller {
 				    'apakah_anggota_keluarga_bekerja' =>  $this->input->post('xis_anggota_keluarga_bekerja',true),
 				    'penghasilan_anggota_keluarga_yang_bekerja' =>  $this->input->post('xpenghasilan',true),
 				];
-		// echo "<pre>";
-		// print_r ($data);
-		// echo "</pre>";exit();
+
 		$this->db->where('id', $id);
 		$up = $this->db->update('wa_kuesioner_ar', $data);
 		if ($up) {
 			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
 		}else{
 			echo json_encode(['sts' => 'fail','message' => 'Data Gagal DIsimpan!']);
+		}
+	}
+
+	public function delete_ar($id='')
+	{
+		$this->db->where('id', $id);
+		$del = $this->db->delete('wa_kuesioner_ar');
+		if ($del) {
+			echo json_encode(['sts' => 'success']);
+		}else{
+			echo json_encode(['sts' => 'fail']);
 		}
 	}
 

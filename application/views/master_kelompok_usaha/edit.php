@@ -62,10 +62,11 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
+								
 									<label for="provinsi">Provinsi</label>
-									<select class="form-control select2" name="provinsi" id="provinsi">
+									<select class="form-control select2"  onchange="provChange($(this).val())" name="provinsi" id="provinsi">
 											<?php foreach ($provinsi as $key => $value): ?>
-												<?php if ($data['nama_kelompok'] == $value->kode): ?>
+												<?php if ($data['provinsi'] == $value->kode): ?>
 													
 												<option selected value="<?=$value->kode?>"><?=$value->nama_provinsi?></option>
 												<?php else: ?>
@@ -80,14 +81,7 @@
 								<div class="form-group">
 									<label for="kabupaten">Kabupaten/Kota</label>
 									<select class="form-control select2" name="kabupaten" id="kabupaten">
-											<?php foreach ($kab_kota as $key => $value): ?>
-												<?php if ($data['kabupaten'] == $value->kode): ?>
-												<option selected value="<?=$value->kode?>"><?=$value->nama_kab_kota?></option>
-												<?php else: ?>
-												<option value="<?=$value->kode?>"><?=$value->nama_kab_kota?></option>
-												<?php endif ?>
-											<?php endforeach ?>
-
+											
 									</select>
 								</div>
 							</div>
@@ -187,6 +181,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
     	
+    	provChangeSelect(<?=$data['provinsi']?>,<?=$data['kabupaten']?>)
 
     	$('.select2').select2()
     	$('#titleId').html('<?=$title?>')
@@ -234,6 +229,23 @@
 
     })
 
+
+    function provChangeSelect(kodeProv,kodeKab) {
+		$.get( "<?php echo base_url("master_kelompok_usaha/getKabSelect/") ?>"+kodeProv+'/'+kodeKab, function( data ) {
+			data = JSON.parse(data)
+			$('#kabupaten').html(data)
+		});
+    }
+
+    function provChange(kode) {
+	    event.preventDefault(); //prevent default action 
+		$.get( "<?php echo base_url("master_kelompok_usaha/getKab/") ?>"+kode, function( data ) {
+			data = JSON.parse(data)
+			console.log(data)
+
+			$('#kabupaten').html(data)
+		});
+    }
 
 	
 </script>

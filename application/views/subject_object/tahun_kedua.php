@@ -9,7 +9,7 @@
 			<div class="icon">
 				<i class="ion ion-calendar"></i>
 			</div>
-			<a href="/ptm-web/subject_object/tahun_kedua/penguatan_kelembagaan" class="small-box-footer">
+			<a href="<?=base_url('penguatan_kelembagaan')?>" class="small-box-footer">
 				<i class="fa fa-arrow-circle-right"></i>
 			</a>
 		</div>

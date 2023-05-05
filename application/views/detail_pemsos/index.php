@@ -13,6 +13,8 @@
     <div class="container-fluid">
 	  <div class="card card-outline card-primary">
 	    <div class="card-header">
+	    	<a  style="" href="<?=base_url('pemetaan_sosial')?>" class="btn btn-default">
+	        <i class="fas fa-arrow-left mr-2 text-white"></i>Kembali </a>
 	      <div class="card-tools">
 	      	      <!-- <a  style="float: right" href="<?=base_url('detail_pemsos/add/').$id?>" class="btn btn-warning pull-right">
 	        <i class="fas fa-plus mr-2 text-white"></i>Baru </a> -->

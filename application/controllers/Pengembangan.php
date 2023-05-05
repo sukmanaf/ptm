@@ -31,11 +31,13 @@ class Pengembangan extends CI_Controller {
 			$a = [
 				$key+1,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,
 				rupiah(@$value->anggaran_rencana_usaha),rupiah(@$value->realisasi_rencana_usaha),
-				'<a type="button" style="display:inline" href="'.base_url('pengembangan/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload"></i></a>'.
+				'<div style="display:inline-flex">
+				<a type="button" style="display:inline" href="'.base_url('pengembangan/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload"></i></a>'.
 				'<a type="button" style="display:inline" href="'.base_url('detail_pengembangan/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
 				'<button type="button" id="realisasi" onclick="realisasi(\''.$value->kode_kab_kota.'\','.$value->tahun_anggaran.',\''.$value->nama_kab_kota.'\')" class="btn btn-warning "><i class="fas fa-edit"></i></button>'.
 				'<a type="button" style="display:inline" target="_blank" href="'.base_url('export_pdf/pengembangan_usaha_a/').$value->kode_kab_kota.'" title="Export Laporan A" class="btn btn-info"><b>A</b></a>'.
-				'<a type="button" style="display:inline" target="_blank" href="'.base_url('export_pdf/pengembangan_usaha_b/').$value->kode_kab_kota.'" title="Export Laporan B" class="btn btn-secondary"><b>B</b></a>'
+				'<a type="button" style="display:inline" target="_blank" href="'.base_url('export_pdf/pengembangan_usaha_b/').$value->kode_kab_kota.'" title="Export Laporan B" class="btn btn-secondary"><b>B</b></a>
+				</div>'
 			];
 			array_push($data,$a);
 		}

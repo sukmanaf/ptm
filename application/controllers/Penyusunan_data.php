@@ -32,9 +32,10 @@ class penyusunan_data extends CI_Controller {
 		foreach ($get as $key => $value) {
 			$a = [
 				$key+1,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,rupiah($value->anggaran_penyusunan_data),rupiah($value->realisasi_penyusunan_data),
-					'<a type="button" style="display:inline" href="'.base_url('detail_penyusunan_data/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
+					'<div style="display:inline-flex">
+					<a type="button" style="display:inline" href="'.base_url('detail_penyusunan_data/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
 				'<a type="button"  style="display:inline" href="'.base_url('penyusunan_data/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload" ></i></a>'.
-				'<button type="button" id="realisasi" onclick="realisasi(\''.$value->kode_kab_kota.'\','.$value->tahun_anggaran.',\''.$value->nama_kab_kota.'\')" class="btn btn-warning "><i class="fas fa-edit"></i></button>'
+				'<button type="button" id="realisasi" onclick="realisasi(\''.$value->kode_kab_kota.'\','.$value->tahun_anggaran.',\''.$value->nama_kab_kota.'\')" class="btn btn-warning "><i class="fas fa-edit"></i></button></div>'
 
 				// '<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
 			];
