@@ -1,0 +1,12 @@
+{
+  "folders": [
+	{
+		"path": "../../.."
+	},
+	{
+		"name": "SSH FS - react_atr",
+		"uri": "ssh://react_atr/"
+	}
+],
+  "settings": {}
+}

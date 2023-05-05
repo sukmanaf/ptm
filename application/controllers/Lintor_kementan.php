@@ -134,16 +134,18 @@ class Lintor_kementan extends CI_Controller
                     $nama_kelompok_tani = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
                     $bantuan = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
                     $keterangan = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
-                    $temp_data[] = array(
-                        'nomor'    => $nomor,
-                        'nama_petani'    => $nama,
-                        'alamat'    => $alamat,
-                        'nomor_sk_pengesahan'    => $nomor_sk_pengesahan,
-                        'nomor_register'    => $nomor_register,
-                        'nama_kelompok_tani'    => $nama_kelompok_tani,
-                        'bantuan_pernah_diterima'    => $bantuan,
-                        'keterangan'    => $keterangan,
-                    );
+                    if (!empty($nomor)) {
+                        $temp_data[] = array(
+                            'nomor'    => $nomor,
+                            'nama_petani'    => $nama,
+                            'alamat'    => $alamat,
+                            'nomor_sk_pengesahan'    => $nomor_sk_pengesahan,
+                            'nomor_register'    => $nomor_register,
+                            'nama_kelompok_tani'    => $nama_kelompok_tani,
+                            'bantuan_pernah_diterima'    => $bantuan,
+                            'keterangan'    => $keterangan,
+                        );
+                    }
                 }
             }
             // print_r($temp_data);
