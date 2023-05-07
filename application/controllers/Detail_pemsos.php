@@ -37,7 +37,7 @@ class Detail_pemsos extends CI_Controller {
 			$a = [
 				$key+1,@$value->nama_kab_kota,@$value->nama_kecamatan,@$value->nama_desa_kelurahan,@$value->jumlah,@$value->target_batas_waktu_penyelesaian,
 				// '<a type="button" href="'.base_url('detail_pemsos/edit/').$id.'/'.$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
-				'<a type="button"  style="display:inline" href="'.base_url('detail_pemsos_responden/data/').$value->id.'" class="btn btn-success"><i class="fas fa-edit" ></i></a>'
+				'<a type="button"  style="display:inline" href="'.base_url('detail_pemsos_responden/data/').$value->id.'/'.$id.'" class="btn btn-success"><i class="fas fa-edit" ></i></a>'
 				// '<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
 			];
 			array_push($data,$a);

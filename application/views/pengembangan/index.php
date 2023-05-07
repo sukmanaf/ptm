@@ -40,7 +40,7 @@
 	              <th>Target KK</th>
 	              <th>Anggaran</th>
 	              <th>Realisasi</th>
-	              <th style="width: 26% !important">Aksi</th>
+	              <th>Aksi</th>
 	            </tr>
 	          </thead>
 	        </table>

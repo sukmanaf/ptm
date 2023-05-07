@@ -32,10 +32,12 @@ class Penlok_targetkk extends CI_Controller {
 		foreach ($get as $key => $value) {
 			$a = [
 				$key+1,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun_anggaran,@$value->target_kk,rupiah($value->anggaran_penlok),rupiah($value->realisasi_penlok),
-					'<a type="button"  style="display:inline" href="'.base_url('detail_penlok/data/').$value->id.'" class="btn btn-primary"><i class="fas fa-search" ></i></a>'.
+
+					'<div style="display:inline-flex">
+					<a type="button"  style="display:inline" href="'.base_url('detail_penlok/data/').$value->id.'" class="btn btn-primary"><i class="fas fa-search" ></i></a>'.
 					'<a type="button"  style="display:inline" href="'.base_url('penlok_targetkk/upload/').$value->id.'" class="btn btn-warning"><i class="fas fa-upload" ></i></a>'.
 					'<a type="button" href="'.base_url('penlok_targetkk/edit/').$value->id.'" class="btn btn-success"><i class="fas fa-edit"></i></a>'.
-					'<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button>'
+					'<button type="button" id="del" onclick="dels('.$value->id.')" class="btn btn-danger hapus"><i class="fas fa-trash"></i></button></div>'
 			];
 			array_push($data,$a);
 		}

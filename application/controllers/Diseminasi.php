@@ -31,11 +31,13 @@ class Diseminasi extends CI_Controller {
 				
 				$key+1,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,
 				rupiah(@$value->anggaran_diseminasi),rupiah(@$value->realisasi_diseminasi),
-				'<a type="button" style="display:inline" href="'.base_url('diseminasi/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload"></i></a>'.
+				'<div style="display:inline-flex">
+				<a type="button" style="display:inline" href="'.base_url('diseminasi/upload/').$value->id.'" class="btn btn-primary"><i class="fas fa-upload"></i></a>'.
 				'<a type="button" style="display:inline" href="'.base_url('detail_diseminasi/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
 				'<button type="button" id="realisasi" onclick="realisasi(\''.$value->kode_kab_kota.'\','.$value->tahun_anggaran.',\''.$value->nama_kab_kota.'\')" class="btn btn-warning "><i class="fas fa-edit"></i></button>'.
 				'<a type="button" title="Download PDF" target="_blank" style="display:inline" href="'.base_url('export_pdf/diseminasi/').$value->kode_kab_kota.'" class="btn btn-info btn-sm">Export Pendampingan</a>'.
-				'<a type="button" title="Download PDF" target="_blank" style="display:inline" href="'.base_url('export_pdf/diseminasi_not_in/').$value->kode_kab_kota.'" class="btn btn-info btn-sm">Export Tidak Pendampingan </a>'
+				'<a type="button" title="Download PDF" target="_blank" style="display:inline" href="'.base_url('export_pdf/diseminasi_not_in/').$value->kode_kab_kota.'" class="btn btn-info btn-sm">Export Tidak Pendampingan </a>
+				</div>'
 					
 			];
 			array_push($data,$a);

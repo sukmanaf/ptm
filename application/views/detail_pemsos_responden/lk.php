@@ -4,7 +4,7 @@
 		<button onclick="addLk(<?=$id?>)" type="button" class="btn btn-warning " style="float: right;margin-bottom: 10px"><i class="fas fa-plus mr-2 text-white"></i>Baru</button>
 	</div>
 	<div class="col-md-12">
-		<table id="LKtable" class="table table-hover dataTable no-footer dtr-inline" aria-describedby="table-front_info" style="width: 1038px;">
+		<table id="dtTable" class="table table-hover dataTable no-footer dtr-inline" aria-describedby="table-front_info" style="width: 1038px;">
 		  <thead>
 		    <tr>
 		          <th>No</th>
@@ -21,14 +21,14 @@
 </div>
 
 
-<div class="modal" tabindex="-1" id="modalAddLk">
+<div class="modal" tabindex="-1" id="modalAdd">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
+        <h5 class="modal-title">Tambah Data</h5>
       </div>
       <div class="modal-body">
- 		<form action="#" id="lkFormAdd" class="form-horizontal" enctype="multipart/form-data" method="post">
+ 		<form action="#" id="FormAdd" class="form-horizontal" enctype="multipart/form-data" method="post">
  			<input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" style="display: none">
       		<input type="hidden" name="id_targetkk_desa" value="<?=$id?>">
       		<input type="hidden" name="nik" value="<?=$data['nik']?>">
@@ -64,7 +64,7 @@
                     <div class="form-group">
                         <label for='nik'>Desa/Kelurahan</label></br>
                         <select class="form-control" name="kode_desa_kelurahan">
-                        		<option value="<?=substr($data['kode_desa_kelurahan'],0,6)?>"><?=$data['nama_desa_kelurahan']?></option>
+                        		<option value="<?=$data['kode_desa_kelurahan']?>"><?=$data['nama_desa_kelurahan']?></option>
                         </select>
                     </div>
                 </div>
@@ -100,7 +100,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="$('.modal').modal('hide')">Close</button>
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <!-- <button type="submit" >Simpan</button> -->
+        <button class="btn btn-primary" onclick="$('#FormAdd').submit()">Simpan</button>
       </div>
        </form>
     </div>
@@ -108,18 +109,18 @@
 </div>
 
 
-<div class="modal" tabindex="-1" id="modalEditLk">
+<div class="modal" tabindex="-1" id="modalEdit">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
+        <h5 class="modal-title">Edit Data</h5>
       </div>
       <div class="modal-body">
- 		<form action="#" id="lkFormEdit" class="form-horizontal" enctype="multipart/form-data" method="post">
+ 		<form action="#" id="FormEdit" class="form-horizontal" enctype="multipart/form-data" method="post">
  			<input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" style="display: none">
       		<input type="hidden" name="xid_targetkk_desa" value="<?=$id?>">
       		<input type="hidden" name="xnik" value="<?=$data['nik']?>">
-      		<input type="hidden" id="lkid" name="lkid" value="">
+      		<input type="hidden" id="xid" name="lkid" value="">
         	<div class="row">
                 <div class="col-sm-6 col-md-6 col-xs-12">
                     <div class="form-group">
@@ -188,7 +189,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="$('.modal').modal('hide')">Close</button>
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button class="btn btn-primary" onclick="$('#FormEdit').submit()">Simpan</button>
+        <!-- <button type="submit" class="btn btn-primary">Simpan</button> -->
       </div>
        </form>
     </div>
@@ -199,8 +201,10 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		loadDtLk();
+        console.log('lk')
 
-		$("#lkFormAdd").submit(function(event){
+		$("#FormAdd").submit(function(event){
+            console.log('simpan')
 	        event.preventDefault(); //prevent default action 
 	        var post_url = '<?php echo base_url("detail_pemsos_responden/create_lk") ?>'; //get form action url
 	        var request_method = $(this).attr("method"); //get form GET/POST method
@@ -219,23 +223,23 @@
 	        	response = JSON.parse(response)
 	        	if (response.sts == 'success') {
 	        		toastr.success(response.message);
-		        	loadDtLk()
-	        		setTimeout(function() {
+		        	// loadDtLk()
+                    $('#dtTable').DataTable().ajax.reload()
 	        		// 	location.reload()
 		        		$('#alamat').html('')
 		        		$('#lat').val('')
 		        		$('#lng').val('')
-		        		$('#modalAddLk').modal('hide')
+		        		$('.modal').modal('hide')
 
-	        		}, 3000);
 	        	}else{
+
 	        		toastr.error(response.message);
 	        	} 
 	        });
 
 	        
 	    });
-	    $("#lkFormEdit").submit(function(event){
+	    $("#FormEdit").submit(function(event){
 	        event.preventDefault(); //prevent default action 
 	        var post_url = '<?php echo base_url("detail_pemsos_responden/update_lk") ?>'; //get form action url
 	        var request_method = $(this).attr("method"); //get form GET/POST method
@@ -254,15 +258,11 @@
 	        	response = JSON.parse(response)
 	        	if (response.sts == 'success') {
 	        		toastr.success(response.message);
-		        	loadDtLk()
-	        		setTimeout(function() {
-	        		// 	location.reload()
-		        		$('#alamat').html('')
-		        		$('#lat').val('')
-		        		$('#lng').val('')
-		        		$('#modalEditLk').modal('hide')
-
-	        		}, 3000);
+                    $('#dtTable').DataTable().ajax.reload()
+	        		$('#alamat').html('')
+	        		$('#lat').val('')
+	        		$('#lng').val('')
+	        		$('.modal').modal('hide')
 	        	}else{
 	        		toastr.error(response.message);
 	        	} 
@@ -273,12 +273,10 @@
     });
 
     function loadDtLk() {
-        return false
-    	$('#LKtable').dataTable().fnClearTable();
-    	$('#LKtable').dataTable().fnDestroy();
-    	$('#LKtable').DataTable({
+        console.log('dt')
+    	$('#dtTable').DataTable({
 		    ajax: {
-		        url: '<?php echo base_url("detail_pemsos_responden/get_lk/").$id;?>',
+		        url: '<?php echo base_url("detail_pemsos_responden/get_lk/").$data['nik'];?>',
 		        data: function ( d ) {
 	                d.<?php echo $this->security->get_csrf_token_name();?> = "<?php echo $this->security->get_csrf_hash();?>"
 	            },
@@ -288,26 +286,17 @@
     }
 
     function addLk($id) {
-    	$('#modalAddLk').modal('show')
+    	$('#modalAdd').modal('show')
     }
 
     function editLk(kode) {
 	    event.preventDefault(); //prevent default action 
 		$.get( "<?php echo base_url("detail_pemsos_responden/edit_lk/") ?>"+kode, function( data ) {
 			data = JSON.parse(data)
-			$('#lkid').val(data.id)
+			$('#xid').val(data.id)
 			$('#xalamat').html(data.alamat)
 			$('#xlat').val(data.lattitude)
 			$('#xlng').val(data.longitude)
-    		$('#modalEditLk').modal('show')
-
-			console.log(data)
+    		$('#modalEdit').modal('show')
 		});
     }
-// 	    var map = L.map('map').setView([51.505, -0.09], 13);
-
-// 	    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//     maxZoom: 19,
-//     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-// }).addTo(map);
-</script>

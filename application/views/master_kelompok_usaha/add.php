@@ -70,7 +70,7 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="kabupaten">Ketegori Kelompok Usaha</label>
+									<label for="kabupaten">Kabupaten Kota</label>
 									<select class="form-control select2" name="kabupaten" id="kabupaten">
 											<?php foreach ($kab_kota as $key => $value): ?>
 												<option value="<?=$value->kode?>"><?=$value->nama_kab_kota?></option>

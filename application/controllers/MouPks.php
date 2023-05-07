@@ -47,12 +47,7 @@ class MOUPks extends CI_Controller {
 
 	public function create()
 	{
-		// echo "<pre>";
-		// print_r ($_POST);
-		// echo "</pre>";
-		// echo "<pre>";
-		// print_r ($_FILES);
-		// echo "</pre>";
+
 		$nip = $this->input->post('nip',true);
 		if (strlen($nip) != 18) {
 			echo json_encode(['sts' => 'fail','message' => 'Jumlah NIp Harus 18!']);
@@ -78,7 +73,22 @@ class MOUPks extends CI_Controller {
 		$ins =  $this->db->insert('wa_moupks', $data);
   		$insert_id = $this->db->insert_id();
 
-		
+		foreach ($_FILES as $key => $value) {
+        		
+            if ($_FILES[$key]['name']) {
+            	// die('masuk');
+				$date = date('Ymdhis').rand();
+				$ext = pathinfo($_FILES[$key]['name'], PATHINFO_EXTENSION);
+				$jenis_perjanjian = $this->input->post('jenis_perjanjian',true);
+				$status_perjanjian = $this->input->post('status_perjanjian',true);
+        		$jenis_evidence = str_replace('upload_evidence', '', $key);
+				$jenis_evidence = $this->input->post('jenis_evidence'.$jenis_evidence,true);
+				$name = $insert_id.'_'.$jenis_perjanjian.'_'.$jenis_evidence.'_'.$date.'.'.$ext;
+        		// exit();
+        		$_FILES[$key]['name'] = $name;      
+        	}
+	    }
+
 		if ($ins) {
 			if ($_FILES) {
 			$this->do_upload($insert_id);	
@@ -93,6 +103,7 @@ class MOUPks extends CI_Controller {
 
 	public function edit($id='')
 	{
+		$data['tahapan']=$this->db->get('ms_tahapan_moupks')->result();
 		$data['title']= 'Home - MOU & PKS - Edit';
 		$data['data'] = $this->global->get_by_one('wa_moupks',$id,'id');
 		$this->db->where('id', $id);
@@ -104,7 +115,23 @@ class MOUPks extends CI_Controller {
 	public function update()
 	{
 		$id = $this->input->post('id',true);
-		
+		foreach ($_FILES as $key => $value) {
+        		
+            if ($_FILES[$key]['name']) {
+            	// die('masuk');
+        		// check type fle upload
+				$date = date('Ymdhis').rand();
+				$ext = pathinfo($_FILES[$key]['name'], PATHINFO_EXTENSION);
+				$jenis_perjanjian = $this->input->post('jenis_perjanjian',true);
+				$status_perjanjian = $this->input->post('status_perjanjian',true);
+        		$jenis_evidence = str_replace('upload_evidence', '', $key);
+				$jenis_evidence = $this->input->post('jenis_evidence'.$jenis_evidence,true);
+				$name = $id.'_'.$jenis_perjanjian.'_'.$jenis_evidence.'_'.$date.'.'.$ext;
+        		// exit();
+        		$_FILES[$key]['name'] = $name;      
+        	}
+	    }
+
 		$data = [
 					'nip'	=> $this->input->post('nip',true),
 					'nama_pejabat'	=> $this->input->post('nama_pejabat',true),
@@ -126,6 +153,11 @@ class MOUPks extends CI_Controller {
 		}else{
 			$ins =  $this->db->insert('wa_moupks', $data);
 
+		}
+		if ($ins) {
+			if ($_FILES) {
+			$this->do_upload($id);	
+			}
 		}
 		if ($ins) {
 			echo json_encode(['sts' => 'success','message' => 'Data Berhasil Disimpan!']);
@@ -179,14 +211,14 @@ class MOUPks extends CI_Controller {
 	            if ($_FILES[$key]['name']) {
 	            	// die('masuk');
 	        		// check type fle upload
-	        		$jenis_evidence = str_replace('upload_evidence', '', $key);
-					$jenis_evidence = $this->input->post('jenis_evidence'.$jenis_evidence,true);
 					$ext = pathinfo($_FILES[$key]['name'], PATHINFO_EXTENSION);
 					$jenis_perjanjian = $this->input->post('jenis_perjanjian',true);
 					$status_perjanjian = $this->input->post('status_perjanjian',true);
-					$name = $id.'_'.$jenis_perjanjian.'_'.$jenis_evidence.'_'.$date.'.'.$ext;
-	        		// exit();
-	        		$_FILES[$key]['name'] = $name;       
+	        		$jenis_evidence = str_replace('upload_evidence', '', $key);
+					$jenis_evidence = $this->input->post('jenis_evidence'.$jenis_evidence,true);
+					// $name = $id.'_'.$jenis_perjanjian.'_'.$jenis_evidence.'_'.$date.'.'.$ext;
+	    //     		// exit();
+	    //     		$_FILES[$key]['name'] = $name;       
 	        		$allowed_type = array('image/jpeg'=>1,'image/jpg'=>1,'image/png'=>1,'image/gif'=>1,'application/pdf'=>1);
 					$filetype = mime_content_type($_FILES[$key]['tmp_name']);
 
@@ -204,7 +236,7 @@ class MOUPks extends CI_Controller {
 
 	                $config['upload_path']          = './uploads/mou_pks/';
 	                $config['allowed_types']        = 'pdf|jpeg|jpg|png';
-	                $config['file_name']			= $name;
+	                // $config['file_name']			= $name;
 	                // $config['max_size']             = 100;
 	                // $config['max_width']            = 1024;
 	                // $config['max_height']           = 768;

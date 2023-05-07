@@ -31,9 +31,11 @@ class Fasilitasi_akses extends CI_Controller {
 				
 				$key+1,@$value->nama_provinsi,@$value->nama_kab_kota,@$value->tahun,@$value->target_kk,
 				rupiah(@$value->anggaran_akses_pemasaran),rupiah(@$value->realisasi_akses_pemasaran),
-				'<a type="button" title="Detail Data" style="display:inline" href="'.base_url('detail_fasilitasi_akses/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
+				'<div style="display:inline-flex">
+				<a type="button" title="Detail Data" style="display:inline" href="'.base_url('detail_fasilitasi_akses/data/').$value->id.'" class="btn btn-success"><i class="fas fa-search"></i></a>'.
 				'<button type="button" id="realisasi" onclick="realisasi(\''.$value->kode_kab_kota.'\','.$value->tahun_anggaran.',\''.$value->nama_kab_kota.'\')" title="Edit" class="btn btn-warning "><i class="fas fa-edit"></i></button>'.
-				'<a type="button" title="Download PDF" target="_blank" style="display:inline" href="'.base_url('export_pdf/fasilitasi_akses/').$value->kode_kab_kota.'" class="btn btn-info"><i class="fas fa-file"></i></a>'
+				'<a type="button" title="Download PDF" target="_blank" style="display:inline" href="'.base_url('export_pdf/fasilitasi_akses/').$value->kode_kab_kota.'" class="btn btn-info"><i class="fas fa-file"></i></a>
+				</div>'
 
 
 			];
