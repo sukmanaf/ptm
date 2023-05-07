@@ -35,7 +35,7 @@ class Dashboard_field_staff extends CI_Controller
 		}
 		echo json_encode($data);
 	}
-	public function get_all()
+	public function get_all($tahun)
 	{
 		$data = [];
 
@@ -44,6 +44,9 @@ class Dashboard_field_staff extends CI_Controller
 		$this->db->select('kode_provinsi');
 		$this->db->group_by("nama_provinsi");
 		$this->db->group_by("kode_provinsi");
+		if ($tahun != '') {
+			$this->db->where('tahun', $tahun);
+		}
 		$get = $this->global->get_all('v_dashboard_field_staff');
 		foreach ($get as $key => $value) {
 			$a = [
@@ -59,20 +62,48 @@ class Dashboard_field_staff extends CI_Controller
 		echo json_encode($data);
 	}
 
-	public function get_kab($idprov = '', $idtab)
+	public function get_kab($idprov = '', $idtab, $tahun)
 	{
 		$data = [];
-		$this->db->where('kode_provinsi', $idprov);
-		$get = $this->global->get_all('v_dashboard_field_staff');
-		foreach ($get as $key => $value) {
-			$a = [
-				$key + 1,
-				@$value->nama_provinsi,
-				@$value->nama_kab_kota,
-				@$value->jumlah
+		if ($idtab == 'pertama_kab') {
+			$this->db->select_sum('jumlah');
+			$this->db->select('nama_kab_kota');
+			$this->db->select('kode_kab_kota');
+			$this->db->select('kode_provinsi');
+			$this->db->select('nama_provinsi');
+			$this->db->group_by("kode_provinsi");
+			$this->db->group_by("nama_provinsi");
+			$this->db->group_by("nama_kab_kota");
+			$this->db->group_by("kode_kab_kota");
+			$this->db->where('kode_provinsi', $idprov);
+			$this->db->where('tahun', $tahun);
+			$get = $this->global->get_all('v_dashboard_field_staff');
+			foreach ($get as $key => $value) {
+				$a = [
+					$key + 1,
+					"<div data-toggle='modal' style='cursor:pointer;' data-target='#modal-xl-detail' onclick=to_kab('" . @$value->kode_kab_kota . "','pertama_orang')>" . @$value->nama_provinsi . "</div>",
+					"<div data-toggle='modal' style='cursor:pointer;' data-target='#modal-xl-detail' onclick=to_kab('" . @$value->kode_kab_kota . "','pertama_orang')>" . @$value->nama_kab_kota . "</div>",
+					"<div data-toggle='modal' style='cursor:pointer;' data-target='#modal-xl-detail' onclick=to_kab('" . @$value->kode_kab_kota . "','pertama_orang')>" . @$value->jumlah . "</div>",
 
-			];
-			array_push($data, $a);
+
+				];
+				array_push($data, $a);
+			}
+		} elseif ($idtab == 'pertama_orang') {
+			$this->db->select('nama_kab_kota');
+			$this->db->select('fullname');
+			$this->db->where('kode_kab_kota', $idprov);
+			$this->db->where('tahun', $tahun);
+			$get = $this->global->get_all('v_dashboard_field_staff');
+			foreach ($get as $key => $value) {
+				$a = [
+					$key + 1,
+					@$value->nama_kab_kota,
+					@$value->fullname
+
+				];
+				array_push($data, $a);
+			}
 		}
 
 
