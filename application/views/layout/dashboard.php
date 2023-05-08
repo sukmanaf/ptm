@@ -427,6 +427,18 @@
 													<p>Anggaran Tahun Ketiga</p>
 												</a>
 											</li>
+											<li class="nav-item">
+											<a href='<?= base_url('master_kelompok_usaha') ?>' class="nav-link">
+												<i class='nav-icon fa-circle far'></i>
+												<p>Kelompok Usaha</p>
+											</a>
+											</li>
+											<li class="nav-item">
+												<a href='<?= base_url('master_koperasi') ?>' class="nav-link">
+													<i class='nav-icon fa-circle far'></i>
+													<p>Koperasi</p>
+												</a>
+											</li>
 										</ul>
 									</li>
 
@@ -450,13 +462,13 @@
 								</a>
 							</li>
 							<li class='nav-item '>
-								<a href="#" class='nav-link '>
+								<!-- <a href="#" class='nav-link '>
 									<i class="nav-icon fas fa-book"></i>
 									<p>
 										CPCL
 										<i class="right fas fa-angle-left"></i>
 									</p>
-								</a>
+								</a> -->
 								<ul class="nav nav-treeview">
 									<li class="nav-item">
 										<a href='http://194.233.71.171/ptm-web/cpcl/entri' class="nav-link">

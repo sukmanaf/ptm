@@ -63,7 +63,7 @@
             </div>
             <div class="row">
 				<fieldset class="border rounded-3 p-3" style="width: 100%">
-	              <legend class="float-none ">Nomor Sertipikat Terdaftar yang akan diberdayakan </legend>
+	              <legend class="float-none " style="font-size: 16px">Nomor Sertipikat Terdaftar yang akan diberdayakan </legend>
 	              	<div class="row">
 		                <div class="col-md-6">
 							<div class="form-group">
@@ -103,37 +103,159 @@
 							<div class="form-group">
 								<label for='fc_o'>Sertifikat Lainnya</label></br>
 								<div class=" d-inline">
-									<input  type="radio"   id="sertifikat_lainnya_ada"   checked value="1" name="sertifikat_lainnya"   />
+									<input  type="radio"   id="sertifikat_lainnya_ada"   checked="checked" value="1" name="sertifikat_lainnya"   />
 									<label style="margin-right: 20px" for="sertifikat_lainnya_ada">Ada</label>
 								</div>
 								<div class="d-inline">
 									<input  type="radio"   id="sertifikat_lainnya_tidak" value="0" name="sertifikat_lainnya"  />
-									<label for="sertifikat_lainnya_tidak">Perempuan</label>
+									<label for="sertifikat_lainnya_tidak">Tidak Ada</label>
 								</div>
 							</div>
 						</div>
 	          		</div>
 				</fieldset>
+
+			</div>
+		</br>
+            <div class="row">
+				<fieldset class="border rounded-3 p-3" style="width: 100%">
+	              <legend class="float-none " style="font-size: 16px">Nomor sertipikat lainnya (untuk mendata sertipikat lainnya yang dimiliki) </legend>
+	                <div id="legend_tanah_lainnya" class="card" style="padding: 10px">
+		              	<div class="row">
+			                <div class="col-md-3">
+								<div class="form-group">
+									<label for="keberadaan_ada">Nomor</label>
+									<input name="keberadaan_ada" id="keberadaan_ada" type="text" value="" maxlength="14" class="numbers form-control clear" >
+								</div>
+							</div>
+			                <div class="col-md-4">
+								<div class="form-group">
+									<label for="nama">Nama</label>
+									<input name="nama" id="nama" type="text" value="" class=" form-control clear" fdprocessedid="cnb7g9">
+								</div>
+							</div>
+
+			                <div class="col-md-3">
+								<div class="form-group">
+									<label for='fc_o'>Jenis Kelamin</label></br>
+									<div class=" d-inline">
+										<input  type="radio"   id="laki"   checked value="1" name="jenis_kelamin"   />
+										<label style="margin-right: 20px" for="laki">Laki-Laki</label>
+									</div>
+									<div class="d-inline">
+										<input  type="radio"   id="perempuan" value="0" name="jenis_kelamin"  />
+										<label for="perempuan">Perempuan</label>
+									</div>
+								</div>
+							</div>
+			                <div class="col-md-1">
+								<div class="form-group">
+									<label for="luas">Luas</label>
+									<input name="luas" id="luas" type="text" value="" class="numbers form-control clear" fdprocessedid="cnb7g9">
+								</div>
+							</div>
+
+			                <div class="col-md-1">
+			                	<div class="form-group">
+									<label for="luas" style="color: white">Luas</label>
+			                		<button onclick="appends()" class="btn btn-primary">Tambah</button>
+								</div>
+			                </div>
+
+		          		</div>
+		          		
+		            </div>
+	              
+				</fieldset>
 				
 			</div>
-        	<div class="row">
-                <div class="col-sm-6 col-md-6 col-xs-12">
+			<div class="row" style="margin-top: 20px">
+                <div class="col-sm-3 col-md-3 col-xs-4">
                     <div class="form-group">
-                        <label for='fc_nama_responden_utama'>Provinsi</label>
-                        <select class="form-control" name="kode_provinsi">
-                        		<option value="<?=substr($data['kode_desa_kelurahan'],0,2)?>"><?=$data['nama_provinsi']?></option>
-                        </select>
-                    </div>
+						<label for='fc_o'> Bantuan Administrasi pertanahan</label></br>
+						
+					</div>
                 </div>
-                <div class="col-sm-6 col-md-6 col-xs-12">
-                    <div class="form-group">
-                        <label for='fc_nama_responden_utama'>Kabupaten/Kota</label>
-                        <select class="form-control" name="kode_kab_kota">
-                        		<option value="<?=substr($data['kode_desa_kelurahan'],0,4)?>"><?=$data['nama_kab_kota']?></option>
-                        </select>
-                    </div>
+                <div class="col-sm-9 col-md-9 col-xs-8">
+                	<div class="row">
+                		
+                    <?php foreach ($bantuan as $key => $value): ?>
+                        <div class="col-sm-6 col-md-6 col-xs-12">
+							<div class="form-check" style="display: inline;">
+							  <input class="form-check-input" type="checkbox" value="<?=$value->kode_bantuan?>" id="bantuan<?=$key?>" name="bantuan[]">
+							  <label class="form-check-label" for="bantuan<?=$key?>">
+							    <?=$value->deskripsi?>
+							  </label>
+							</div>
+  		                </div>
+						<?php endforeach ?>
+                	</div>
                 </div>
             </div>
+			
+			<div class="row" style="margin-top: 20px">
+                <div class="col-sm-3 col-md-3 col-xs-4">
+                    <div class="form-group">
+						<label for='fc_o'> Pemanfaatan Lahan</label></br>
+					</div>
+                </div>
+                <div class="col-sm-9 col-md-9 col-xs-8">
+                	<div class="row">
+                    <?php foreach ($pemanfaatan_lahan as $key => $value): ?>
+                        <div class="col-sm-6 col-md-6 col-xs-12">
+							<div class="form-check" style="display: inline;">
+							  <input class="form-check-input" type="checkbox" value="<?=$value->kode_pemanfaatan_lahan?>" id="pemanfaatan_lahan<?=$key?>" name="pemanfaatan_lahan[]">
+							  <label class="form-check-label" for="pemanfaatan_lahan<?=$key?>">
+							    <?=$value->deskripsi?>
+							  </label>
+							</div>
+  		                </div>
+						<?php endforeach ?>
+                	</div>
+                </div>
+            </div>
+			<div class="row" style="margin-top: 20px">
+                <div class="col-sm-3 col-md-3 col-xs-4">
+                    <div class="form-group">
+						<label for='fc_o'> Pengelola Tanah</label></br>
+						
+					</div>
+                </div>
+                <div class="col-sm-9 col-md-9 col-xs-8">
+                	<div class="row">
+                		
+                    <?php foreach ($pengelola_tanah as $key => $value): 
+                    	$checked = $key==0 ? 'checked':'' ?>
+
+						<?php if ($value->kode_pengelola == 99): ?>
+	                        <div class="col-sm-2 col-md-2">
+								<div class="form-check" style="display: inline;">
+								  <input class="form-check-input" type="radio" onchange="pengelolaChange()" value="<?=$value->kode_pengelola?>" id="pengelola_tanah<?=$key?>" name="pengelola_tanah[]">
+								  <label class="form-check-label" for="pengelola_tanah<?=$key?>">
+								    <?=$value->deskripsi?>
+								  </label>
+								</div>
+	  		                </div>
+	                        <div class="col-sm-3 col-md-3">
+								<input type="text" name="orang" readonly id="pengelola_tanah_orang" class="form-control numbers" style="width: 100px;display: inline;">
+								<span>Orang</span>
+							</div>	  
+						<?php else: ?>
+							<div class="col-sm-6 col-md-6">
+								<div class="form-check" style="display: inline;">
+								  <input class="form-check-input" <?=@$checked?> type="radio" onchange="pengelolaChange()" value="<?=$value->kode_pengelola?>" id="pengelola_tanah<?=$value->kode_pengelola?>" name="pengelola_tanah[]">
+								  <label class="form-check-label" for="pengelola_tanah<?=$key?>">
+								    <?=$value->deskripsi?>
+								  </label>
+								</div>
+	  		                </div>
+						<?php endif ?>
+						<?php endforeach ?>
+                	</div>
+                </div>
+            </div>
+			
+        	
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="$('.modal').modal('hide')">Close</button>
@@ -347,3 +469,62 @@
     	}
 
     }
+    var num = 1;
+    function appends(argument) {
+	    event.preventDefault(); //prevent default action 
+    	var str = '<div id="divAppend'+num+'" class="row">'+
+				    '<div class="col-md-3">'+
+						'<div class="form-group">'+
+							'<label for="keberadaan_ada">Nomor</label>'+
+							'<input name="keberadaan_ada" id="keberadaan_ada[]" type="text" value="" maxlength="14" class="numbers form-control clear" >'+
+						'</div>'+
+					'</div>'+
+				    '<div class="col-md-4">'+
+						'<div class="form-group">'+
+							'<label for="nama">Nama</label>'+
+							'<input name="nama[]" id="nama" type="text" value="" class=" form-control clear" >'+
+						'</div>'+
+					'</div>'+
+				    '<div class="col-md-3">'+
+						'<div class="form-group">'+
+							'<label for="fc_o">Jenis Kelamin</label></br>'+
+							'<div class=" d-inline">'+
+								'<input  type="radio"   id="laki"   checked value="1" name="jenis_kelamin[]"   />'+
+								'<label style="margin-right: 20px" for="laki">Laki-Laki</label>'+
+							'</div>'+
+							'<div class="d-inline">'+
+								'<input  type="radio"   id="perempuan" value="0" name="jenis_kelamin[]"  />'+
+								'<label for="perempuan">Perempuan</label>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+				    '<div class="col-md-1">'+
+						'<div class="form-group">'+
+							'<label for="luas">Luas</label>'+
+							'<input name="luas[]" id="luas" type="text" value="" class="numbers form-control clear">'+
+						'</div>'+
+					'</div>'+
+				    '<div class="col-md-1">'+
+				    	'<div class="form-group">'+
+							'<label for="luas" style="color: white">Luas</label>'+
+				    		'<button class="btn btn-danger" onclick="delsAppend('+num+')">Hapus</button>'+
+						'</div>'+
+				    '</div>'+
+				'</div>';
+			$('#legend_tanah_lainnya').append(str)
+
+    }
+
+	function delsAppend(v) {
+		    event.preventDefault(); //prevent default action 
+		$('#divAppend'+v).remove()
+	}
+
+	function pengelolaChange(argument) {
+		if ($('#pengelola_tanah99').is(':checked')) {
+			$('#pengelola_tanah_orang').attr('readonly',false)
+		}else{
+			$('#pengelola_tanah_orang').attr('readonly',true)
+
+		}
+	}

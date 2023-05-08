@@ -77,6 +77,10 @@ class Detail_pemsos_responden extends CI_Controller {
 		// ===== th ====
 		$dataTH['tanah_terdaftar']=$this->pemsos->th_tanah_terdaftar();
 		$dataTH['tanah_belum_terdaftar']=$this->pemsos->th_tanah_belum_terdaftar();
+		$dataTH['bantuan']=$this->global->get_all('ms_kuesioner_th04a');
+		$dataTH['pemanfaatan_lahan']=$this->global->get_all('ms_kuesioner_th05');
+		$dataTH['pengelola_tanah']=$this->global->get_all('ms_kuesioner_th06');
+
 
 
 		$data['lk']=$this->load->view('detail_pemsos_responden/lk',$data,true);
