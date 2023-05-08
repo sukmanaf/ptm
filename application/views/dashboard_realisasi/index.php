@@ -49,6 +49,15 @@
 							</select>
 						</div>
 					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="">Jenis Realisasi</label>
+							<select id="jenis" name="" onchange="to_change(this)" required class="form-control select2" style="width: 100%;">
+								<option value="anggaran"> Anggaran</option>
+								<option value="fisik"> Fisik</option>
+							</select>
+						</div>
+					</div>
 				</div>
 				<div id="table-front_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
 					<table id="table-frontpertama" class="table table-hover dataTable no-footer dtr-inline" aria-describedby="table-front_info" style="width: 100%;">
@@ -62,19 +71,33 @@
 								<th colspan="2">Penetapan Model Pemberdayaan</th>
 								<th colspan="2">Penyusunan Data Penerima Akses</th>
 							</tr>
-							<tr>
+							<tr id="anggaran" style="display:none;">
 								<th></th>
 								<th></th>
-								<th>A</th>
-								<th>R</th>
-								<th>A</th>
-								<th>R</th>
-								<th>A</th>
-								<th>R</th>
-								<th>A</th>
-								<th>R</th>
-								<th>A</th>
-								<th>R</th>
+								<th>Anggaran</th>
+								<th>Realisasi</th>
+								<th>Anggaran</th>
+								<th>Realisasi</th>
+								<th>Anggaran</th>
+								<th>Realisasi</th>
+								<th>Anggaran</th>
+								<th>Realisasi</th>
+								<th>Anggaran</th>
+								<th>Realisasi</th>
+							</tr>
+							<tr id="fisik" style="display:none;">
+								<th></th>
+								<th></th>
+								<th>Target</th>
+								<th>Realisasi</th>
+								<th>Target</th>
+								<th>Realisasi</th>
+								<th>Target</th>
+								<th>Realisasi</th>
+								<th>Target</th>
+								<th>Realisasi</th>
+								<th>Target</th>
+								<th>Realisasi</th>
 							</tr>
 						</thead>
 					</table>
@@ -174,11 +197,22 @@
 		}
 		var tahun = $("#tahun").val()
 		var tahap = $("#tahap").val()
+		var jenis = $("#jenis").val()
+		if (jenis == 'fisik') {
+			$("#fisik").show()
+			$("#anggaran").hide()
+		} else {
+			$("#fisik").hide()
+			$("#anggaran").show()
+		}
 		var tab = $('#table-front' + tahap).DataTable();
+
 		tab.destroy()
 		loadDt(tahap, tahun)
 	}
 	$(document).ready(function() {
+		$("#anggaran").show()
+
 		loadDt('pertama', 2023);
 	});
 
